@@ -1,0 +1,41 @@
+import Image from 'next/image'
+import { testimonials } from '@/lib/content'
+
+export function TestimonialsSection() {
+  if (!testimonials.length) return null
+  return (
+    <section className="section bg-gray-50" aria-labelledby="testimonials-heading">
+      <div className="base-container">
+        <h2 id="testimonials-heading" className="testimonials-main-title">Testimonials</h2>
+        <div className="space-y-8">
+          {testimonials.map((t, idx) => (
+            <figure key={idx} className="bg-white rounded-xl p-8 shadow-md border border-gray-100 relative overflow-hidden">
+              <blockquote className="reviews-text">
+                <p>“{t.quote}”</p>
+              </blockquote>
+              <figcaption className="mt-4 flex items-center justify-between flex-wrap gap-4">
+                <div>
+                  <p className="autor-name">{t.role ? `${t.role}` : t.author}</p>
+                  <p className="text-sm text-gray-500">{t.author !== t.role ? t.author : ''}</p>
+                </div>
+                {t.rating && (
+                  <div className="star-icon-wrapper" aria-label={`${t.rating} star rating`}>
+                    {Array.from({ length: t.rating }).map((_, i) => (
+                      <Image
+                        key={i}
+                        src="/assets/67db459955ee8b93594b4101_Star%201.webp"
+                        alt="Star"
+                        width={20}
+                        height={20}
+                      />
+                    ))}
+                  </div>
+                )}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}

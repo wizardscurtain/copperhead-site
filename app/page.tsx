@@ -2,6 +2,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import HeroSlider from '../components/hero-slider'
 import Footer from '../components/footer'
+import { PartnersStrip } from '@/components/partners-strip'
+import { TestimonialsSection } from '@/components/testimonials'
+import { ServicesGrid } from '@/components/services-grid'
 
 export default function HomePage() {
   return (
@@ -50,104 +53,9 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Testimonials Section */}
-      <div className="section">
-        <div className="base-container">
-          <div className="customer-reviews-slider">
-            <div className="testimonials-slide">
-              <div className="customer-reviews-container">
-                <div className="customer-reviews-left">
-                  <div className="white-left-preloader"></div>
-                </div>
-                <div className="customer-reviews-right">
-                  <p className="testimonials-main-title">Testimonials</p>
-                  <div className="reviews-text">
-                    Rapid deployment in a high demand market, proper backgrounds, solid agents...High Tier delivery 
-                    to new and existing clients on first delivery...Looking forward to continued service.
-                  </div>
-                  <div className="name-container">
-                    <h5 className="autor-name">Pinkerton, Associate Director of Operations Seattle</h5>
-                    <div className="star-icon-wrapper">
-                      {[...Array(5)].map((_, i) => (
-                        <Image
-                          key={i}
-                          src="/assets/67db459955ee8b93594b4101_Star%201.webp"
-                          alt="Star"
-                          width={16}
-                          height={16}
-                          className="star-icon"
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Services Section */}
-      <div className="services-section">
-        <div className="base-container">
-          <div className="services-content">
-            <h2 className="section-heading">Our Services</h2>
-            <div className="services-grid">
-              <div className="service-item">
-                <div className="service-icon-wrapper">
-                  <Image
-                    src="/assets/67db459955ee8b93594b4101_Guard.webp"
-                    alt="Security Services"
-                    width={60}
-                    height={60}
-                  />
-                </div>
-                <h3>Executive Protection</h3>
-                <p>Professional executive and VIP protection services</p>
-              </div>
-              
-              <div className="service-item">
-                <div className="service-icon-wrapper">
-                  <Image
-                    src="/assets/67db459955ee8b93594b4101_Investigation.webp"
-                    alt="Private Investigations"
-                    width={60}
-                    height={60}
-                  />
-                </div>
-                <h3>Private Investigations</h3>
-                <p>Comprehensive investigative services</p>
-              </div>
-              
-              <div className="service-item">
-                <div className="service-icon-wrapper">
-                  <Image
-                    src="/assets/67db459955ee8b93594b4101_Training.webp"
-                    alt="Training"
-                    width={60}
-                    height={60}
-                  />
-                </div>
-                <h3>Training</h3>
-                <p>Professional security training programs</p>
-              </div>
-              
-              <div className="service-item">
-                <div className="service-icon-wrapper">
-                  <Image
-                    src="/assets/67db459955ee8b93594b4101_Consulting.webp"
-                    alt="Consulting"
-                    width={60}
-                    height={60}
-                  />
-                </div>
-                <h3>Security Consulting</h3>
-                <p>Expert security consultation services</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <PartnersStrip />
+      <TestimonialsSection />
+      <ServicesGrid />
 
       <Footer />
     </div>

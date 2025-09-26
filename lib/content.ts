@@ -43,3 +43,21 @@ export const testimonials: TestimonialItem[] = [
     rating: 5,
   },
 ]
+
+export interface PartnerLogo {
+  name: string
+  src: string
+  alt?: string
+  width?: number
+  height?: number
+}
+
+// These files already exist in public/assets (added previously) so we reference directly.
+export const partners: PartnerLogo[] = [
+  { name: 'Pinkerton', src: '/assets/67f1cf5777ab474bf70ba63c_CCI-Web-PNK.png', width: 140, height: 60 },
+  { name: 'Microsoft', src: '/assets/67f1d01310db00cd6ad529e9_CCI-Web-MSFT.png', width: 140, height: 60 },
+  { name: 'Concentric', src: '/assets/67f1d0d74d93d2a7b9efb71c_CCI-Web-Concentric.png', width: 140, height: 60 },
+  { name: 'Allied', src: '/assets/67f1d187bbe2ac4ebfe1b688_CCI-Web-ALLIED.png', width: 140, height: 60 },
+  { name: 'C24', src: '/assets/67f1d2549fcb04b14e6110c3_CCI-Web-C24.png', width: 140, height: 60 },
+]
+
