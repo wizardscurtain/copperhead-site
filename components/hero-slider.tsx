@@ -75,4 +75,3 @@ export default function HeroSlider({ slides = heroSlides, intervalMs = 4000, aut
     </div>
   )
 }
-
