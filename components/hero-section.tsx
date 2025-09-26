@@ -65,18 +65,18 @@ export function HeroSection() {
   }, [])
 
   return (
-    <section className="relative py-20 lg:py-32 overflow-hidden min-h-screen flex items-center">
+    <section className="relative py-20 lg:py-32 overflow-hidden min-h-screen flex items-center hero-section">
       <div className="absolute inset-0 z-0">
         <img
           src="/images/seattle-space-needle.jpg"
           alt="Seattle Space Needle - Copperhead Consulting headquarters location"
           className="w-full h-full object-cover scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/70" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/70 to-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent" />
       </div>
 
-      <div className="absolute top-20 right-10 text-accent/20 animate-float">
+      <div className="absolute top-20 right-10 text-accent/30 animate-float">
         <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 20 20">
           <path
             fillRule="evenodd"
@@ -97,22 +97,19 @@ export function HeroSection() {
               <div className="text-accent mr-3 animate-pulse-glow">
                 <ShieldIcon />
               </div>
-              <span className="text-accent font-semibold text-lg tracking-wide">Elite Security Solutions</span>
+              <span className="text-accent font-bold text-lg tracking-wide uppercase">Elite Security Solutions</span>
             </div>
 
             <h1
-              className={`text-4xl md:text-6xl lg:text-7xl font-bold text-balance mb-6 transition-all duration-1000 delay-200 ${
+              className={`text-4xl md:text-6xl lg:text-7xl font-bold text-balance mb-6 transition-all duration-1000 delay-200 text-white ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
             >
-              We value your{" "}
-              <span className="text-accent bg-gradient-to-r from-accent to-accent/80 bg-clip-text text-transparent">
-                safety
-              </span>
+              On Standby and Ready for <span className="text-accent">Your Needs</span>
             </h1>
 
             <p
-              className={`text-xl md:text-2xl text-muted-foreground text-pretty mb-8 max-w-3xl leading-relaxed transition-all duration-1000 delay-400 ${
+              className={`text-xl md:text-2xl text-gray-300 text-pretty mb-8 max-w-3xl leading-relaxed transition-all duration-1000 delay-400 ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
             >
@@ -127,7 +124,7 @@ export function HeroSection() {
             >
               <Button
                 size="lg"
-                className="text-lg px-8 py-4 hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl bg-accent hover:bg-accent/90"
+                className="primary-button-with-icon button-text text-lg px-8 py-4 bg-accent hover:bg-accent/90 text-white border-0"
                 onClick={() => {
                   const servicesElement = document.getElementById("services")
                   if (servicesElement) {
@@ -140,7 +137,7 @@ export function HeroSection() {
               <Button
                 variant="outline"
                 size="lg"
-                className="text-lg px-8 py-4 glass-effect hover:scale-105 transition-all duration-200 border-accent/30 hover:border-accent/50 bg-transparent"
+                className="text-lg px-8 py-4 glass-effect hover:scale-105 transition-all duration-200 border-accent/50 hover:border-accent text-white bg-transparent"
                 onClick={() => (window.location.href = "tel:(360)519-9932")}
               >
                 <PhoneIcon />
@@ -162,7 +159,7 @@ export function HeroSection() {
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
-            <div className="aspect-video rounded-lg overflow-hidden shadow-2xl">
+            <div className="aspect-video rounded-lg overflow-hidden shadow-2xl border border-accent/20">
               <video
                 src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/67db459955ee8b93594b3fd5_67ef650a7f795f40958d6f63_CCI_EP_174%20-%20720WebShareName-transcode-fkA7heUg0sBYIPWQ7FhTdGTSIjROFL.mp4"
                 title="Copperhead Consulting Inc - Security Solutions"

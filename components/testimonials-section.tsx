@@ -16,6 +16,7 @@ const QuoteIcon = () => (
 
 export function TestimonialsSection() {
   const [isVisible, setIsVisible] = useState(false)
+  const [currentSlide, setCurrentSlide] = useState(0) // Added slider state
   const sectionRef = useRef<HTMLElement>(null)
 
   const testimonials = [
@@ -24,23 +25,27 @@ export function TestimonialsSection() {
         "Rapid deployment in a high demand market, proper backgrounds, solid agents...High Tier delivery to new and existing clients on first delivery...Looking forward to continued service.",
       author: "Pinkerton",
       role: "Associate Director of Operations Seattle",
+      isOrange: true, // Alternating orange/dark backgrounds
     },
     {
       quote:
         "It felt so good to have CCI. We all felt safe, comfortable and thank you for being respectful of our space and privacy to our parents and guarding our kids!",
       author: "KinderCare Seattle",
       role: "Center Director",
+      isOrange: false,
     },
     {
       quote: "Securing our future and making our kids feel safe, we couldn't have asked for a better service.",
       author: "Seattle Monastery",
       role: "Principal",
+      isOrange: true,
     },
     {
       quote:
         "Produces highly competent and capable agents to support our high-net-worth clients ... We appreciate your responsiveness to cover down quickly as needed & professionalism of CCI agents",
       author: "Concentric Advisors",
       role: "Director of Operations",
+      isOrange: false,
     },
   ]
 
@@ -61,41 +66,67 @@ export function TestimonialsSection() {
     return () => observer.disconnect()
   }, [])
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % testimonials.length)
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [testimonials.length])
+
   return (
-    <section ref={sectionRef} id="testimonials" className="py-20">
+    <section ref={sectionRef} id="testimonials" className="py-20 bg-black">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div
           className={`text-center mb-16 transition-all duration-1000 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-balance mb-6">Testimonials</h2>
-          <p className="text-lg text-muted-foreground">What our clients say about our services</p>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-balance mb-6 text-white">Testimonials</h2>
+          <p className="text-lg text-gray-300">What our clients say about our services</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {testimonials.map((testimonial, index) => (
-            <Card
-              key={index}
-              className={`h-full hover:shadow-lg hover:scale-105 transition-all duration-300 ${
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              }`}
-              style={{ transitionDelay: `${index * 150}ms` }}
+        <div className="relative max-w-4xl mx-auto">
+          <div className="overflow-hidden rounded-lg">
+            <div
+              className="flex transition-transform duration-500 ease-in-out"
+              style={{ transform: `translateX(-${currentSlide * 100}%)` }}
             >
-              <CardHeader>
-                <div className="text-accent mb-4">
-                  <QuoteIcon />
+              {testimonials.map((testimonial, index) => (
+                <div key={index} className="w-full flex-shrink-0">
+                  <Card
+                    className={`h-full border-0 ${testimonial.isOrange ? "testimonial-orange" : "testimonial-dark"}`}
+                  >
+                    <CardHeader>
+                      <div className="text-white/80 mb-4">
+                        <QuoteIcon />
+                      </div>
+                    </CardHeader>
+                    <CardContent className="space-y-6">
+                      <CardDescription className="text-lg leading-relaxed italic text-white">
+                        "{testimonial.quote}"
+                      </CardDescription>
+                      <div>
+                        <CardTitle className="text-xl text-white">{testimonial.author}</CardTitle>
+                        <p className="text-sm text-white/80 uppercase tracking-wide font-medium">{testimonial.role}</p>
+                      </div>
+                    </CardContent>
+                  </Card>
                 </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <CardDescription className="text-base leading-relaxed italic">"{testimonial.quote}"</CardDescription>
-                <div>
-                  <CardTitle className="text-lg">{testimonial.author}</CardTitle>
-                  <p className="text-sm text-muted-foreground uppercase tracking-wide">{testimonial.role}</p>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+              ))}
+            </div>
+          </div>
+
+          <div className="flex justify-center mt-8 space-x-2">
+            {testimonials.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentSlide(index)}
+                className={`w-3 h-3 rounded-full transition-colors duration-200 ${
+                  currentSlide === index ? "bg-accent" : "bg-gray-600"
+                }`}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

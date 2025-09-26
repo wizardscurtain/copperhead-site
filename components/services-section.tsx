@@ -103,7 +103,7 @@ export function ServicesSection() {
       description:
         "Superior 3:1 capability compared to standard guards, cutting-edge integrated communications, elite training in medical and life saving techniques our professionals are unmatched at the peak of their field.",
       badge: "Elite",
-      color: "bg-gradient-to-br from-accent/10 to-accent/5",
+      backgroundImage: "/images/executive-protection.jpg",
     },
     {
       icon: K9Icon,
@@ -111,7 +111,7 @@ export function ServicesSection() {
       description:
         "We provide top-tier K9 detection services trusted by large-scale venues, festivals, and high-security events across the nation. From explosives and firearms to narcotics detection.",
       badge: "Certified",
-      color: "bg-gradient-to-br from-primary/10 to-primary/5",
+      backgroundImage: "/images/training-session.jpg",
     },
     {
       icon: DroneIcon,
@@ -119,7 +119,7 @@ export function ServicesSection() {
       description:
         "We combine cutting-edge robotics and drone technology with the critical thinking and adaptability of trained security professionals.",
       badge: "Advanced",
-      color: "bg-gradient-to-br from-secondary/20 to-secondary/10",
+      backgroundImage: "/images/surveillance-camera.jpg",
     },
     {
       icon: TruckIcon,
@@ -127,14 +127,14 @@ export function ServicesSection() {
       description:
         "We deploy Mobile Security Ops Centers to bring real-time surveillance and command to the field. They enhance response, communication, and control wherever they're needed most.",
       badge: "24/7",
-      color: "bg-gradient-to-br from-accent/10 to-accent/5",
+      backgroundImage: "/images/soc-team.jpg",
     },
     {
       icon: UserShieldIcon,
       title: "Executive Protection",
       description: "Elite, discreet protection for executives and high-profile clients—your safety, our priority.",
       badge: "Discreet",
-      color: "bg-gradient-to-br from-primary/10 to-primary/5",
+      backgroundImage: "/images/executive-protection.jpg",
     },
     {
       icon: SearchIcon,
@@ -142,7 +142,7 @@ export function ServicesSection() {
       description:
         "Confidential, thorough investigations tailored to your needs. We uncover the truth with professionalism and precision.",
       badge: "Confidential",
-      color: "bg-gradient-to-br from-secondary/20 to-secondary/10",
+      backgroundImage: "/images/training-session.jpg",
     },
     {
       icon: AlertTriangleIcon,
@@ -150,7 +150,7 @@ export function ServicesSection() {
       description:
         "Proactive threat and risk assessments to safeguard your assets, and operations. We identify vulnerabilities before they become liabilities.",
       badge: "Proactive",
-      color: "bg-gradient-to-br from-accent/10 to-accent/5",
+      backgroundImage: "/images/surveillance-camera.jpg",
     },
     {
       icon: MonitorIcon,
@@ -158,7 +158,7 @@ export function ServicesSection() {
       description:
         "Our 24/7 Security Operations Center delivers real-time monitoring and rapid response. Centralized intelligence to keep your operations secure and informed.",
       badge: "Real-time",
-      color: "bg-gradient-to-br from-primary/10 to-primary/5",
+      backgroundImage: "/images/soc-team.jpg",
     },
   ]
 
@@ -188,22 +188,21 @@ export function ServicesSection() {
   }
 
   return (
-    <section ref={sectionRef} id="services" className="py-20 bg-gradient-to-b from-background to-muted/30">
+    <section ref={sectionRef} id="services" className="py-20 bg-black">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div
           className={`text-center mb-16 transition-all duration-1000 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-balance mb-6">Our services</h2>
-          <p className="text-lg md:text-xl text-muted-foreground text-pretty max-w-4xl mx-auto leading-relaxed">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-balance mb-6 text-white">Our services</h2>
+          <p className="text-lg md:text-xl text-gray-300 text-pretty max-w-4xl mx-auto leading-relaxed">
             We deliver elite security solutions tailored for discerning clients. Our expertise spans high-end security
             consulting, executive protection, travel and residential, technical surveillance countermeasures (TSCM), and
             discreet private investigations.
           </p>
           <Button
-            variant="outline"
-            className="mt-8 glass-effect hover:scale-105 transition-all duration-200 border-accent/30 hover:border-accent/50 bg-transparent"
+            className="mt-8 primary-button-with-icon button-text bg-accent hover:bg-accent/90 text-white border-0"
             onClick={handleAllServices}
           >
             All Services
@@ -214,24 +213,35 @@ export function ServicesSection() {
           {services.map((service, index) => (
             <Card
               key={index}
-              className={`h-full hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer border-0 ${service.color} backdrop-blur-sm ${
+              className={`service-card-dark h-full relative overflow-hidden cursor-pointer ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
-              style={{ transitionDelay: `${index * 100}ms` }}
+              style={{
+                transitionDelay: `${index * 100}ms`,
+                backgroundImage: `url(${service.backgroundImage})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
             >
-              <CardHeader className="relative">
-                <Badge variant="secondary" className="absolute top-4 right-4 text-xs font-medium">
+              {/* Dark overlay */}
+              <div className="absolute inset-0 bg-black/70" />
+
+              <CardHeader className="relative z-10">
+                <Badge className="absolute top-4 left-4 text-xs font-medium bg-accent text-white border-0">
                   {service.badge}
                 </Badge>
-                <div className="text-accent mb-4 group-hover:scale-110 transition-transform duration-200">
+                <div className="text-accent mb-4 group-hover:scale-110 transition-transform duration-200 mt-8">
                   <service.icon />
                 </div>
-                <CardTitle className="text-lg font-semibold">{service.title}</CardTitle>
+                <CardTitle className="text-lg font-bold text-white">{service.title}</CardTitle>
               </CardHeader>
-              <CardContent>
-                <CardDescription className="text-sm leading-relaxed text-foreground/80">
+              <CardContent className="relative z-10">
+                <CardDescription className="text-sm leading-relaxed text-gray-300">
                   {service.description}
                 </CardDescription>
+                <Button variant="link" className="mt-4 p-0 h-auto text-accent hover:text-accent/80 font-medium">
+                  Learn More →
+                </Button>
               </CardContent>
             </Card>
           ))}
