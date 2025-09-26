@@ -1,62 +1,39 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
+import { heroSlides, type SlideItem } from '../lib/content'
 
-const slides = [
-  {
-    src: '/assets/67e761f4b67b3fdcfbf4f17f_CCI-Web-Home.jpg',
-    alt: 'Copperhead CI Home'
-  },
-  {
-    src: '/assets/67eec03468321ce8951ae033_CCI-Web-PI.jpg', 
-    alt: 'Private Investigations'
-  },
-  {
-    src: '/assets/67eeb007429253fac0cd7e4c_CCI-Web-SOC.jpg',
-    alt: 'Security Operations Center'
-  },
-  {
-    src: '/assets/67ec892286370cc1f20c74c0_CCI-Web-Driver.jpg',
-    alt: 'Driver Services'
-  },
-  {
-    src: '/assets/67ef33259d35c0818526ccbe_CCI-Web-Train1.jpg',
-    alt: 'Training Services'
-  }
-]
+interface HeroSliderProps {
+  slides?: SlideItem[]
+  intervalMs?: number
+  autoPlay?: boolean
+}
 
-export default function HeroSlider() {
-  const [currentSlide, setCurrentSlide] = useState(0)
+export default function HeroSlider({ slides = heroSlides, intervalMs = 4000, autoPlay = true }: HeroSliderProps) {
+  const [current, setCurrent] = useState(0)
+  const total = slides.length
+
+  const next = useCallback(() => setCurrent((p) => (p + 1) % total), [total])
+  const prev = useCallback(() => setCurrent((p) => (p - 1 + total) % total), [total])
+  const go = (i: number) => setCurrent(i)
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length)
-    }, 4000)
-    
-    return () => clearInterval(interval)
-  }, [])
-
-  const goToSlide = (index: number) => {
-    setCurrentSlide(index)
-  }
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length)
-  }
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)
-  }
+    if (!autoPlay) return
+    const id = setInterval(next, intervalMs)
+    return () => clearInterval(id)
+  }, [next, intervalMs, autoPlay])
 
   return (
-    <div className="slider-3 w-slider" data-autoplay="true" data-delay="4000">
+    <div className="slider-3 w-slider" data-autoplay={autoPlay} data-delay={intervalMs} aria-roledescription="carousel">
       <div className="mask-2 w-slider-mask">
-        {slides.map((slide, index) => (
+        {slides.map((slide, i) => (
           <div
-            key={index}
-            className={`slide-8 w-slide ${index === currentSlide ? 'w--current' : ''}`}
-            style={{ display: index === currentSlide ? 'block' : 'none' }}
+            key={slide.src + i}
+            className={`slide-8 w-slide ${i === current ? 'w--current' : ''}`}
+            style={{ display: i === current ? 'block' : 'none' }}
+            role="group"
+            aria-label={`${i + 1} of ${total}`}
           >
             <Image
               src={slide.src}
@@ -64,38 +41,38 @@ export default function HeroSlider() {
               width={1672}
               height={800}
               className="image"
-              priority={index === 0}
+              priority={i === 0 || slide.priority}
             />
           </div>
         ))}
       </div>
-      
-      <button 
+      <button
         className="left-arrow-4 w-slider-arrow-left"
-        onClick={prevSlide}
+        onClick={prev}
         aria-label="Previous slide"
       >
-        <div className="w-icon-slider-left"></div>
+        <div className="w-icon-slider-left" />
       </button>
-      
       <button
         className="right-arrow-4 w-slider-arrow-right"
-        onClick={nextSlide}
+        onClick={next}
         aria-label="Next slide"
       >
-        <div className="w-icon-slider-right"></div>
+        <div className="w-icon-slider-right" />
       </button>
-      
-      <div className="w-slider-nav w-round">
-        {slides.map((_, index) => (
+      <div className="w-slider-nav w-round" role="tablist">
+        {slides.map((_, i) => (
           <button
-            key={index}
-            className={`w-slider-dot ${index === currentSlide ? 'w--current' : ''}`}
-            onClick={() => goToSlide(index)}
-            aria-label={`Go to slide ${index + 1}`}
+            key={i}
+            className={`w-slider-dot ${i === current ? 'w--current' : ''}`}
+            onClick={() => go(i)}
+            aria-label={`Go to slide ${i + 1}`}
+            aria-selected={i === current}
+            role="tab"
           />
         ))}
       </div>
     </div>
   )
 }
+

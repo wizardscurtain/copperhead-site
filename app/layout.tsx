@@ -3,7 +3,9 @@ import { Inconsolata, Lato, Poppins, Inter } from "next/font/google"
 import "./globals.css"
 import { Suspense } from "react"
 import { PerformanceMonitor } from "@/components/performance-monitor"
-import Navigation from "../components/navigation"
+import Navigation from "@/components/navigation"
+import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import type React from "react"
 
 const inconsolata = Inconsolata({
@@ -61,7 +63,7 @@ export const metadata: Metadata = {
     siteName: "Copperhead Consulting Inc",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "/assets/67e761f4b67b3fdcfbf4f17f_CCI-Web-Home.jpg",
         width: 1200,
         height: 630,
         alt: "Copperhead Consulting - Elite Security Solutions",
@@ -75,7 +77,7 @@ export const metadata: Metadata = {
     title: "Copperhead Consulting Inc - Elite Security Solutions",
     description:
       "Exceptional security, intelligence, and risk assessment solutions using cutting-edge technology and skilled senior professionals.",
-    images: ["/og-image.jpg"],
+  images: ["/assets/67e761f4b67b3fdcfbf4f17f_CCI-Web-Home.jpg"],
   },
   robots: {
     index: true,
@@ -247,19 +249,25 @@ export default function RootLayout({
           }}
         />
 
-        <Navigation />
-        <Suspense fallback={<div className="min-h-screen bg-background" />}>{children}</Suspense>
-        <PerformanceMonitor />
+  <Navigation />
+  <Suspense fallback={<div className="min-h-screen bg-background" />}>{children}</Suspense>
+  <PerformanceMonitor />
+  <Analytics />
+  <SpeedInsights />
 
         <script
           dangerouslySetInnerHTML={{
             __html: `
             // Custom lightweight analytics
-            if (typeof window !== 'undefined') {
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'GA_MEASUREMENT_ID');
+            if (typeof window !== 'undefined' && !window.__GA_INIT) {
+              window.__GA_INIT = true;
+              const id = process.env.NEXT_PUBLIC_GA_ID || 'GA_MEASUREMENT_ID';
+              if (id && id !== 'GA_MEASUREMENT_ID') {
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){window.dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', id);
+              }
             }
           `,
           }}
