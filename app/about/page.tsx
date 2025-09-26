@@ -2,6 +2,8 @@
 
 import { Button } from "@/components/ui/button"
 import Footer from "../../components/footer"
+import { TeamGrid } from "@/components/team-grid"
+import { ValuesSection } from "@/components/values-section"
 
 export default function AboutPage() {
   return (
@@ -44,59 +46,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Team Values */}
-      <section className="py-20 bg-muted/50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">Our Values</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold mb-4">Excellence</h3>
-                <p className="text-muted-foreground">
-                  We maintain the highest standards in everything we do, from training to execution.
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                    />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold mb-4">Integrity</h3>
-                <p className="text-muted-foreground">
-                  Trust and transparency form the foundation of all our client relationships.
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold mb-4">Innovation</h3>
-                <p className="text-muted-foreground">
-                  We continuously evolve our methods and technology to stay ahead of emerging threats.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ValuesSection />
+      <TeamGrid />
 
       {/* Contact CTA */}
       <section className="py-20">

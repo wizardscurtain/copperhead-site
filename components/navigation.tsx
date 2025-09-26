@@ -3,9 +3,11 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const pathname = usePathname()
 
   return (
     <nav className="nav-fixed-white-menu w-nav" role="banner">
@@ -50,10 +52,24 @@ export default function Navigation() {
                   </Link>
                   
                   <div className="border-wrap-2">
-                    <Link href="/" className="nav-item-link">Home</Link>
-                    <Link href="/about" className="nav-item-link">About Us</Link>
-                    <Link href="/services" className="nav-item-link">Services</Link>
-                    <Link href="/contact" className="nav-item-link">Contact Us</Link>
+                    {[
+                      { href: '/', label: 'Home' },
+                      { href: '/about', label: 'About Us' },
+                      { href: '/services', label: 'Services' },
+                      { href: '/contact', label: 'Contact Us' },
+                    ].map(link => {
+                      const active = pathname === link.href
+                      return (
+                        <Link
+                          key={link.href}
+                          href={link.href}
+                          className={`nav-item-link ${active ? 'active-nav-link' : ''}`}
+                          aria-current={active ? 'page' : undefined}
+                        >
+                          {link.label}
+                        </Link>
+                      )
+                    })}
                   </div>
                 </div>
                 

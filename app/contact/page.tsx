@@ -1,5 +1,11 @@
 import { ContactForm } from "@/components/contact-form"
 import Footer from "../../components/footer"
+import dynamic from 'next/dynamic'
+
+// Placeholder dynamic Map (could later integrate real map provider)
+const Map = dynamic(() => Promise.resolve(() => (
+  <div className="w-full h-full flex items-center justify-center text-sm text-gray-500">Map Placeholder</div>
+)), { ssr: false })
 
 export default function ContactPage() {
   return (
@@ -13,9 +19,9 @@ export default function ContactPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {/* Contact Information */}
-            <div className="space-y-8">
+            <div className="space-y-8 lg:col-span-1">
               <div>
                 <h2 className="text-2xl font-semibold mb-6">Get In Touch</h2>
                 <div className="space-y-4">
@@ -87,13 +93,20 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Contact Form */}
-            <div>
-              <ContactForm
-                type="contact"
-                title="Send Us a Message"
-                description="Fill out the form below and we'll get back to you within 24 hours."
-              />
+            {/* Contact Form + Map */}
+            <div className="space-y-8 lg:col-span-2">
+              <div className="grid md:grid-cols-2 gap-8">
+                <div>
+                  <ContactForm
+                    type="contact"
+                    title="Send Us a Message"
+                    description="Fill out the form below and we'll get back to you within 24 hours."
+                  />
+                </div>
+                <div className="aspect-[4/3] rounded-lg overflow-hidden border border-gray-200 shadow-sm">
+                  <Map />
+                </div>
+              </div>
             </div>
           </div>
         </div>

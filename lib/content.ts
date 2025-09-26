@@ -61,3 +61,31 @@ export const partners: PartnerLogo[] = [
   { name: 'C24', src: '/assets/67f1d2549fcb04b14e6110c3_CCI-Web-C24.png', width: 140, height: 60 },
 ]
 
+export interface TeamMember {
+  name: string
+  role: string
+  img?: string
+  bio?: string
+  linkedIn?: string
+}
+
+export const team: TeamMember[] = [
+  { name: 'Jon', role: 'Founder / CEO', img: '/assets/67f1c4c8d7d92c9c15cdc0e4_CCI-Web-Jon.jpg' },
+  { name: 'James', role: 'Director of Operations', img: '/assets/67f1c4dc6eb9489baba0b5c9_CCI-Web-James.jpg' },
+  { name: 'Josh', role: 'Security Programs', img: '/assets/67f1c4ee8859cc20820c21c7_CCI-Web-Josh.jpg' },
+  { name: 'Vince', role: 'Training Lead', img: '/assets/67f1c4ffe64cd5a5f97c0a78_CCI-Web-Vince.jpg' },
+]
+
+export interface ValueProp {
+  title: string
+  description: string
+  icon?: 'excellence' | 'integrity' | 'innovation'
+}
+
+export const valueProps: ValueProp[] = [
+  { title: 'Excellence', description: 'Highest standards from preparation to execution.', icon: 'excellence' },
+  { title: 'Integrity', description: 'Trust and transparency in every engagement.', icon: 'integrity' },
+  { title: 'Innovation', description: 'Evolving methods & tech to stay ahead of threats.', icon: 'innovation' },
+]
+
+
