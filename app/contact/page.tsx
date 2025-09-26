@@ -1,4 +1,5 @@
 import { ContactForm } from "@/components/contact-form"
+import Footer from "../../components/footer"
 
 export default function ContactPage() {
   return (
@@ -97,6 +98,7 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }

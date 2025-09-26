@@ -3,6 +3,7 @@ import { Inconsolata, Lato, Poppins, Inter } from "next/font/google"
 import "./globals.css"
 import { Suspense } from "react"
 import { PerformanceMonitor } from "@/components/performance-monitor"
+import Navigation from "../components/navigation"
 import type React from "react"
 
 const inconsolata = Inconsolata({
@@ -246,6 +247,7 @@ export default function RootLayout({
           }}
         />
 
+        <Navigation />
         <Suspense fallback={<div className="min-h-screen bg-background" />}>{children}</Suspense>
         <PerformanceMonitor />
 

@@ -1,11 +1,9 @@
-import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
+import Footer from "../../components/footer"
 
 export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-background">
-      <Header />
 
       {/* Hero Section */}
       <section className="bg-primary text-primary-foreground py-20">
