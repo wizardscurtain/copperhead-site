@@ -195,6 +195,21 @@ export default function RootLayout({
           {children}
         </main>
         
+        {/* Toast notifications */}
+        <Toaster 
+          position="top-right"
+          expand={true}
+          richColors
+          closeButton
+          toastOptions={{
+            style: {
+              background: 'hsl(var(--background))',
+              color: 'hsl(var(--foreground))',
+              border: '1px solid hsl(var(--border))'
+            }
+          }}
+        />
+        
         {/* Google Tag Manager */}
         <Script
           id="gtm"
