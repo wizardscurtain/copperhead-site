@@ -1,0 +1,28 @@
+{
+  "last_run": "2024-12-28T10:30:00Z",
+  "framework_tests": {
+    "nextjs": {
+      "build": "pending",
+      "dev_server": "pending",
+      "typescript": "pending"
+    },
+    "seo": {
+      "structured_data": "pending",
+      "meta_tags": "pending",
+      "sitemap": "detected",
+      "robots": "detected"
+    }
+  },
+  "component_tests": {
+    "hero_section": "detected",
+    "services_grid": "detected",
+    "team_grid": "detected",
+    "testimonials": "detected",
+    "contact_form": "detected"
+  },
+  "performance_tests": {
+    "core_web_vitals": "pending",
+    "lighthouse": "pending",
+    "bundle_analysis": "pending"
+  }
+}

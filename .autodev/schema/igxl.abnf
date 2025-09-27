@@ -1,0 +1,20 @@
+; IGXL (Inter-GPT eXchange Language) ABNF Grammar
+; Enhanced Digital Forge Message Contract v2.1
+
+message = timestamp SP agent SP role SP kind SP status SP text
+timestamp = ISO8601-datetime
+agent = "human" / "copilot" / "cline" / "cursor" / "windsurf" / "other"
+role = "plan" / "code" / "review" / "test" / "ops"
+kind = "msg" / "task" / "claim" / "lock"
+status = "open" / "doing" / "done" / "blocked"
+text = 1*VCHAR
+
+; ISO8601 datetime format
+ISO8601-datetime = date "T" time "Z"
+date = 4DIGIT "-" 2DIGIT "-" 2DIGIT
+time = 2DIGIT ":" 2DIGIT ":" 2DIGIT
+
+; Basic definitions
+SP = %x20
+VCHAR = %x21-7E
+DIGIT = %x30-39

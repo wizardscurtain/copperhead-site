@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["t", "id", "a", "r", "k", "s", "text"],
+  "properties": {
+    "t": {"type": "string", "format": "date-time"},
+    "id": {"type": "string"},
+    "a": {"enum": ["human", "copilot", "cline", "cursor", "windsurf", "other"]},
+    "r": {"enum": ["plan", "code", "review", "test", "ops"]},
+    "k": {"enum": ["msg", "task", "claim", "lock"]},
+    "s": {"enum": ["open", "doing", "done", "blocked"]},
+    "text": {"type": "string"}
+  }
+}

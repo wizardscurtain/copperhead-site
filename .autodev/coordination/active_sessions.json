@@ -1,0 +1,10 @@
+{
+  "sessions": [],
+  "main_session": null,
+  "last_cleanup": "2024-12-28T10:30:00Z",
+  "session_plan": {
+    "recommended_sessions": 1,
+    "max_safe_sessions": 2,
+    "complexity_score": 2
+  }
+}
