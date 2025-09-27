@@ -72,81 +72,52 @@ export default function HomePage() {
       />
       
       <div className="homepage">
-        {/* Enhanced Hero Section with SEO */}
+        {/* FAQ Schema for AEO */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+        
+        {/* Professional Hero Section - Client Focused */}
         <section 
-          className="section-home-hero" 
+          className="hero-section-professional" 
           aria-label="Hero section"
           itemScope 
           itemType="https://schema.org/Organization"
         >
-          <div className="home-hero-container">
-            <div className="home-hero-left">
-              <div className="home-hero-content">
-                <h1 className="home-hero-heading" itemProp="name">
-                  COPPERHEAD<br />
-                  CONSULTING<br />
-                  <span className="orange-text">INC.</span>
-                </h1>
-                <div className="home-hero-text" itemProp="description">
-                  Veteran-owned and operated executive and personal protection, security consulting, 
-                  private investigations and training. Serving the Pacific Northwest, Washington State and Oregon.
-                </div>
-                
-                {/* Enhanced CTA with analytics tracking */}
-                <div className="button-hero-wrapper">
-                  <CTAButton 
-                    href="#services"
-                    eventLabel="watch_video_cta"
-                  >
-                    <p className="button-white-text">Our Services</p>
-                    <div className="icons-wrapper" aria-hidden="true">
-                      <Image
-                        src="/assets/67db459955ee8b93594b40fd_Play.webp"
-                        alt=""
-                        width={20}
-                        height={20}
-                        className="link-icon-white"
-                        loading="eager"
-                        priority
-                      />
-                      <Image
-                        src="/assets/67ed9c3f382e7903ed6c91bc_mdi_play.svg"
-                        alt=""
-                        width={20}
-                        height={20}
-                        className="link-icon-red"
-                        loading="eager"
-                        priority
-                      />
-                    </div>
-                    <div className="white-btn-ov" aria-hidden="true"></div>
-                  </CTAButton>
-                  
-                  {/* Emergency contact CTA */}
-                  <EmergencyCallButton />
-                </div>
-                
-                {/* Trust indicators */}
-                <div className="mt-8 flex flex-wrap gap-4 text-sm text-muted-foreground">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                    <span>24/7 Emergency Response</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                    <span>Veteran Owned & Operated</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                    <span>Licensed & Bonded</span>
-                  </div>
-                </div>
+          {/* Background Image */}
+          <div className="hero-background">
+            <Image
+              src="/assets/67eec03468321ce8951ae033_CCI-Web-PI.jpg"
+              alt="Professional security team"
+              fill
+              className="object-cover"
+              priority
+              quality={85}
+            />
+            <div className="hero-overlay" />
+          </div>
+          
+          <div className="hero-content-container">
+            <div className="hero-content-wrapper">
+              <h1 className="hero-main-heading">
+                We Value Your Safety
+              </h1>
+              <p className="hero-description">
+                Our mission is to deliver exceptional security, intelligence, and risk assessment 
+                solutions using cutting-edge technology and skilled senior professionals.
+              </p>
+              
+              {/* Single Strong CTA */}
+              <div className="hero-cta-wrapper">
+                <CTAButton 
+                  href="/contact"
+                  eventLabel="hero_learn_more_cta"
+                  className="hero-primary-cta"
+                >
+                  Learn More
+                </CTAButton>
               </div>
-            </div>
-            <div className="home-hero-right">
-              <Suspense fallback={<HeroSliderFallback />}>
-                <HeroSlider />
-              </Suspense>
             </div>
           </div>
           
