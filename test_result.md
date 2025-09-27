@@ -17,10 +17,10 @@ frontend:
 
   - task: "Homepage Partners Section"
     implemented: true
-    working: true
+    working: false
     file: "components/partners-strip.tsx"
-    stuck_count: 0
-    priority: "medium"
+    stuck_count: 1
+    priority: "high"
     needs_retesting: false
     status_history:
       - working: "NA"
@@ -29,6 +29,9 @@ frontend:
       - working: true
         agent: "testing"
         comment: "✅ PASSED - Partners section visible with partner logos displaying correctly (Microsoft, Pinkerton, Concentric, Allied, C24)"
+      - working: false
+        agent: "testing"
+        comment: "❌ FAILED - Partners section not displaying on homepage during production verification testing. Component exists in code but not visible in browser. Playwright selectors for .partners, [data-testid='partners'], .partners-strip all return null."
 
   - task: "Homepage Services Grid"
     implemented: true
