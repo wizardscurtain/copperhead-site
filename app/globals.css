@@ -167,6 +167,26 @@
   color: white;
 }
 
+.video-play-button {
+  display: inline-flex;
+  align-items: center;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.video-play-button:hover {
+  border-color: #ff6b35;
+  background: rgba(255, 107, 53, 0.1);
+  transform: translateY(-2px);
+}
+
 /* Mobile Responsive */
 @media (max-width: 768px) {
   .hero-section-professional {
