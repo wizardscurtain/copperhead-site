@@ -35,9 +35,9 @@ frontend:
 
   - task: "Homepage Services Grid"
     implemented: true
-    working: true
+    working: false
     file: "components/services-grid.tsx"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
     needs_retesting: false
     status_history:
@@ -47,6 +47,9 @@ frontend:
       - working: true
         agent: "testing"
         comment: "✅ PASSED - Services grid renders correctly with service items displayed properly"
+      - working: false
+        agent: "testing"
+        comment: "❌ FAILED - Services grid not displaying on homepage during production verification. Component exists in code but not visible. Additionally, service icons are causing 404 errors: Guard.webp, Investigation.webp, Training.webp, Consulting.webp missing from /assets/ directory."
 
   - task: "Navigation Menu"
     implemented: true
