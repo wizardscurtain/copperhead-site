@@ -1,8 +1,14 @@
 {
   "type": "seo-strategy",
-  "detected_at": "2024-12-28T10:30:00Z",
-  "confidence": 0.95,
-  "activated_by": "bootstrapper",
-  "keywords_found": ["next.js", "seo", "static", "consulting", "website"],
-  "rationale": "Next.js project with sitemap.ts and robots.ts detected - SEO-focused static site"
+  "detected_at": "2024-12-28T10:45:00Z",
+  "confidence": 0.85,
+  "activated_by": "PlaybookManager_v2.1",
+  "keywords_found": ["optimized", "clone", "website", "next.js", "consulting", "security", "seo"],
+  "rationale": "Security consulting website clone with explicit optimization focus - SEO playbook activated for lead generation and technical optimization",
+  "project_context": {
+    "target_site": "copperheadci.com",
+    "business_type": "security_consulting",
+    "key_services": ["security_consulting", "SOC", "surveillance_tech", "executive_protection", "TSCM", "investigations", "K9_detection"],
+    "seo_priorities": ["local_seo", "technical_seo", "conversion_optimization", "lead_generation"]
+  }
 }
