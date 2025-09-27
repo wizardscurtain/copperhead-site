@@ -12,25 +12,25 @@
       "src": "/assets/67eec2d5a5a87300d777cd9f_CCI-Favicon.png",
       "sizes": "32x32",
       "type": "image/png",
-      "purpose": "favicon"
+      "purpose": "any"
     },
     {
       "src": "/assets/67eec2fa20b324faa2f6ebb1_CCI-Webclip.png",
       "sizes": "180x180",
       "type": "image/png",
-      "purpose": "apple-touch-icon"
+      "purpose": "any"
     },
     {
       "src": "/assets/67eb2953665127110d87b36c_CCI-Logo1-Or-White-Horizontal-p-500.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     },
     {
       "src": "/assets/67eb2953665127110d87b36c_CCI-Logo1-Or-White-Horizontal.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "any maskable"
     }
   ],
   "categories": [
