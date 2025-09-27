@@ -256,22 +256,29 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               function sendToGoogleAnalytics({name, delta, value, id}) {
-                gtag('event', name, {
-                  event_category: 'Web Vitals',
-                  event_label: id,
-                  value: Math.round(name === 'CLS' ? delta * 1000 : delta),
-                  non_interaction: true,
-                });
+                if (typeof gtag !== 'undefined') {
+                  gtag('event', name, {
+                    event_category: 'Web Vitals',
+                    event_label: id,
+                    value: Math.round(name === 'CLS' ? delta * 1000 : delta),
+                    non_interaction: true,
+                  });
+                }
               }
               
-              if ('web-vitals' in window) {
-                import('web-vitals').then(({getCLS, getFID, getFCP, getLCP, getTTFB}) => {
-                  getCLS(sendToGoogleAnalytics);
-                  getFID(sendToGoogleAnalytics);
-                  getFCP(sendToGoogleAnalytics);
-                  getLCP(sendToGoogleAnalytics);
-                  getTTFB(sendToGoogleAnalytics);
+              // Use dynamic import with proper error handling
+              try {
+                import('https://unpkg.com/web-vitals@3/dist/web-vitals.js').then((webVitals) => {
+                  webVitals.getCLS(sendToGoogleAnalytics);
+                  webVitals.getFID(sendToGoogleAnalytics);
+                  webVitals.getFCP(sendToGoogleAnalytics);
+                  webVitals.getLCP(sendToGoogleAnalytics);
+                  webVitals.getTTFB(sendToGoogleAnalytics);
+                }).catch((err) => {
+                  console.warn('Web Vitals could not be loaded:', err);
                 });
+              } catch (err) {
+                console.warn('Web Vitals import failed:', err);
               }
             `
           }}
