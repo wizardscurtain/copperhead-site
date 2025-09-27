@@ -83,9 +83,9 @@ frontend:
 
   - task: "Services Page Cards"
     implemented: true
-    working: true
+    working: false
     file: "app/services/page.tsx"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
     needs_retesting: false
     status_history:
@@ -95,6 +95,9 @@ frontend:
       - working: true
         agent: "testing"
         comment: "✅ PASSED - Found 6 service cards as expected, 6 'Get Consultation' buttons found and working (tested navigation to contact page)"
+      - working: false
+        agent: "testing"
+        comment: "❌ FAILED - Service cards not displaying properly on services page. Playwright found 0 service cards with .service-card selector, though 6 'Get Consultation' buttons were found. Layout/styling issue preventing cards from being visible or properly structured."
 
   - task: "Contact Form"
     implemented: true
