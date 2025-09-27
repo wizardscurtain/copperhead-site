@@ -64,7 +64,7 @@ export default function AboutPage() {
               <Button
                 variant="outline"
                 size="lg"
-                onClick={() => (window.location.href = "mailto:soc@copperheadci.com")}
+                onClick={() => (window.location.href = "mailto:josh@copperheadci.com")}
               >
                 Email Us
               </Button>
