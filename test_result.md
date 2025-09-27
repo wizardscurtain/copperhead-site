@@ -2,9 +2,9 @@
 frontend:
   - task: "Homepage Hero Section"
     implemented: true
-    working: true
+    working: false
     file: "app/page.tsx"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
     needs_retesting: false
     status_history:
@@ -14,6 +14,9 @@ frontend:
       - working: true
         agent: "testing"
         comment: "✅ PASSED - Hero section displays correct 'We Value Your Safety' messaging, Learn More CTA button works and navigates to contact page successfully"
+      - working: false
+        agent: "testing"
+        comment: "❌ FAILED - Learn More CTA button navigation not working properly. Button found but clicking does not navigate to contact page as expected. Current URL remains unchanged after click."
 
   - task: "Homepage Partners Section"
     implemented: true
