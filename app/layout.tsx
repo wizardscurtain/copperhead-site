@@ -56,7 +56,13 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
-    title: siteConfig.name
+    title: siteConfig.name,
+    startupImage: [
+      {
+        url: '/assets/67eb2953665127110d87b36c_CCI-Logo1-Or-White-Horizontal.png',
+        media: '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)',
+      },
+    ]
   },
   applicationName: siteConfig.name,
   authors: [{ name: siteConfig.name, url: siteConfig.url }],
