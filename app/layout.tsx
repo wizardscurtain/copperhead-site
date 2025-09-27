@@ -5,7 +5,7 @@ import Script from 'next/script'
 import { Toaster } from 'sonner'
 import { siteConfig, analyticsConfig } from '@/lib/config'
 import { generateSEOTags, generateLocalBusinessSchema } from '@/lib/seo'
-import Header from '@/components/header'
+import { Header } from '@/components/header'
 
 // Optimized font loading
 const inter = Inter({ 
