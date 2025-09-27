@@ -94,18 +94,9 @@ export default function HomePage() {
                 
                 {/* Enhanced CTA with analytics tracking */}
                 <div className="button-hero-wrapper">
-                  <Link 
-                    href="#services" 
-                    className="primary-button-with-icon w-inline-block"
-                    onClick={() => {
-                      if (typeof window !== 'undefined' && 'gtag' in window) {
-                        (window as any).gtag('event', 'hero_cta_click', {
-                          event_category: 'engagement',
-                          event_label: 'watch_video_cta'
-                        })
-                      }
-                    }}
-                    aria-label="Learn about our security services"
+                  <CTAButton 
+                    href="#services"
+                    eventLabel="watch_video_cta"
                   >
                     <p className="button-white-text">Our Services</p>
                     <div className="icons-wrapper" aria-hidden="true">
@@ -129,23 +120,10 @@ export default function HomePage() {
                       />
                     </div>
                     <div className="white-btn-ov" aria-hidden="true"></div>
-                  </Link>
+                  </CTAButton>
                   
                   {/* Emergency contact CTA */}
-                  <Link 
-                    href={`tel:${siteConfig.contact.phone.primary}`}
-                    className="ml-4 inline-flex items-center px-6 py-3 border border-accent text-accent hover:bg-accent hover:text-accent-foreground rounded-full font-semibold transition-all duration-300 hover:scale-105"
-                    onClick={() => {
-                      if (typeof window !== 'undefined' && 'gtag' in window) {
-                        (window as any).gtag('event', 'emergency_call', {
-                          event_category: 'conversion',
-                          event_label: 'hero_phone_click'
-                        })
-                      }
-                    }}
-                  >
-                    🚨 Emergency: {siteConfig.contact.phone.primary}
-                  </Link>
+                  <EmergencyCallButton />
                 </div>
                 
                 {/* Trust indicators */}
