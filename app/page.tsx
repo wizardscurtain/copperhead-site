@@ -135,6 +135,11 @@ export default function HomePage() {
           <PartnersStrip />
         </Suspense>
 
+        {/* Testimonials with enhanced loading */}
+        <Suspense fallback={<div className="py-16 bg-muted/20 animate-pulse" />}>
+          <TestimonialsSection />
+        </Suspense>
+
         {/* Services section with enhanced SEO */}
         <section id="services" aria-label="Our security services" className="py-20">
           <Suspense fallback={<ServicesFallback />}>
