@@ -169,8 +169,8 @@ export function ContactForm({
         )
         
         // Track failed submission
-        if (typeof gtag !== 'undefined') {
-          gtag('event', 'form_submit_error', {
+        if (typeof window !== 'undefined' && 'gtag' in window) {
+          (window as any).gtag('event', 'form_submit_error', {
             event_category: 'error',
             event_label: `${type}_form_error`
           })
