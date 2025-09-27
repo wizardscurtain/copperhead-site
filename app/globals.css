@@ -465,7 +465,82 @@
   background: rgba(255, 255, 255, 0.6);
 }
 
-/* Enhanced testimonials from content.ts */
+/* Services Section on Homepage */
+.services-section {
+  padding: 4rem 0;
+  background: white;
+}
+
+.section-heading {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 3rem;
+  color: #333;
+  font-family: var(--font-inter);
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.service-item {
+  text-align: center;
+  padding: 2.5rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.service-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  border-color: #ff6b35;
+}
+
+.service-icon-wrapper {
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.service-item h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #333;
+  font-family: var(--font-inter);
+}
+
+.service-item p {
+  color: #666;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+/* Mobile Responsive for Services */
+@media (max-width: 768px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .service-item {
+    padding: 2rem 1.5rem;
+  }
+  
+  .section-heading {
+    font-size: 2rem;
+  }
+}
+
+/* Enhanced testimonials from content.ts - KEEP BOTH VERSIONS */
 .section {
   padding: 4rem 0;
 }
