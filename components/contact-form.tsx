@@ -146,8 +146,8 @@ export function ContactForm({
           reset()
           
           // Track successful submission
-          if (typeof gtag !== 'undefined') {
-            gtag('event', 'form_submit_success', {
+          if (typeof window !== 'undefined' && 'gtag' in window) {
+            (window as any).gtag('event', 'form_submit_success', {
               event_category: 'conversion',
               event_label: `${type}_form_success`
             })
