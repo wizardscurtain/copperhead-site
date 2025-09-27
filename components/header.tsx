@@ -36,10 +36,13 @@ export function Header() {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <img
-                src="/images/cci-logo-horizontal.png"
+              <Image
+                width={180}
+                height={60}
+                src="/assets/67eb2953665127110d87b36c_CCI-Logo1-Or-White-Horizontal.png"
                 alt="Copperhead Consulting Inc"
-                className="h-10 w-auto brightness-0 invert"
+                className="h-12 w-auto"
+                priority
               />
             </Link>
           </div>
