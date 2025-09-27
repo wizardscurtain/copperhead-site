@@ -115,8 +115,8 @@ export function ContactForm({
     startTransition(async () => {
       try {
         // Track form submission
-        if (typeof gtag !== 'undefined') {
-          gtag('event', 'form_submit', {
+        if (typeof window !== 'undefined' && 'gtag' in window) {
+          (window as any).gtag('event', 'form_submit', {
             event_category: 'engagement',
             event_label: `${type}_form_submission`,
             value: isQuoteForm ? 1 : 0.5
