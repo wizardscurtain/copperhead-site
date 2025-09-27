@@ -41,7 +41,7 @@ const professionalServices = [
     id: 'investigations',
     title: 'Private Investigations',
     description: 'Confidential, comprehensive investigative services for corporate and personal matters.',
-    icon: '/assets/67db459955ee8b93594b4101_Investigation.webp',
+    icon: '/assets/67ed39fc12566ee1705f9642_ion_call-outline.svg',
     image: '/assets/67eec03468321ce8951ae033_CCI-Web-PI.jpg',
     features: [
       'Corporate due diligence',
@@ -67,7 +67,7 @@ const professionalServices = [
     id: 'risk-assessment',
     title: 'Risk Assessment',
     description: 'Comprehensive security assessments and vulnerability analysis for businesses and individuals.',
-    icon: '/assets/67db459955ee8b93594b4101_Consulting.webp',
+    icon: '/assets/67eb2c98ecee573bf828eba4_Suit-Icon.png',
     image: '/assets/67ef5905588f5577ef47b0f7_CCI-AI-2.jpg',
     features: [
       'Threat and vulnerability assessments',
