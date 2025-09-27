@@ -30,22 +30,10 @@ export function CTAButton({
     }
   }
 
-  if (variant === 'primary') {
-    return (
-      <Link 
-        href={href}
-        className={`hero-primary-cta ${className}`}
-        onClick={handleClick}
-      >
-        {children}
-      </Link>
-    )
-  }
-
   return (
     <Link 
       href={href}
-      className={`inline-flex items-center px-6 py-3 border border-accent text-accent hover:bg-accent hover:text-accent-foreground rounded-full font-semibold transition-all duration-300 hover:scale-105 ${className}`}
+      className={`${variant === 'primary' ? 'hero-primary-cta' : 'inline-flex items-center px-6 py-3 border border-accent text-accent hover:bg-accent hover:text-accent-foreground rounded-full font-semibold transition-all duration-300 hover:scale-105'} ${className}`}
       onClick={handleClick}
     >
       {children}
