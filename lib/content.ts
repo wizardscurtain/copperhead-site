@@ -22,10 +22,10 @@ export interface ServiceItem {
 }
 
 export const services: ServiceItem[] = [
-  { title: 'Executive Protection', description: 'Discrete, professional executive & VIP protection services.', icon: '/assets/67db459955ee8b93594b4101_Guard.webp' },
-  { title: 'Private Investigations', description: 'Confidential, comprehensive investigative support.', icon: '/assets/67db459955ee8b93594b4101_Investigation.webp' },
-  { title: 'Training', description: 'Professional security training programs & preparedness.', icon: '/assets/67db459955ee8b93594b4101_Training.webp' },
-  { title: 'Security Consulting', description: 'Holistic risk, threat, & security posture assessments.', icon: '/assets/67db459955ee8b93594b4101_Consulting.webp' },
+  { title: 'Executive Protection', description: 'Discrete, professional executive & VIP protection services.', icon: '/assets/67eb2c98ecee573bf828eba4_Suit-Icon.png' },
+  { title: 'Private Investigations', description: 'Confidential, comprehensive investigative support.', icon: '/assets/67ed39fc12566ee1705f9642_ion_call-outline.svg' },
+  { title: 'K9 Detection Services', description: 'Professional canine detection & security services.', icon: '/assets/67eb60b2e1334d183ec1e7af_K9-Icon.png' },
+  { title: 'Security Consulting', description: 'Holistic risk, threat, & security posture assessments.', icon: '/assets/67eb6590ce4251d8ba3f2f20_Cyber-Icon.png' },
 ]
 
 export interface TestimonialItem {
