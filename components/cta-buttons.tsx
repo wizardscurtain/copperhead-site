@@ -34,7 +34,7 @@ export function CTAButton({
     return (
       <Link 
         href={href}
-        className={`primary-button-with-icon w-inline-block ${className}`}
+        className={`hero-primary-cta ${className}`}
         onClick={handleClick}
       >
         {children}
