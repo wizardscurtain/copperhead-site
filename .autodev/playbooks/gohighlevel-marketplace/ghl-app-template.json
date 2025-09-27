@@ -1,0 +1,15 @@
+{
+  "name": "GoHighLevel Marketplace App",
+  "description": "OAuth app with GHL API and webhook integration",
+  "frameworks": {
+    "backend": "Express/FastAPI",
+    "oauth": "OAuth 2.0",
+    "webhooks": "GHL Webhooks",
+    "storage": "MongoDB/PostgreSQL"
+  },
+  "security_requirements": ["OAuth security", "Webhook HMAC verification", "Multi-tenant isolation"],
+  "coding_standards": ["12-factor app", "API versioning", "Webhook reliability"],
+  "session_complexity": 4,
+  "estimated_duration": "4-8 weeks",
+  "recommended_sessions": 3
+}

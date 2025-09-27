@@ -1,0 +1,15 @@
+{
+  "name": "Actix Web API",
+  "description": "Rust Actix Web service with serde and sqlx",
+  "frameworks": {
+    "backend": "actix-web",
+    "db": "sqlx + PostgreSQL",
+    "serialization": "serde",
+    "testing": "tokio-test"
+  },
+  "security_requirements": ["TLS termination", "Input validation", "Memory safety"],
+  "coding_standards": ["Rustfmt", "Clippy", "Error handling with thiserror"],
+  "session_complexity": 4,
+  "estimated_duration": "3-6 weeks",
+  "recommended_sessions": 2
+}

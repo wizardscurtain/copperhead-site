@@ -1,0 +1,47 @@
+{
+  "name": "React + Node.js Full Stack",
+  "description": "Production-ready React frontend with Express backend",
+  "frameworks": {
+    "frontend": "React 18 + TypeScript + Vite",
+    "backend": "Express + TypeScript + MongoDB",
+    "testing": "Vitest + React Testing Library + Supertest",
+    "deployment": "Docker + Vercel/Railway"
+  },
+  "file_structure": {
+    "frontend/": ["src/", "public/", "package.json", "vite.config.ts"],
+    "backend/": ["src/", "package.json", "tsconfig.json", "Dockerfile"],
+    "shared/": ["types/", "utils/"]
+  },
+  "required_dependencies": {
+    "frontend": ["react", "react-dom", "@types/react", "vite", "typescript"],
+    "backend": ["express", "@types/express", "mongodb", "cors", "helmet", "zod", "jsonwebtoken", "bcryptjs"]
+  },
+  "api_patterns": {
+    "routes": "All routes prefixed with /api",
+    "auth": "JWT tokens with refresh mechanism",
+    "validation": "Zod schema validation",
+    "error_handling": "Centralized error middleware"
+  },
+  "security_requirements": [
+    "CORS properly configured",
+    "Helmet.js security headers",
+    "Input validation on all endpoints",
+    "Environment variables for secrets",
+    "Rate limiting on auth endpoints",
+    "JWT secret rotation capability",
+    "Password hashing with bcrypt"
+  ],
+  "deployment_checklist": [
+    "Environment variables configured",
+    "Database connection tested",
+    "API routes functional",
+    "Frontend build optimization",
+    "Security headers verified",
+    "HTTPS enforced",
+    "Health check endpoint active"
+  ],
+  "coding_standards": ["Prettier", "ESLint", "Conventional Commits", "TypeScript strict mode"],
+  "session_complexity": 3,
+  "estimated_duration": "2-4 weeks",
+  "recommended_sessions": 2
+}

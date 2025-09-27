@@ -1,0 +1,51 @@
+{
+  "name": "Next.js SEO-Optimized Site",
+  "description": "Static-first Next.js with comprehensive SEO optimization",
+  "frameworks": {
+    "frontend": "Next.js 14 + App Router",
+    "styling": "Tailwind CSS",
+    "cms": "Optional headless CMS",
+    "analytics": "Google Analytics + Search Console"
+  },
+  "seo_requirements": [
+    "Schema.org structured data",
+    "OpenGraph + Twitter Cards",
+    "Sitemap generation",
+    "Core Web Vitals optimization",
+    "Mobile-first responsive design",
+    "Semantic HTML structure",
+    "Image optimization with next/image",
+    "Meta descriptions and titles",
+    "Internal linking strategy",
+    "Page speed optimization"
+  ],
+  "performance_targets": {
+    "lighthouse_score": ">= 90",
+    "core_web_vitals": "All green",
+    "first_contentful_paint": "< 1.5s",
+    "largest_contentful_paint": "< 2.5s",
+    "cumulative_layout_shift": "< 0.1"
+  },
+  "content_optimization": [
+    "Keyword research integration",
+    "Content hierarchy (H1-H6)",
+    "Alt text for all images",
+    "Internal linking structure",
+    "Breadcrumb navigation",
+    "FAQ sections with schema",
+    "Local SEO for consulting"
+  ],
+  "technical_seo": [
+    "XML sitemap generation",
+    "Robots.txt optimization",
+    "Canonical URLs",
+    "Structured data markup",
+    "Open Graph tags",
+    "Twitter Card meta",
+    "JSON-LD schema"
+  ],
+  "coding_standards": ["SEO best practices", "Performance optimization", "Accessibility", "Core Web Vitals"],
+  "session_complexity": 2,
+  "estimated_duration": "1-3 weeks",
+  "recommended_sessions": 1
+}

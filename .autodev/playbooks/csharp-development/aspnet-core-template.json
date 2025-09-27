@@ -1,0 +1,15 @@
+{
+  "name": "ASP.NET Core API",
+  "description": "C# ASP.NET Core Web API with EF Core",
+  "frameworks": {
+    "backend": "ASP.NET Core",
+    "orm": "Entity Framework Core",
+    "auth": "ASP.NET Identity",
+    "testing": "xUnit"
+  },
+  "security_requirements": ["HTTPS redirect", "Data protection", "Identity security"],
+  "coding_standards": ["EditorConfig", "StyleCop", "Nullable reference types"],
+  "session_complexity": 3,
+  "estimated_duration": "2-4 weeks",
+  "recommended_sessions": 2
+}

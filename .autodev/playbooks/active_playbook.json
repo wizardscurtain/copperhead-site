@@ -1,0 +1,8 @@
+{
+  "type": "seo-strategy",
+  "detected_at": "2024-12-28T10:30:00Z",
+  "confidence": 0.95,
+  "activated_by": "bootstrapper",
+  "keywords_found": ["next.js", "seo", "static", "consulting", "website"],
+  "rationale": "Next.js project with sitemap.ts and robots.ts detected - SEO-focused static site"
+}

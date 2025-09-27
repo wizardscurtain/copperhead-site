@@ -1,0 +1,22 @@
+{
+  "name": "Express + MongoDB API",
+  "description": "Secure REST API with Express and MongoDB",
+  "frameworks": {
+    "backend": "Express + MongoDB",
+    "validation": "Zod",
+    "auth": "JWT + bcrypt",
+    "testing": "Vitest + Supertest"
+  },
+  "security_requirements": [
+    "Helmet security headers",
+    "CORS configuration",
+    "Rate limiting",
+    "Input validation",
+    "MongoDB injection prevention",
+    "Audit logging"
+  ],
+  "coding_standards": ["12-factor app", "OpenAPI specs", "Error handling", "Logging"],
+  "session_complexity": 2,
+  "estimated_duration": "1-3 weeks",
+  "recommended_sessions": 1
+}

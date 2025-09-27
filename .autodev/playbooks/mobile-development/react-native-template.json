@@ -1,0 +1,27 @@
+{
+  "name": "React Native Mobile App",
+  "description": "Expo-managed React Native app with OTA updates",
+  "frameworks": {
+    "mobile": "React Native + Expo",
+    "state": "Zustand/Redux Toolkit",
+    "navigation": "React Navigation v6",
+    "testing": "Jest + React Native Testing Library"
+  },
+  "deployment_checklist": [
+    "Bundle ID configured",
+    "OTA updates enabled",
+    "App store assets ready",
+    "Push notification setup",
+    "Deep linking configured"
+  ],
+  "security_requirements": [
+    "Secure storage for tokens",
+    "Certificate pinning",
+    "Biometric authentication",
+    "API key obfuscation"
+  ],
+  "coding_standards": ["TypeScript strict", "Atomic components", "Expo best practices"],
+  "session_complexity": 2,
+  "estimated_duration": "3-5 weeks",
+  "recommended_sessions": 2
+}
