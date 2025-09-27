@@ -135,57 +135,11 @@ export default function HomePage() {
           <PartnersStrip />
         </Suspense>
 
-        {/* Testimonials with enhanced loading */}
-        <Suspense fallback={<div className="py-16 bg-muted/20 animate-pulse" />}>
-          <TestimonialsSection />
-        </Suspense>
-
         {/* Services section with enhanced SEO */}
-        <section id="services" aria-label="Our security services">
+        <section id="services" aria-label="Our security services" className="py-20">
           <Suspense fallback={<ServicesFallback />}>
             <ServicesGrid />
           </Suspense>
-        </section>
-
-        {/* Local service areas for SEO */}
-        <section className="py-16 bg-muted/10" aria-label="Service areas">
-          <div className="base-container">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4">Serving the Pacific Northwest</h2>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                Professional security consulting and protection services across Washington State and Oregon
-              </p>
-            </div>
-            
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-              {[
-                { city: 'Seattle', state: 'WA', description: 'Executive Protection & Security Consulting' },
-                { city: 'Bellevue', state: 'WA', description: 'Corporate Security Solutions' },
-                { city: 'Tacoma', state: 'WA', description: 'Risk Assessment & Training' },
-                { city: 'Portland', state: 'OR', description: 'Private Investigation Services' }
-              ].map((location) => (
-                <div key={`${location.city}-${location.state}`} className="group">
-                  <div className="bg-card p-6 rounded-lg border border-border hover:border-accent transition-colors">
-                    <h3 className="font-semibold text-lg mb-2 group-hover:text-accent transition-colors">
-                      {location.city}, {location.state}
-                    </h3>
-                    <p className="text-sm text-muted-foreground">
-                      {location.description}
-                    </p>
-                  </div>
-                </div>
-              ))}\n            </div>
-            
-            {/* Local SEO content for AI crawlers */}
-            <div className="sr-only">
-              <h3>Security Services in Seattle Washington</h3>
-              <p>
-                Copperhead Consulting provides comprehensive security consulting services in Seattle, 
-                including executive protection, private investigations, risk assessment, and security training.
-                Our veteran-owned firm serves the greater Seattle metropolitan area with 24/7 emergency response.
-              </p>
-            </div>
-          </div>
         </section>
 
         <Footer />
