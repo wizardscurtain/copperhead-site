@@ -7,6 +7,7 @@ import Footer from '../components/footer'
 import { PartnersStrip } from '@/components/partners-strip'
 import { TestimonialsSection } from '@/components/testimonials'
 import { ServicesGrid } from '@/components/services-grid'
+import { CTAButton, EmergencyCallButton } from '@/components/cta-buttons'
 import { siteConfig } from '@/lib/config'
 import { generateSEOTags, generateFAQSchema, aeoContent } from '@/lib/seo'
 
