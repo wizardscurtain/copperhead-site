@@ -135,8 +135,8 @@ export default function HomePage() {
                     href={`tel:${siteConfig.contact.phone.primary}`}
                     className="ml-4 inline-flex items-center px-6 py-3 border border-accent text-accent hover:bg-accent hover:text-accent-foreground rounded-full font-semibold transition-all duration-300 hover:scale-105"
                     onClick={() => {
-                      if (typeof gtag !== 'undefined') {
-                        gtag('event', 'emergency_call', {
+                      if (typeof window !== 'undefined' && 'gtag' in window) {
+                        (window as any).gtag('event', 'emergency_call', {
                           event_category: 'conversion',
                           event_label: 'hero_phone_click'
                         })
