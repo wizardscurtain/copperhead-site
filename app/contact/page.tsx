@@ -2,9 +2,19 @@ import { ContactForm } from "@/components/contact-form"
 import Footer from "../../components/footer"
 import dynamic from 'next/dynamic'
 
-// Placeholder dynamic Map (could later integrate real map provider)
+// Google Maps embed for the Seattle office
 const Map = dynamic(() => Promise.resolve(() => (
-  <div className="w-full h-full flex items-center justify-center text-sm text-gray-500">Map Placeholder</div>
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2679.8334!2d-122.3426!3d47.7036!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5490135d1a00b5b3%3A0x20b8e4ac6b5e3f8!2s10002%20Aurora%20Ave%20N%20Ste%2036%2C%20Seattle%2C%20WA%2098133!5e0!3m2!1sen!2sus!4v1640995200000!5m2!1sen!2sus"
+    width="100%"
+    height="100%"
+    style={{border: 0}}
+    allowFullScreen
+    loading="lazy"
+    referrerPolicy="no-referrer-when-downgrade"
+    title="Copperhead Consulting Inc - Seattle Office Location"
+    className="w-full h-full"
+  />
 )), { ssr: false })
 
 export default function ContactPage() {
