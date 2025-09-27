@@ -110,13 +110,27 @@ export default function HomePage() {
               
               {/* Single Strong CTA */}
               <div className="hero-cta-wrapper">
-                <CTAButton 
-                  href="/contact"
-                  eventLabel="hero_learn_more_cta"
-                  className="hero-primary-cta"
-                >
-                  Learn More
-                </CTAButton>
+                <div className="flex items-center gap-4">
+                  <CTAButton 
+                    href="/contact"
+                    eventLabel="hero_learn_more_cta"
+                    className="hero-primary-cta"
+                  >
+                    Learn More
+                  </CTAButton>
+                  
+                  {/* Professional Video Play Button */}
+                  <button className="video-play-button group">
+                    <Image
+                      src="/assets/67db459955ee8b93594b40fd_Play.webp"
+                      alt="play video"
+                      width={24}
+                      height={24}
+                      className="group-hover:scale-110 transition-transform"
+                    />
+                    <span className="ml-2 text-white group-hover:text-accent transition-colors">Watch Video</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
