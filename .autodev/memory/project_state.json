@@ -7,16 +7,40 @@
       "type": "frontend",
       "framework": "Next.js 14",
       "status": "active",
-      "features": ["App Router", "TypeScript", "Tailwind CSS", "Radix UI"]
-    },
-    {
-      "name": "Security Consulting Content",
-      "type": "content",
-      "status": "active",
-      "features": ["Hero sections", "Services", "Team", "Testimonials", "Contact"]
+      "features": [
+        "sitemap",
+        "robots"
+      ],
+      "components_detected": [
+        "testimonials-section",
+        "quote-modal",
+        "performance-monitor",
+        "services-grid",
+        "navigation",
+        "partners-strip",
+        "values-section",
+        "footer",
+        "process-section",
+        "theme-provider",
+        "contact-form",
+        "hero-slider",
+        "team-grid",
+        "hero-section",
+        "services-section",
+        "testimonials",
+        "header",
+        "stats-section",
+        "lazy-load-wrapper"
+      ],
+      "pages_detected": [
+        "services",
+        "about",
+        "contact",
+        "actions"
+      ]
     }
   ],
-  "last_update": "2024-12-28T10:30:00Z",
+  "last_update": "2025-09-27T15:43:26.495619Z",
   "playbook_active": "seo-strategy",
   "bootstrap_complete": true,
   "session_info": {
@@ -29,5 +53,6 @@
     "type": "Security Consulting Website",
     "framework": "Next.js 14",
     "target": "SEO-optimized static site"
-  }
+  },
+  "analysis_complete": true
 }
