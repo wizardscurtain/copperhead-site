@@ -1,159 +1,228 @@
+import type { Metadata } from 'next'
+import Image from 'next/image'
+import Link from 'next/link'
 import { Button } from "@/components/ui/button"
 import Footer from "../../components/footer"
+import { siteConfig } from '@/lib/config'
+import { generateSEOTags } from '@/lib/seo'
+
+// Enhanced SEO for services page
+const seoData = generateSEOTags({
+  title: 'Security Services | Executive Protection, Investigations, Risk Assessment',
+  description: 'Professional security consulting services including executive protection, private investigations, K9 detection, cybersecurity, and risk assessment in Seattle and Pacific Northwest.',
+  keywords: [
+    'executive protection services',
+    'private investigation Seattle',
+    'security consulting Washington',
+    'K9 detection services',
+    'cybersecurity consulting',
+    'risk assessment services'
+  ]
+})
+
+export const metadata: Metadata = seoData
+
+// Professional services data
+const professionalServices = [
+  {
+    id: 'executive-protection',
+    title: 'Executive Protection',
+    description: 'Discrete, professional executive & VIP protection services for high-profile individuals and corporate leaders.',
+    icon: '/assets/67eb2c98ecee573bf828eba4_Suit-Icon.png',
+    image: '/assets/67eee3a52eb9e3766d0f8b92_CCI-Web-K9.jpg',
+    features: [
+      'Close protection for executives and VIPs',
+      'Travel security coordination',
+      'Threat assessment and mitigation',
+      'Residential security consultation'
+    ]
+  },
+  {
+    id: 'investigations',
+    title: 'Private Investigations',
+    description: 'Confidential, comprehensive investigative services for corporate and personal matters.',
+    icon: '/assets/67db459955ee8b93594b4101_Investigation.webp',
+    image: '/assets/67eec03468321ce8951ae033_CCI-Web-PI.jpg',
+    features: [
+      'Corporate due diligence',
+      'Background investigations',
+      'Fraud investigation',
+      'Surveillance operations'
+    ]
+  },
+  {
+    id: 'k9-detection',
+    title: 'K9 Detection Services',
+    description: 'Specialized canine units for explosive, narcotic, and contraband detection at events and facilities.',
+    icon: '/assets/67eb60b2e1334d183ec1e7af_K9-Icon.png',
+    image: '/assets/67eee4f6d8505637ff5a988a_CCI-Web-T%26R.jpg',
+    features: [
+      'Explosive detection',
+      'Narcotic detection',
+      'Event security screening',
+      'Facility sweeps'
+    ]
+  },
+  {
+    id: 'risk-assessment',
+    title: 'Risk Assessment',
+    description: 'Comprehensive security assessments and vulnerability analysis for businesses and individuals.',
+    icon: '/assets/67db459955ee8b93594b4101_Consulting.webp',
+    image: '/assets/67ef5905588f5577ef47b0f7_CCI-AI-2.jpg',
+    features: [
+      'Threat and vulnerability assessments',
+      'Security program development',
+      'Emergency response planning',
+      'Security training programs'
+    ]
+  },
+  {
+    id: 'technology-solutions',
+    title: 'Technology Solutions',
+    description: 'Advanced robotics, drone technology, and integrated communications for enhanced security operations.',
+    icon: '/assets/67eb61b4b095ffb7f4f36c18_Drone-Icon.png',
+    image: '/assets/67efec7a9d9a9911822c0884_CCI-Web-Robotics.jpg',
+    features: [
+      'Drone surveillance operations',
+      'Robotics-enhanced security',
+      'Integrated communications',
+      'Advanced surveillance systems'
+    ]
+  },
+  {
+    id: 'cybersecurity',
+    title: 'Cybersecurity',
+    description: 'Technical surveillance countermeasures (TSCM) and digital security solutions.',
+    icon: '/assets/67eb6590ce4251d8ba3f2f20_Cyber-Icon.png',
+    image: '/assets/67eeb007429253fac0cd7e4c_CCI-Web-SOC.jpg',
+    features: [
+      'Technical surveillance countermeasures',
+      'Digital forensics',
+      'Cyber threat assessment',
+      'Secure communications'
+    ]
+  }
+]
 
 export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-background">
+      {/* Professional Hero Section */}
+      <section className="services-hero-section">
+        <div className="services-hero-background">
+          <Image
+            src="/assets/67eeb007429253fac0cd7e4c_CCI-Web-SOC.jpg"
+            alt="Security Operations Center"
+            fill
+            className="object-cover"
+            priority
+            quality={85}
+          />
+          <div className="services-hero-overlay" />
+        </div>
+        
+        <div className="services-hero-content">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="services-hero-text">
+              <h1 className="services-hero-title">
+                We Are Always Ready To Help Your Problems
+              </h1>
+              <p className="services-hero-description">
+                Comprehensive security solutions delivered by experienced professionals 
+                using cutting-edge technology and proven methodologies.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-      {/* Hero Section */}
-      <section className="bg-primary text-primary-foreground py-20">
+      {/* Professional Services Grid */}
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">Our Services</h1>
-            <p className="text-xl text-primary-foreground/80 leading-relaxed">
-              Comprehensive security solutions tailored to your specific needs
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-6">Our Professional Services</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Elite security consulting and protection services tailored to your specific needs, 
+              delivered by veteran professionals with extensive operational experience.
             </p>
           </div>
-        </div>
-      </section>
 
-      {/* Services Grid */}
-      <section className="py-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Executive Protection */}
-            <div className="bg-card p-8 rounded-lg shadow-lg">
-              <div className="w-16 h-16 bg-accent/10 rounded-lg flex items-center justify-center mb-6">
-                <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
+            {professionalServices.map((service, index) => (
+              <div key={service.id} className="professional-service-card">
+                <div className="service-image-container">
+                  <Image
+                    src={service.image}
+                    alt={service.title}
+                    width={600}
+                    height={400}
+                    className="service-image"
+                    loading={index < 2 ? "eager" : "lazy"}
                   />
-                </svg>
+                </div>
+                
+                <div className="service-content">
+                  <div className="service-icon-wrapper">
+                    <Image
+                      src={service.icon}
+                      alt=""
+                      width={60}
+                      height={60}
+                      className="service-icon"
+                    />
+                  </div>
+                  
+                  <h3 className="service-title">{service.title}</h3>
+                  <p className="service-description">{service.description}</p>
+                  
+                  <ul className="service-features">
+                    {service.features.map((feature, idx) => (
+                      <li key={idx} className="service-feature">
+                        <span className="feature-bullet">•</span>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                  
+                  <div className="service-cta">
+                    <Link
+                      href="/contact"
+                      className="service-cta-button"
+                    >
+                      Get Consultation
+                    </Link>
+                  </div>
+                </div>
               </div>
-              <h3 className="text-2xl font-bold mb-4">Executive Protection</h3>
-              <p className="text-muted-foreground mb-6">
-                Professional close protection services for high-profile individuals and executives.
-              </p>
-              <Button variant="outline">Learn More</Button>
-            </div>
-
-            {/* K9 Detection */}
-            <div className="bg-card p-8 rounded-lg shadow-lg">
-              <div className="w-16 h-16 bg-accent/10 rounded-lg flex items-center justify-center mb-6">
-                <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold mb-4">K9 Detection</h3>
-              <p className="text-muted-foreground mb-6">
-                Specialized canine units for explosive, narcotic, and contraband detection.
-              </p>
-              <Button variant="outline">Learn More</Button>
-            </div>
-
-            {/* Surveillance */}
-            <div className="bg-card p-8 rounded-lg shadow-lg">
-              <div className="w-16 h-16 bg-accent/10 rounded-lg flex items-center justify-center mb-6">
-                <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold mb-4">Surveillance</h3>
-              <p className="text-muted-foreground mb-6">
-                Advanced surveillance operations using cutting-edge technology and techniques.
-              </p>
-              <Button variant="outline">Learn More</Button>
-            </div>
-
-            {/* Cybersecurity */}
-            <div className="bg-card p-8 rounded-lg shadow-lg">
-              <div className="w-16 h-16 bg-accent/10 rounded-lg flex items-center justify-center mb-6">
-                <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold mb-4">Cybersecurity</h3>
-              <p className="text-muted-foreground mb-6">
-                Comprehensive digital security solutions and threat assessment services.
-              </p>
-              <Button variant="outline">Learn More</Button>
-            </div>
-
-            {/* Private Investigation */}
-            <div className="bg-card p-8 rounded-lg shadow-lg">
-              <div className="w-16 h-16 bg-accent/10 rounded-lg flex items-center justify-center mb-6">
-                <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold mb-4">Private Investigation</h3>
-              <p className="text-muted-foreground mb-6">
-                Professional investigative services for corporate and personal matters.
-              </p>
-              <Button variant="outline">Learn More</Button>
-            </div>
-
-            {/* Risk Assessment */}
-            <div className="bg-card p-8 rounded-lg shadow-lg">
-              <div className="w-16 h-16 bg-accent/10 rounded-lg flex items-center justify-center mb-6">
-                <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 00-2-2z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold mb-4">Risk Assessment</h3>
-              <p className="text-muted-foreground mb-6">
-                Comprehensive security assessments and vulnerability analysis.
-              </p>
-              <Button variant="outline">Learn More</Button>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Video Section */}
-      <section className="py-20 bg-muted/50">
+      {/* Call to Action Section */}
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-8">See Our Services in Action</h2>
-            <div className="aspect-video rounded-lg overflow-hidden shadow-2xl">
-              <video
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/67db459955ee8b93594b3fd5_67ef650a7f795f40958d6f63_CCI_EP_174%20-%20720WebShareName-transcode-fkA7heUg0sBYIPWQ7FhTdGTSIjROFL.mp4"
-                title="Copperhead Consulting Services"
-                className="w-full h-full object-cover"
-                controls
-                preload="metadata"
-                poster="/images/training-session.jpg"
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">
+              Ready to Secure Your Organization?
+            </h2>
+            <p className="text-xl text-gray-600 mb-8">
+              Contact our security experts today to discuss your specific needs and 
+              learn how we can help protect what matters most to your organization.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/contact"
+                className="cta-primary-button"
               >
-                Your browser does not support the video tag.
-              </video>
+                Start Consultation
+              </Link>
+              <Link
+                href={`tel:${siteConfig.contact.phone.primary}`}
+                className="cta-secondary-button"
+              >
+                Call {siteConfig.contact.phone.primary}
+              </Link>
             </div>
           </div>
         </div>
