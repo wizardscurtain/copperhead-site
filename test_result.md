@@ -170,13 +170,14 @@ metadata:
 test_plan:
   current_focus:
     - "Homepage Hero Section"
-    - "Navigation Menu"
-    - "Services Page Hero"
+    - "Homepage Partners Section"
+    - "Homepage Services Grid"
     - "Services Page Cards"
-    - "Contact Form"
-    - "Quote Request Form"
-    - "Mobile Responsiveness"
-  stuck_tasks: []
+  stuck_tasks:
+    - "Homepage Hero Section"
+    - "Homepage Partners Section"
+    - "Homepage Services Grid"
+    - "Services Page Cards"
   test_all: true
   test_priority: "high_first"
 
