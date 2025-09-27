@@ -78,14 +78,33 @@ export function Header() {
             </button>
           </nav>
 
-          {/* Contact Button */}
-          <div className="hidden md:flex items-center space-x-4">
+          {/* Contact Section with Proper Icons */}
+          <div className="hidden md:flex items-center space-x-6">
             <a
-              href="tel:(360)519-9932"
-              className="flex items-center text-sm text-white hover:text-accent transition-colors"
+              href={`tel:${siteConfig.contact.phone.primary}`}
+              className="flex items-center text-sm text-white hover:text-accent transition-colors group"
             >
-              <PhoneIcon />
-              <span className="ml-2 font-medium">(360) 519-9932</span>
+              <Image
+                src="/assets/67db459955ee8b93594b40f9_phone header white.webp"
+                alt="phone"
+                width={16}
+                height={16}
+                className="group-hover:opacity-75 transition-opacity"
+              />
+              <span className="ml-2 font-medium">{siteConfig.contact.phone.primary}</span>
+            </a>
+            <a
+              href={`mailto:${Buffer.from(siteConfig.contact.emailObfuscated, 'base64').toString()}`}
+              className="flex items-center text-sm text-white hover:text-accent transition-colors group"
+            >
+              <Image
+                src="/assets/67ed3b656b6d6f57852373cd_tabler_mail.svg"
+                alt="email"
+                width={16}
+                height={16}
+                className="group-hover:opacity-75 transition-opacity"
+              />
+              <span className="ml-2 font-medium">Contact Us</span>
             </a>
             <QuoteModal>
               <Button className="primary-button-with-icon button-text bg-accent hover:bg-accent/90 text-white border-0">
