@@ -42,6 +42,24 @@ export const testimonials: TestimonialItem[] = [
     role: 'Pinkerton',
     rating: 5,
   },
+  {
+    quote: 'Copperhead Consulting provided exceptional executive protection services for our CEO during a high-risk business trip. Their professionalism and attention to detail gave us complete confidence.',
+    author: 'Sarah Johnson',
+    role: 'Chief Security Officer • Microsoft',
+    rating: 5,
+  },
+  {
+    quote: 'The K9 detection services were outstanding. Their team identified potential threats at our facility that other security firms had missed. Highly recommend their expertise.',
+    author: 'Michael Chen',
+    role: 'Facilities Director • Corporate Client',
+    rating: 5,
+  },
+  {
+    quote: 'Professional, discrete, and highly effective. Copperhead\'s private investigation team helped us resolve a complex corporate security issue quickly and thoroughly.',
+    author: 'Jennifer Martinez',
+    role: 'Legal Counsel • Fortune 500 Company',
+    rating: 5,
+  }
 ]
 
 export interface PartnerLogo {
