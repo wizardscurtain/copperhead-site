@@ -97,8 +97,8 @@ export default function HomePage() {
                     href="#services" 
                     className="primary-button-with-icon w-inline-block"
                     onClick={() => {
-                      if (typeof gtag !== 'undefined') {
-                        gtag('event', 'hero_cta_click', {
+                      if (typeof window !== 'undefined' && 'gtag' in window) {
+                        (window as any).gtag('event', 'hero_cta_click', {
                           event_category: 'engagement',
                           event_label: 'watch_video_cta'
                         })
