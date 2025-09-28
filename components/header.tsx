@@ -107,38 +107,34 @@ export function Header() {
         {isMenuOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-accent/20 bg-black/95">
-              <button
-                onClick={() => scrollToSection("services")}
-                className="block w-full text-left px-3 py-2 text-white hover:text-accent nav-text"
-              >
-                Services
-              </button>
               <Link
-                href="/services"
+                href="/"
                 className="block w-full text-left px-3 py-2 text-white hover:text-accent nav-text"
                 onClick={() => setIsMenuOpen(false)}
               >
-                All Services
+                Home
               </Link>
               <Link
                 href="/about"
                 className="block w-full text-left px-3 py-2 text-white hover:text-accent nav-text"
                 onClick={() => setIsMenuOpen(false)}
               >
-                About
+                About Us
               </Link>
-              <button
-                onClick={() => scrollToSection("testimonials")}
+              <Link
+                href="/services"
                 className="block w-full text-left px-3 py-2 text-white hover:text-accent nav-text"
+                onClick={() => setIsMenuOpen(false)}
               >
-                Testimonials
-              </button>
-              <button
-                onClick={() => scrollToSection("contact")}
+                Services
+              </Link>
+              <Link
+                href="/contact"
                 className="block w-full text-left px-3 py-2 text-white hover:text-accent nav-text"
+                onClick={() => setIsMenuOpen(false)}
               >
-                Contact
-              </button>
+                Contact Us
+              </Link>
               <div className="px-3 py-2">
                 <QuoteModal>
                   <Button className="primary-button-with-icon button-text w-full bg-accent hover:bg-accent/90 text-white">
