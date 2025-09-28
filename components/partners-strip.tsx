@@ -15,6 +15,7 @@ export function PartnersStrip() {
                 width={p.width || 140}
                 height={p.height || 60}
                 loading="lazy"
+                style={{ width: 'auto', height: 'auto' }}
               />
             </div>
           ))}
