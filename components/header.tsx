@@ -49,36 +49,30 @@ export function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <button
-              onClick={() => scrollToSection("services")}
-              className="nav-text text-white hover:text-accent transition-colors uppercase tracking-wide"
-            >
-              Services
-            </button>
             <Link
-              href="/services"
+              href="/"
               className="nav-text text-white hover:text-accent transition-colors uppercase tracking-wide"
             >
-              All Services
+              Home
             </Link>
             <Link
               href="/about"
               className="nav-text text-white hover:text-accent transition-colors uppercase tracking-wide"
             >
-              About
+              About Us
             </Link>
-            <button
-              onClick={() => scrollToSection("testimonials")}
+            <Link
+              href="/services"
               className="nav-text text-white hover:text-accent transition-colors uppercase tracking-wide"
             >
-              Testimonials
-            </button>
-            <button
-              onClick={() => scrollToSection("contact")}
+              Services
+            </Link>
+            <Link
+              href="/contact"
               className="nav-text text-white hover:text-accent transition-colors uppercase tracking-wide"
             >
-              Contact
-            </button>
+              Contact Us
+            </Link>
           </nav>
 
           {/* Contact Section with Proper Icons */}
