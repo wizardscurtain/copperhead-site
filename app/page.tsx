@@ -101,11 +101,12 @@ export default function HomePage() {
           <div className="hero-content-container">
             <div className="hero-content-wrapper">
               <h1 className="hero-main-heading">
-                We Value Your Safety
+                Elite Security Solutions
               </h1>
               <p className="hero-description">
-                Our mission is to deliver exceptional security, intelligence, and risk assessment 
-                solutions using cutting-edge technology and skilled senior professionals.
+                With over 20 years of experience and 50+ trained agents, we deliver discreet, 
+                high-end executive protection and security consulting using cutting-edge technology 
+                including K9 detection, robotics, drones, and mobile security operations centers.
               </p>
               
               {/* Single Strong CTA */}
