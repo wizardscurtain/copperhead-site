@@ -28,18 +28,18 @@ export default function AboutPage() {
             <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">Our Story</h2>
             <div className="prose prose-lg mx-auto text-muted-foreground">
               <p className="text-lg leading-relaxed mb-6">
-                Copperhead Consulting Inc was founded with a mission to provide unparalleled security, intelligence, and
-                risk assessment solutions. Our team consists of highly skilled senior professionals with extensive
-                backgrounds in law enforcement, military operations, and private security.
+                Copperhead Consulting Inc was founded to provide elite, discreet security solutions for discerning clients. 
+                With over 20 years of collective experience and 50+ trained agents, our team delivers superior training 
+                with medical and life-saving techniques, providing a 3:1 capability compared to standard security guards.
               </p>
               <p className="text-lg leading-relaxed mb-6">
-                We leverage cutting-edge technology and proven methodologies to deliver comprehensive security solutions
-                tailored to each client's unique needs. From executive protection to cybersecurity, our diverse range of
-                services ensures complete coverage for all security concerns.
+                We utilize cutting-edge integrated communications technology, K9 detection, robotics, drones, and mobile 
+                security operations centers to provide real-time surveillance, response, and control. Our services include 
+                technical surveillance countermeasures (TSCM) and comprehensive risk assessments for challenging environments.
               </p>
               <p className="text-lg leading-relaxed">
-                With offices in Tennessee and Washington, we serve clients across the United States, providing 24/7
-                support and rapid response capabilities when you need them most.
+                Serving government agencies, global corporations, and high-profile executives, we operate with utmost 
+                discretion and precision in sensitive environments requiring the highest levels of security and professionalism.
               </p>
             </div>
           </div>
