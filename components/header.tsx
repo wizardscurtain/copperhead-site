@@ -106,7 +106,7 @@ export function Header() {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-accent/20 bg-black/95">
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-white/20 bg-slate-900/95">
               <Link
                 href="/"
                 className="block w-full text-left px-3 py-2 text-white hover:text-accent nav-text"
