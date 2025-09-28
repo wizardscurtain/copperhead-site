@@ -128,6 +128,7 @@ export default function HomePage() {
                       width={24}
                       height={24}
                       className="group-hover:scale-110 transition-transform"
+                      style={{ width: 'auto', height: 'auto' }}
                     />
                     <span className="ml-2 text-white group-hover:text-accent transition-colors">Watch Video</span>
                   </button>
