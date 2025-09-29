@@ -10,7 +10,7 @@ export function TeamGrid() {
           {team.map(m => (
             <div key={m.name} className="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition bg-slate-800/50 border border-slate-700/50">
               {m.img && (
-                <Image src={m.img} alt={m.name} width={400} height={420} className="h-56 w-full object-cover" />
+                <img src={m.img} alt={m.name} width={400} height={420} className="h-56 w-full object-cover" />
               )}
               <div className="p-5">
                 <h3 className="font-semibold text-lg text-white">{m.name}</h3>
