@@ -124,11 +124,6 @@ export default function HomePage() {
                     <span className="ml-2 text-white">Watch</span>
                   </button>
                 </div>
-                
-                {/* Emergency Contact Button */}
-                <div className="hero-emergency-cta">
-                  <EmergencyCallButton eventLabel="hero_emergency_call" />
-                </div>
               </div>
             </div>
           </div>
