@@ -10,14 +10,14 @@ export default function Navigation() {
     <nav className="nav-fixed-white-menu w-nav" role="banner">
       <div className="main-nav-container w-container">
         <div className="main-menu-wrapper">
-          <Image
+          <img
             src="/assets/67eb2953665127110d87b36c_CCI-Logo1-Or-White-Horizontal.png"
             alt="Copperhead Consulting Inc Logo"
             width={221}
             height={60}
             className="image-3"
           />
-          <Link href="/" className="brand-logo w-nav-brand" aria-current="page"></Link>
+          <Link to="/" className="brand-logo w-nav-brand" aria-current="page"></Link>
           
           <nav role="navigation" className={`nav-menu-wrap w-nav-menu ${isMenuOpen ? 'w--open' : ''}`}>
             <div className="nav-menu-shadow-overlay-3">
