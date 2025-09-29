@@ -3,7 +3,7 @@ import { partners } from '@/lib/content'
 
 export function PartnersStrip() {
   return (
-    <section aria-labelledby="partners-heading" className="py-12 bg-white border-t border-gray-200">
+    <section aria-labelledby="partners-heading" className="py-12 bg-slate-800 border-t border-slate-700">
       <div className="base-container">
         <h2 id="partners-heading" className="sr-only">Partners & Clients</h2>
         <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
