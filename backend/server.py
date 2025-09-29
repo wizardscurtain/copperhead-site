@@ -27,8 +27,9 @@ app.add_middleware(
 # Serve static frontend files
 frontend_dist_path = "/app/frontend/dist"
 if os.path.exists(frontend_dist_path):
+    logger.info(f"Serving frontend static files from {frontend_dist_path}")
     # Serve static files from frontend dist directory
-    app.mount("/static", StaticFiles(directory=frontend_dist_path), name="static")
+    app.mount("/assets", StaticFiles(directory=f"{frontend_dist_path}/assets"), name="assets")
     
     @app.get("/")
     async def serve_frontend():
@@ -39,14 +40,12 @@ if os.path.exists(frontend_dist_path):
     async def frontend_health():
         """Health check endpoint for deployment system"""
         return {"status": "healthy", "service": "copperhead-frontend", "build": "production"}
+else:
+    logger.warning(f"Frontend dist directory not found at {frontend_dist_path}")
     
-    # Serve frontend for any non-API route
-    @app.get("/{full_path:path}")
-    async def serve_frontend_routes(full_path: str):
-        """Serve frontend for all non-API routes (SPA routing)"""
-        if full_path.startswith("api/"):
-            raise HTTPException(status_code=404, detail="API endpoint not found")
-        return FileResponse(f"{frontend_dist_path}/index.html")
+    @app.get("/")
+    async def root_fallback():
+        return {"message": "Copperhead Consulting API", "frontend": "not available"}
 
 # Email configuration
 RESEND_API_KEY = os.getenv('RESEND_API_KEY')
