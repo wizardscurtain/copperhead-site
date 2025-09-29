@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<browserconfig>
+    <msapplication>
+        <tile>
+            <square70x70logo src="/assets/67eec2d5a5a87300d777cd9f_CCI-Favicon.png"/>
+            <square150x150logo src="/assets/67eec2fa20b324faa2f6ebb1_CCI-Webclip.png"/>
+            <wide310x150logo src="/assets/67eb2953665127110d87b36c_CCI-Logo1-Or-White-Horizontal-p-500.png"/>
+            <square310x310logo src="/assets/67eb2953665127110d87b36c_CCI-Logo1-Or-White-Horizontal.png"/>
+            <TileColor>#ff6b35</TileColor>
+        </tile>
+    </msapplication>
+</browserconfig>

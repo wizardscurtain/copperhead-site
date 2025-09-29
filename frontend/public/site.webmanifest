@@ -1,0 +1,77 @@
+{
+  "name": "Copperhead Consulting Inc - Professional Security Services",
+  "short_name": "Copperhead CI",
+  "description": "Elite executive protection, security consulting, private investigations and K9 detection services by veteran-owned professionals.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1e293b",
+  "theme_color": "#ff6b35",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["business", "security", "professional"],
+  "shortcuts": [
+    {
+      "name": "Contact Emergency",
+      "short_name": "Emergency",
+      "description": "Contact for immediate security assistance",
+      "url": "/contact?emergency=true",
+      "icons": [
+        {
+          "src": "/assets/67eec2d5a5a87300d777cd9f_CCI-Favicon.png",
+          "sizes": "32x32",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Services",
+      "short_name": "Services",
+      "description": "View our security services",
+      "url": "/services",
+      "icons": [
+        {
+          "src": "/assets/67eec2d5a5a87300d777cd9f_CCI-Favicon.png",
+          "sizes": "32x32",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "icons": [
+    {
+      "src": "/assets/67eec2d5a5a87300d777cd9f_CCI-Favicon.png",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/67eec2fa20b324faa2f6ebb1_CCI-Webclip.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/67eb2953665127110d87b36c_CCI-Logo1-Or-White-Horizontal-p-500.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/67eb2953665127110d87b36c_CCI-Logo1-Or-White-Horizontal.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/assets/67e761f4b67b3fdcfbf4f17f_CCI-Web-Home.jpg",
+      "sizes": "1920x1080",
+      "type": "image/jpeg",
+      "platform": "wide",
+      "label": "Homepage showing security services"
+    }
+  ]
+}
