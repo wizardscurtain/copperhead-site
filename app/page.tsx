@@ -113,11 +113,11 @@ export default function HomePage() {
               <div className="hero-cta-wrapper">
                 <div className="flex items-center gap-4">
                   <CTAButton 
-                    href="/contact"
+                    href="/about"
                     eventLabel="hero_learn_more_cta"
                     className="hero-primary-cta"
                   >
-                    Learn More
+                    Learn More About Us
                   </CTAButton>
                   
                   {/* Professional Video Play Button */}
