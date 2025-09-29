@@ -22,7 +22,7 @@ export function MobileSplashScreen({ onProceed }: MobileSplashScreenProps) {
 
   const handleContactNow = () => {
     const subject = encodeURIComponent('Immediate Response Requested')
-    const email = 'josh@copperheadci.com'
+    const email = 'contact@copperheadci.com'
     const mailtoUrl = `mailto:${email}?subject=${subject}`
     
     // Open default email client
