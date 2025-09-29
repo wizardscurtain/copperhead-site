@@ -57,8 +57,8 @@ export function generateSEOTags(data: SEOData) {
       },
     },
     verification: {
-      google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION,
-      bing: process.env.NEXT_PUBLIC_BING_VERIFICATION,
+      google: import.meta.env.VITE_GOOGLE_VERIFICATION,
+      bing: import.meta.env.VITE_BING_VERIFICATION,
     }
   }
 }
