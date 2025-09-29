@@ -16,8 +16,8 @@ export default function Footer() {
               className="mb-4"
             />
             <p className="text-gray-300 mb-4">
-              Veteran Owned and operated executive and personal protection, 
-              security consulting, private investigations and training.
+              Professional executive protection, security consulting, private investigations and training 
+              serving the Pacific Northwest.
             </p>
             <p className="text-gray-400">
               Pacific Northwest Washington State and Oregon
