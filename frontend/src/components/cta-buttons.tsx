@@ -1,63 +1,45 @@
-"use client"
-
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { siteConfig } from '@/lib/config'
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { Button } from './ui/button'
 
 interface CTAButtonProps {
   href: string
-  children: React.ReactNode
-  variant?: 'primary' | 'secondary'
   className?: string
-  eventCategory?: string
+  children: React.ReactNode
   eventLabel?: string
 }
 
-export function CTAButton({ 
-  href, 
-  children, 
-  variant = 'primary', 
-  className = '',
-  eventCategory = 'engagement',
-  eventLabel = 'cta_click'
-}: CTAButtonProps) {
-  const handleClick = () => {
-    if (typeof window !== 'undefined' && 'gtag' in window) {
-      (window as any).gtag('event', eventLabel, {
-        event_category: eventCategory,
-        event_label: eventLabel
-      })
-    }
+export function CTAButton({ href, className = "", children, eventLabel }: CTAButtonProps) {
+  // Handle external links vs internal routing
+  const isExternal = href.startsWith('http') || href.startsWith('mailto') || href.startsWith('tel')
+  
+  if (isExternal) {
+    return (
+      <a href={href} className={className} data-event-label={eventLabel}>
+        {children}
+      </a>
+    )
   }
-
+  
   return (
-    <Link 
-      href={href}
-      className={`${variant === 'primary' ? 'hero-primary-cta' : 'inline-flex items-center px-6 py-3 border border-accent text-accent hover:bg-accent hover:text-accent-foreground rounded-full font-semibold transition-all duration-300 hover:scale-105'} ${className}`}
-      onClick={handleClick}
-    >
+    <Link to={href} className={className} data-event-label={eventLabel}>
       {children}
     </Link>
   )
 }
 
-export function EmergencyCallButton() {
-  const handleClick = () => {
-    if (typeof window !== 'undefined' && 'gtag' in window) {
-      (window as any).gtag('event', 'emergency_call', {
-        event_category: 'conversion',
-        event_label: 'hero_phone_click'
-      })
-    }
-  }
+interface EmergencyCallButtonProps {
+  eventLabel?: string
+}
 
+export function EmergencyCallButton({ eventLabel }: EmergencyCallButtonProps) {
   return (
-    <Link 
-      href={`tel:${siteConfig.contact.phone.primary}`}
+    <a
+      href="tel:(360) 519-9932"
       className="ml-4 inline-flex items-center px-6 py-3 border border-accent text-accent hover:bg-accent hover:text-accent-foreground rounded-full font-semibold transition-all duration-300 hover:scale-105"
-      onClick={handleClick}
+      data-event-label={eventLabel}
     >
-      🚨 Emergency: {siteConfig.contact.phone.primary}
-    </Link>
+      🚨 Emergency: (360) 519-9932
+    </a>
   )
 }
