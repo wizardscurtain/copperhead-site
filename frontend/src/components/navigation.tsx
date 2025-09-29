@@ -59,7 +59,7 @@ export default function Navigation() {
                       return (
                         <Link
                           key={link.href}
-                          href={link.href}
+                          to={link.href}
                           className={`nav-item-link ${active ? 'active-nav-link' : ''}`}
                           aria-current={active ? 'page' : undefined}
                         >
