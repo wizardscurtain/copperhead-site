@@ -1,7 +1,4 @@
-'use client'
-
 import { useState, useEffect, useCallback } from 'react'
-import Image from 'next/image'
 import { heroSlides, type SlideItem } from '../lib/content'
 
 interface HeroSliderProps {
