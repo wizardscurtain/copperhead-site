@@ -87,7 +87,9 @@ export const metadata: Metadata = {
   },
   other: {
     'msapplication-TileColor': '#ff6b35',
-    'msapplication-config': '/browserconfig.xml'
+    'msapplication-config': '/browserconfig.xml',
+    'mobile-web-app-capable': 'yes',
+    'apple-touch-fullscreen': 'yes'
   }
 }
 
