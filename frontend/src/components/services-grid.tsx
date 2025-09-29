@@ -9,7 +9,7 @@ export function ServicesGrid() {
           {services.map(s => (
             <div key={s.title} className="service-item" role="listitem">
               <div className="service-icon-wrapper">
-                <Image src={s.icon} alt={s.title} width={60} height={60} />
+                <img src={s.icon} alt={s.title} width={60} height={60} />
               </div>
               <h3 className="text-lg font-semibold mb-2">{s.title}</h3>
               <p className="text-gray-600 text-sm leading-relaxed">{s.description}</p>
