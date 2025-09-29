@@ -113,6 +113,28 @@ except Exception as e:
     async def error_fallback():
         return {"message": "Copperhead Consulting API", "status": "backend-only", "error": str(e)}
 
+@app.get("/api/debug")
+async def debug_info():
+    """Debug information for troubleshooting"""
+    try:
+        return {
+            "status": "ok",
+            "frontend_dist_exists": os.path.exists(frontend_dist_path),
+            "frontend_files_count": len(os.listdir(frontend_dist_path)) if os.path.exists(frontend_dist_path) else 0,
+            "environment": os.environ.get("ENVIRONMENT", "unknown"),
+            "python_version": "3.11+",
+            "server": "FastAPI + Uvicorn",
+            "process_id": os.getpid(),
+            "working_directory": os.getcwd()
+        }
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+@app.get("/api/health")
+async def api_health_check():
+    """API health check endpoint"""
+    return {"status": "healthy", "service": "copperhead-api"}
+
 # Email configuration
 RESEND_API_KEY = os.getenv('RESEND_API_KEY')
 DESTINATION_EMAIL = "contact@copperheadci.com"
