@@ -1,0 +1,64 @@
+{
+  "timestamp": "2025-09-29T21:22:14.065844",
+  "summary": {
+    "tests_run": 6,
+    "tests_passed": 2,
+    "success_rate": 33.33333333333333
+  },
+  "results": [
+    {
+      "test": "Health Check",
+      "endpoint": "api/health",
+      "method": "GET",
+      "expected_status": 200,
+      "actual_status": 200,
+      "success": true,
+      "response_preview": "OK"
+    },
+    {
+      "test": "Contact Form - Valid Data",
+      "endpoint": "api/send-email",
+      "method": "POST",
+      "expected_status": 200,
+      "actual_status": 500,
+      "success": false,
+      "response_preview": "{\"detail\":\"Failed to send email\"}"
+    },
+    {
+      "test": "Contact Form - Missing Consent",
+      "endpoint": "api/send-email",
+      "method": "POST",
+      "expected_status": 400,
+      "actual_status": 500,
+      "success": false,
+      "response_preview": "{\"detail\":\"Failed to send email\"}"
+    },
+    {
+      "test": "Contact Form - Invalid Email",
+      "endpoint": "api/send-email",
+      "method": "POST",
+      "expected_status": 422,
+      "actual_status": 422,
+      "success": true,
+      "response_preview": "OK"
+    },
+    {
+      "test": "Quote Request - Valid Data",
+      "endpoint": "api/quote-request",
+      "method": "POST",
+      "expected_status": 200,
+      "actual_status": 500,
+      "success": false,
+      "response_preview": "{\"detail\":\"Failed to send quote request\"}"
+    },
+    {
+      "test": "Quote Request - Missing Consent",
+      "endpoint": "api/quote-request",
+      "method": "POST",
+      "expected_status": 400,
+      "actual_status": 500,
+      "success": false,
+      "response_preview": "{\"detail\":\"Failed to send quote request\"}"
+    }
+  ]
+}
