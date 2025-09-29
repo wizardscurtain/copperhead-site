@@ -48,13 +48,13 @@ export function MobileSplashScreen({ onProceed }: MobileSplashScreenProps) {
     <div className="fixed inset-0 z-50 bg-slate-900 flex flex-col items-center justify-center p-6">
       {/* Copperhead Logo */}
       <div className="mb-8">
-        <Image
+        <img
           src="/assets/67eb2953665127110d87b36c_CCI-Logo1-Or-White-Horizontal.png"
           alt="Copperhead Consulting Inc"
           width={280}
           height={100}
           className="h-20 w-auto"
-          priority
+          loading="eager"
         />
       </div>
 
