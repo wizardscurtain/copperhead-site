@@ -1,12 +1,44 @@
 {
-  "name": "CopperheadCI Professional Security Website",
-  "short_name": "CopperheadCI",
-  "description": "Veteran-owned security consulting, executive protection, private investigations, and training services serving the Pacific Northwest.",
+  "name": "Copperhead Consulting Inc - Professional Security Services",
+  "short_name": "Copperhead CI",
+  "description": "Elite executive protection, security consulting, private investigations and K9 detection services by veteran-owned professionals.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#1a1a1a",
+  "background_color": "#1e293b",
   "theme_color": "#ff6b35",
   "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["business", "security", "professional"],
+  "shortcuts": [
+    {
+      "name": "Contact Emergency",
+      "short_name": "Emergency",
+      "description": "Contact for immediate security assistance",
+      "url": "/contact?emergency=true",
+      "icons": [
+        {
+          "src": "/assets/67eec2d5a5a87300d777cd9f_CCI-Favicon.png",
+          "sizes": "32x32",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Services",
+      "short_name": "Services",
+      "description": "View our security services",
+      "url": "/services",
+      "icons": [
+        {
+          "src": "/assets/67eec2d5a5a87300d777cd9f_CCI-Favicon.png",
+          "sizes": "32x32",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
   "icons": [
     {
       "src": "/assets/67eec2d5a5a87300d777cd9f_CCI-Favicon.png",
@@ -33,22 +65,13 @@
       "purpose": "any maskable"
     }
   ],
-  "categories": [
-    "business",
-    "security",
-    "professional"
-  ],
-  "lang": "en",
-  "dir": "ltr",
-  "scope": "/",
-  "related_applications": [],
-  "prefer_related_applications": false,
   "screenshots": [
     {
       "src": "/assets/67e761f4b67b3fdcfbf4f17f_CCI-Web-Home.jpg",
       "sizes": "1920x1080",
       "type": "image/jpeg",
-      "platform": "wide"
+      "platform": "wide",
+      "label": "Homepage showing security services"
     }
   ]
 }
