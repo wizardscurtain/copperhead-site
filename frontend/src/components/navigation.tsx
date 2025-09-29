@@ -26,7 +26,7 @@ export default function Navigation() {
                   className="close-menu-button-2 w-nav-button"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  <Image
+                  <img
                     src="/assets/63c155ba2b5c7835ff19d720_x_icon.webp"
                     alt="Close menu"
                     width={20}
