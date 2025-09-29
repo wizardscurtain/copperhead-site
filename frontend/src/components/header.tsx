@@ -1,11 +1,8 @@
-"use client"
-
-import { useState } from "react"
-import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import { QuoteModal } from "@/components/quote-modal"
-import Link from "next/link"
-import { siteConfig } from '@/lib/config'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { Button } from './ui/button'
+import { QuoteModal } from './quote-modal'
+import { siteConfig } from '../lib/config'
 
 const MenuIcon = () => (
   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -22,27 +19,18 @@ const XIcon = () => (
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId)
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
-    }
-    setIsMenuOpen(false) // Close mobile menu after clicking
-  }
-
   return (
     <header className="sticky top-0 z-50 bg-slate-900/95 backdrop-blur supports-[backdrop-filter]:bg-slate-900/80 border-b border-white/10 shadow-sm">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <Link href="/" className="flex items-center">
-              <Image
+            <Link to="/" className="flex items-center">
+              <img
                 width={180}
                 height={60}
                 src="/assets/67eb2953665127110d87b36c_CCI-Logo1-Or-White-Horizontal.png"
                 alt="Copperhead Consulting Inc"
                 className="h-12 w-auto"
-                priority
               />
             </Link>
           </div>
@@ -50,25 +38,25 @@ export function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <Link
-              href="/"
+              to="/"
               className="nav-text text-white hover:text-accent transition-colors uppercase tracking-wide"
             >
               Home
             </Link>
             <Link
-              href="/about"
+              to="/about"
               className="nav-text text-white hover:text-accent transition-colors uppercase tracking-wide"
             >
               About Us
             </Link>
             <Link
-              href="/services"
+              to="/services"
               className="nav-text text-white hover:text-accent transition-colors uppercase tracking-wide"
             >
               Services
             </Link>
             <Link
-              href="/contact"
+              to="/contact"
               className="nav-text text-white hover:text-accent transition-colors uppercase tracking-wide"
             >
               Contact Us
@@ -81,7 +69,7 @@ export function Header() {
               href={`tel:${siteConfig.contact.phone.primary}`}
               className="flex items-center text-sm text-white hover:text-accent transition-colors group"
             >
-              <Image
+              <img
                 src="/assets/67db459955ee8b93594b40f9_phone header white.webp"
                 alt="phone"
                 width={16}
@@ -98,38 +86,43 @@ export function Header() {
           </div>
 
           {/* Mobile menu button */}
-          <button className="md:hidden text-white" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <button 
+            className="md:hidden text-white" 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-menu"
+          >
             {isMenuOpen ? <XIcon /> : <MenuIcon />}
           </button>
         </div>
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden">
+          <div id="mobile-menu" className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-white/20 bg-slate-900/95">
               <Link
-                href="/"
+                to="/"
                 className="block w-full text-left px-3 py-2 text-white hover:text-accent nav-text"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Home
               </Link>
               <Link
-                href="/about"
+                to="/about"
                 className="block w-full text-left px-3 py-2 text-white hover:text-accent nav-text"
                 onClick={() => setIsMenuOpen(false)}
               >
                 About Us
               </Link>
               <Link
-                href="/services"
+                to="/services"
                 className="block w-full text-left px-3 py-2 text-white hover:text-accent nav-text"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Services
               </Link>
               <Link
-                href="/contact"
+                to="/contact"
                 className="block w-full text-left px-3 py-2 text-white hover:text-accent nav-text"
                 onClick={() => setIsMenuOpen(false)}
               >
