@@ -103,10 +103,10 @@ export const brandConfig = {
 // Analytics configuration
 export const analyticsConfig = {
   googleAnalytics: {
-    measurementId: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-XXXXXXXXXX"
+    measurementId: import.meta.env.VITE_GA_MEASUREMENT_ID || "G-XXXXXXXXXX"
   },
   googleTagManager: {
-    containerId: process.env.NEXT_PUBLIC_GTM_ID || "GTM-XXXXXXX"
+    containerId: import.meta.env.VITE_GTM_ID || "GTM-XXXXXXX"
   }
 }
 
