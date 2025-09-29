@@ -4,7 +4,7 @@ import { testimonials } from '@/lib/content'
 export function TestimonialsSection() {
   if (!testimonials.length) return null
   return (
-    <section className="section bg-gray-50" aria-labelledby="testimonials-heading">
+    <section className="section bg-slate-900 text-white" aria-labelledby="testimonials-heading">
       <div className="base-container">
         <h2 id="testimonials-heading" className="testimonials-main-title">Testimonials</h2>
         <div className="space-y-8">
