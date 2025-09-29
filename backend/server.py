@@ -15,6 +15,16 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI(title="Copperhead Consulting API", version="1.0.0")
 
+@app.on_event("startup")
+async def startup_event():
+    """Log startup information"""
+    logger.info("🚀 Copperhead Consulting API starting up...")
+    logger.info(f"📁 Frontend dist path: {'/app/frontend/dist'}")
+    logger.info(f"📂 Frontend dist exists: {os.path.exists('/app/frontend/dist')}")
+    if os.path.exists('/app/frontend/dist'):
+        files = os.listdir('/app/frontend/dist')
+        logger.info(f"📋 Frontend dist files: {files[:10]}")  # Log first 10 files
+
 # CORS configuration for frontend
 app.add_middleware(
     CORSMiddleware,
