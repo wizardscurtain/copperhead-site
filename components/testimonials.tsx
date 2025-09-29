@@ -9,7 +9,7 @@ export function TestimonialsSection() {
         <h2 id="testimonials-heading" className="testimonials-main-title text-white">Testimonials</h2>
         <div className="space-y-8">
           {testimonials.map((t, idx) => (
-            <figure key={idx} className="bg-white rounded-xl p-8 shadow-md border border-gray-100 relative overflow-hidden">
+            <figure key={idx} className="bg-slate-800/50 rounded-xl p-8 shadow-md border border-slate-700/50 relative overflow-hidden backdrop-blur-sm">
               <blockquote className="reviews-text">
                 <p>“{t.quote}”</p>
               </blockquote>
