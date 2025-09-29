@@ -88,10 +88,10 @@ export interface TeamMember {
 }
 
 export const team: TeamMember[] = [
-  { name: 'Jon', role: 'Founder / CEO', img: '/assets/67f1c4c8d7d92c9c15cdc0e4_CCI-Web-Jon.jpg' },
-  { name: 'James', role: 'Director of Operations', img: '/assets/67f1c4dc6eb9489baba0b5c9_CCI-Web-James.jpg' },
-  { name: 'Josh', role: 'Security Programs', img: '/assets/67f1c4ee8859cc20820c21c7_CCI-Web-Josh.jpg' },
-  { name: 'Vince', role: 'Training Lead', img: '/assets/67f1c4ffe64cd5a5f97c0a78_CCI-Web-Vince.jpg' },
+  { name: 'Jon Waters', role: 'Founder, CEO', img: '/assets/67f1c4c8d7d92c9c15cdc0e4_CCI-Web-Jon.jpg' },
+  { name: 'James Greene', role: 'Executive Director, CCO', img: '/assets/67f1c4dc6eb9489baba0b5c9_CCI-Web-James.jpg' },
+  { name: 'Josh Tatro', role: 'VP, Business Strategy', img: '/assets/67f1c4ee8859cc20820c21c7_CCI-Web-Josh.jpg' },
+  { name: 'Vince Walker', role: 'Director, Security Operations', img: '/assets/67f1c4ffe64cd5a5f97c0a78_CCI-Web-Vince.jpg' },
 ]
 
 export interface ValueProp {
