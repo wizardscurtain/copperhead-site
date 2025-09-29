@@ -93,14 +93,14 @@ export default function Navigation() {
           <div className="right-header-wrap">
             <div className="phone-header-wrap">
               <div className="address-icon-wrapper">
-                <Image
+                <img
                   src="/assets/67db459955ee8b93594b40f9_phone%20header%20white.webp"
                   alt="Phone"
                   width={20}
                   height={20}
                   className="address-icon"
                 />
-                <Image
+                <img
                   src="/assets/67db459955ee8b93594b40fb_phone%20red.webp"
                   alt="Phone"
                   width={20}
