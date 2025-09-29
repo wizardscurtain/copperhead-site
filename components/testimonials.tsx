@@ -15,7 +15,7 @@ export function TestimonialsSection() {
               </blockquote>
               <figcaption className="mt-4 flex items-center justify-between flex-wrap gap-4">
                 <div>
-                  <p className="autor-name">{t.role ? `${t.role}` : t.author}</p>
+                  <p className="autor-name text-white font-medium">{t.role ? `${t.role}` : t.author}</p>
                   <p className="text-sm text-gray-500">{t.author !== t.role ? t.author : ''}</p>
                 </div>
                 {t.rating && (
