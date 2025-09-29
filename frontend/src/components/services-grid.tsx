@@ -1,5 +1,4 @@
-import Image from 'next/image'
-import { services } from '@/lib/content'
+import { services } from '../lib/content'
 
 export function ServicesGrid() {
   return (
