@@ -12,7 +12,7 @@ export function PartnersStrip() {
           <div className="partners-scroll-track flex items-center gap-8 md:gap-12">
             {duplicatedPartners.map((p, index) => (
               <div key={`${p.name}-${index}`} className="grayscale hover:grayscale-0 transition flex-shrink-0 opacity-70 hover:opacity-100">
-                <Image
+                <img
                   src={p.src}
                   alt={p.alt || p.name}
                   width={p.width ? Math.floor(p.width * 0.4) : 56}
