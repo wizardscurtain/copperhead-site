@@ -1,9 +1,5 @@
-'use client'
-
 import { useState } from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
-import { usePathname } from 'next/navigation'
+import { Link, useLocation } from 'react-router-dom'
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
