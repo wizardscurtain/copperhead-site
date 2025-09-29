@@ -11,7 +11,7 @@ export function TestimonialsSection() {
           {testimonials.map((t, idx) => (
             <figure key={idx} className="bg-slate-800/50 rounded-xl p-8 shadow-md border border-slate-700/50 relative overflow-hidden backdrop-blur-sm">
               <blockquote className="reviews-text">
-                <p>“{t.quote}”</p>
+                <p className="text-gray-100">“{t.quote}”</p>
               </blockquote>
               <figcaption className="mt-4 flex items-center justify-between flex-wrap gap-4">
                 <div>
