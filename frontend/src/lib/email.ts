@@ -214,7 +214,10 @@ export async function sendContactEmail(formData: ContactForm | QuoteRequest, typ
       ? emailTemplates.quote(formData as QuoteRequest)
       : emailTemplates.contact(formData as ContactForm)
     
-    const response = await fetch('/api/send-email', {
+    // Get backend URL from environment variables
+    const backendUrl = import.meta.env.VITE_BACKEND_URL || import.meta.env.REACT_APP_BACKEND_URL || 'http://localhost:8001'
+    
+    const response = await fetch(`${backendUrl}/api/send-email`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
