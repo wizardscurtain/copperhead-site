@@ -265,13 +265,12 @@ async def error_fallback():
 # Uvicorn startup configuration
 if __name__ == "__main__":
     import uvicorn
-    # Comprehensive uvicorn configuration for deployment
+    # Simple, deployment-friendly uvicorn configuration
     uvicorn.run(
-        app, 
+        "server:app",  # Use string format for better compatibility
         host="0.0.0.0", 
         port=8001, 
-        log_level="info",
-        access_log=True,
-        loop="asyncio",
-        workers=1  # Single worker for deployment stability
+        log_level="warning",  # Reduce log verbosity 
+        access_log=False,  # Disable access logging for better performance
+        workers=1
     )
