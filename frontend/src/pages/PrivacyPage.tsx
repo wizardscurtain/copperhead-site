@@ -56,7 +56,7 @@ export default function PrivacyPage() {
               </p>
               <div className="bg-slate-800 p-4 rounded-lg">
                 <p className="text-white"><strong>Copperhead Consulting Inc</strong></p>
-                <p className="text-gray-300">Email: josh@copperheadci.com</p>
+                <p className="text-gray-300">Email: contact@copperheadci.com</p>
                 <p className="text-gray-300">Phone: (360) 519-9932</p>
                 <p className="text-gray-300">Address: 10002 Aurora Ave N Ste 36, Seattle, WA 98133</p>
               </div>
