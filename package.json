@@ -4,10 +4,10 @@
   "description": "Professional security consulting website with PWA capabilities",
   "private": true,
   "scripts": {
-    "build": "next build",
-    "dev": "next dev",
-    "lint": "next lint",
-    "start": "next start"
+    "build": "cd frontend && yarn build",
+    "dev": "cd frontend && yarn dev",
+    "lint": "cd frontend && yarn lint",
+    "start": "cd frontend && yarn start"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
