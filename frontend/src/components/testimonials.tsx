@@ -20,7 +20,7 @@ export function TestimonialsSection() {
                 {t.rating && (
                   <div className="star-icon-wrapper" aria-label={`${t.rating} star rating`}>
                     {Array.from({ length: t.rating }).map((_, i) => (
-                      <Image
+                      <img
                         key={i}
                         src="/assets/67db459955ee8b93594b4101_Star%201.webp"
                         alt="Star"
