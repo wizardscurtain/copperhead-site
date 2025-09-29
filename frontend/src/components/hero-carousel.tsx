@@ -71,13 +71,11 @@ export default function HeroCarousel() {
             key={slide.id}
             className={`hero-slide ${index === currentSlide ? 'active' : ''}`}
           >
-            <Image
+            <img
               src={slide.image}
               alt={slide.alt}
-              fill
-              className="object-cover"
-              priority={index === 0}
-              quality={85}
+              className="object-cover w-full h-full absolute inset-0"
+              loading={index === 0 ? "eager" : "lazy"}
             />
           </div>
         ))}
