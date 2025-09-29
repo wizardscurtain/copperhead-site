@@ -86,18 +86,8 @@ export default function HomePage() {
           itemScope 
           itemType="https://schema.org/Organization"
         >
-          {/* Background Image */}
-          <div className="hero-background">
-            <Image
-              src="/assets/67eec03468321ce8951ae033_CCI-Web-PI.jpg"
-              alt="Professional security team"
-              fill
-              className="object-cover"
-              priority
-              quality={85}
-            />
-            <div className="hero-overlay" />
-          </div>
+          {/* Hero Carousel */}
+          <HeroCarousel />
           
           <div className="hero-content-container">
             <div className="hero-content-wrapper">
@@ -131,24 +121,24 @@ export default function HomePage() {
                       className="group-hover:scale-110 transition-transform"
                       style={{ width: 'auto', height: 'auto' }}
                     />
-                    <span className="ml-2 text-white group-hover:text-accent transition-colors">Watch Video</span>
+                    <span className="ml-2 text-white">Watch</span>
                   </button>
+                </div>
+                
+                {/* Emergency Contact Button */}
+                <div className="hero-emergency-cta">
+                  <EmergencyCallButton eventLabel="hero_emergency_call" />
                 </div>
               </div>
             </div>
           </div>
-          
-          {/* Structured data for location */}
-          <div itemProp="address" itemScope itemType="https://schema.org/PostalAddress" className="sr-only">
-            <span itemProp="streetAddress">{siteConfig.contact.addresses.seattle.street}</span>
-            <span itemProp="addressLocality">{siteConfig.contact.addresses.seattle.city}</span>
-            <span itemProp="addressRegion">{siteConfig.contact.addresses.seattle.state}</span>
-            <span itemProp="postalCode">{siteConfig.contact.addresses.seattle.zip}</span>
-          </div>
         </section>
 
-        {/* Partners section with enhanced loading */}
-        <Suspense fallback={<div className="py-16 bg-muted/20 animate-pulse" />}>
+        {/* Company Stats Bar */}
+        <StatsBar />
+
+        {/* Partners Section */}
+        <Suspense fallback={<div className="bg-white py-12" />}>
           <PartnersStrip />
         </Suspense>
 
