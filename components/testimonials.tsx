@@ -6,7 +6,7 @@ export function TestimonialsSection() {
   return (
     <section className="section bg-slate-900 text-white" aria-labelledby="testimonials-heading">
       <div className="base-container">
-        <h2 id="testimonials-heading" className="testimonials-main-title">Testimonials</h2>
+        <h2 id="testimonials-heading" className="testimonials-main-title text-white">Testimonials</h2>
         <div className="space-y-8">
           {testimonials.map((t, idx) => (
             <figure key={idx} className="bg-white rounded-xl p-8 shadow-md border border-gray-100 relative overflow-hidden">
