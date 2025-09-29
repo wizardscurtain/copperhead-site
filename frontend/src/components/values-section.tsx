@@ -1,4 +1,4 @@
-import { valueProps } from '@/lib/content'
+import { valueProps } from '../lib/content'
 
 const iconMap: Record<string, JSX.Element> = {
   excellence: (
