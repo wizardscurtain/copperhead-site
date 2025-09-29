@@ -31,12 +31,12 @@ if os.path.exists(frontend_dist_path):
     # Serve static files from frontend dist directory
     app.mount("/assets", StaticFiles(directory=f"{frontend_dist_path}/assets"), name="assets")
     
-    @app.get("/")
+    @app.get("/", methods=["GET", "HEAD"])
     async def serve_frontend():
         """Serve the frontend index.html for root path"""
         return FileResponse(f"{frontend_dist_path}/index.html")
     
-    @app.get("/health")
+    @app.get("/health", methods=["GET", "HEAD"])
     async def frontend_health():
         """Health check endpoint for deployment system"""
         return {"status": "healthy", "service": "copperhead-frontend", "build": "production"}
