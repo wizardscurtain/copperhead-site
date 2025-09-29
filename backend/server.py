@@ -77,11 +77,12 @@ try:
             """Health check endpoint for deployment system"""
             return {"status": "healthy", "service": "copperhead-frontend", "build": "production"}
         
-        # Serve other static files (favicon, manifest, etc.)
+        # Serve other static files (favicon, manifest, etc.) - but NOT API routes
         @app.get("/{file_path:path}")
         async def serve_static_files(file_path: str):
             """Serve static files from frontend dist"""
-            if file_path.startswith("api/"):
+            # Ensure API routes are not intercepted
+            if file_path.startswith("api"):
                 raise HTTPException(status_code=404, detail="API endpoint not found")
             
             file_full_path = os.path.join(frontend_dist_path, file_path)
@@ -89,7 +90,7 @@ try:
                 return FileResponse(file_full_path)
             
             # For SPA routing, return index.html for non-file requests
-            if "." not in file_path and not file_path.startswith("api"):
+            if "." not in file_path:
                 return FileResponse(f"{frontend_dist_path}/index.html", media_type="text/html")
             
             raise HTTPException(status_code=404, detail="File not found")
