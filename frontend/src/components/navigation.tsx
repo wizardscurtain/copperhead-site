@@ -38,8 +38,8 @@ export default function Navigation() {
               
               <div className="dropdown-menu-2">
                 <div className="top-tablet-menu-2">
-                  <Link href="/" className="logo-mobile-3 w-nav-brand">
-                    <Image
+                  <Link to="/" className="logo-mobile-3 w-nav-brand">
+                    <img
                       src="/assets/67f1de0b3fcfae53e58db532_CCI-OB-Logo.png"
                       alt="CCI Logo"
                       width={200}
