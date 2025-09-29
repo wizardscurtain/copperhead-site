@@ -72,7 +72,7 @@ export default function Navigation() {
                 
                 <div className="login-tablet-wrap">
                   <div className="phone-tablet-wrap">
-                    <Image
+                    <img
                       src="/assets/67ed39fc12566ee1705f9642_ion_call-outline.svg"
                       alt="Phone"
                       width={20}
