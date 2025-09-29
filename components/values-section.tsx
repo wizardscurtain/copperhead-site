@@ -15,17 +15,17 @@ const iconMap: Record<string, JSX.Element> = {
 export function ValuesSection() {
   if (!valueProps.length) return null
   return (
-    <section className="py-20 bg-muted/50" aria-labelledby="values-heading">
+    <section className="py-20 bg-slate-900" aria-labelledby="values-heading">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-        <h2 id="values-heading" className="text-3xl md:text-4xl font-bold text-center mb-12">Our Values</h2>
+        <h2 id="values-heading" className="text-3xl md:text-4xl font-bold text-center mb-12 text-white">Our Values</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {valueProps.map(v => (
-            <div key={v.title} className="text-center p-6 rounded-xl bg-white/60 backdrop-blur shadow-sm border border-gray-200">
-              <div className="w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center bg-accent/10 text-accent">
+            <div key={v.title} className="text-center p-6 rounded-xl bg-slate-800/50 backdrop-blur shadow-lg border border-slate-700/50">
+              <div className="w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center bg-accent/20 text-accent">
                 {iconMap[v.icon || 'excellence']}
               </div>
-              <h3 className="text-xl font-semibold mb-3">{v.title}</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">{v.description}</p>
+              <h3 className="text-xl font-semibold mb-3 text-white">{v.title}</h3>
+              <p className="text-gray-300 text-sm leading-relaxed">{v.description}</p>
             </div>
           ))}
         </div>
