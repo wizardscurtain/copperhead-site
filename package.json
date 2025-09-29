@@ -1,6 +1,7 @@
 {
-  "name": "my-v0-project",
-  "version": "0.1.0",
+  "name": "copperhead-consulting-website",
+  "version": "1.0.0",
+  "description": "Professional security consulting website with PWA capabilities",
   "private": true,
   "scripts": {
     "build": "next build",
