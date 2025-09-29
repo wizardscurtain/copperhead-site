@@ -24,7 +24,7 @@ app.add_middleware(
 
 # Email configuration
 RESEND_API_KEY = os.getenv('RESEND_API_KEY')
-DESTINATION_EMAIL = "josh@copperheadci.com"
+DESTINATION_EMAIL = "contact@copperheadci.com"
 
 class ContactFormData(BaseModel):
     name: str
