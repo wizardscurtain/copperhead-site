@@ -1,5 +1,4 @@
-import Image from 'next/image'
-import { partners } from '@/lib/content'
+import { partners } from '../lib/content'
 
 export function PartnersStrip() {
   // Duplicate partners array for seamless infinite scroll
