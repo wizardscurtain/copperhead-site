@@ -1,5 +1,4 @@
-import Image from 'next/image'
-import { team } from '@/lib/content'
+import { team } from '../lib/content'
 
 export function TeamGrid() {
   if (!team.length) return null
