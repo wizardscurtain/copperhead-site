@@ -32,13 +32,13 @@ export default function HeroSlider({ slides = heroSlides, intervalMs = 4000, aut
             role="group"
             aria-label={`${i + 1} of ${total}`}
           >
-            <Image
+            <img
               src={slide.src}
               alt={slide.alt}
               width={1672}
               height={800}
               className="image"
-              priority={i === 0 || slide.priority}
+              loading={i === 0 || slide.priority ? "eager" : "lazy"}
             />
           </div>
         ))}
