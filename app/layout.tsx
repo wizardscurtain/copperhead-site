@@ -6,6 +6,7 @@ import { Toaster } from 'sonner'
 import { siteConfig, analyticsConfig } from '@/lib/config'
 import { generateSEOTags, generateLocalBusinessSchema } from '@/lib/seo'
 import { Header } from '@/components/header'
+import { PWAWrapper } from '@/components/pwa-wrapper'
 
 // Optimized font loading
 const inter = Inter({ 
