@@ -1,5 +1,4 @@
-import Image from 'next/image'
-import { testimonials } from '@/lib/content'
+import { testimonials } from '../lib/content'
 
 export function TestimonialsSection() {
   if (!testimonials.length) return null
