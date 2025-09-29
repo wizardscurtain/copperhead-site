@@ -50,6 +50,18 @@ if os.path.exists(frontend_dist_path):
     async def frontend_health():
         """Health check endpoint for deployment system"""
         return {"status": "healthy", "service": "copperhead-frontend", "build": "production"}
+    
+    @app.get("/api/debug")
+    async def debug_info():
+        """Debug information for troubleshooting"""
+        return {
+            "status": "ok",
+            "frontend_dist_exists": os.path.exists(frontend_dist_path),
+            "frontend_files_count": len(os.listdir(frontend_dist_path)) if os.path.exists(frontend_dist_path) else 0,
+            "environment": os.environ.get("ENVIRONMENT", "unknown"),
+            "python_version": "3.11+",
+            "server": "FastAPI + Uvicorn"
+        }
 else:
     logger.warning(f"Frontend dist directory not found at {frontend_dist_path}")
     
