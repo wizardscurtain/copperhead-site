@@ -1,5 +1,4 @@
-import Image from 'next/image'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 
 export default function Footer() {
   return (
@@ -8,7 +7,7 @@ export default function Footer() {
   <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           {/* Company Info */}
           <div className="md:col-span-2">
-            <Image
+            <img
               src="/assets/67eb2953665127110d87b36c_CCI-Logo1-Or-White-Horizontal.png"
               alt="Copperhead Consulting Inc"
               width={200}
@@ -28,11 +27,11 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
-              <li><Link href="/" className="text-gray-300 hover:text-white transition-colors">Home</Link></li>
-              <li><Link href="/about" className="text-gray-300 hover:text-white transition-colors">About Us</Link></li>
-              <li><Link href="/services" className="text-gray-300 hover:text-white transition-colors">Services</Link></li>
-              <li><Link href="/contact" className="text-gray-300 hover:text-white transition-colors">Contact</Link></li>
-              <li><Link href="/privacy" className="text-gray-300 hover:text-white transition-colors">Privacy Policy</Link></li>
+              <li><Link to="/" className="text-gray-300 hover:text-white transition-colors">Home</Link></li>
+              <li><Link to="/about" className="text-gray-300 hover:text-white transition-colors">About Us</Link></li>
+              <li><Link to="/services" className="text-gray-300 hover:text-white transition-colors">Services</Link></li>
+              <li><Link to="/contact" className="text-gray-300 hover:text-white transition-colors">Contact</Link></li>
+              <li><Link to="/privacy" className="text-gray-300 hover:text-white transition-colors">Privacy Policy</Link></li>
             </ul>
           </div>
 
@@ -51,8 +50,8 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="mailto:josh@copperheadci.com" className="hover:text-white transition-colors">
-                  josh@copperheadci.com
+                <a href="mailto:contact@copperheadci.com" className="hover:text-white transition-colors">
+                  contact@copperheadci.com
                 </a>
               </li>
             </ul>
@@ -63,7 +62,7 @@ export default function Footer() {
             <ul className="space-y-2 text-gray-300">
               <li>
                 <a href="https://www.linkedin.com/company/copperhead-consulting-inc" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2">
-                  <Image src="/assets/67efea24e374e193de17a675_mdi_linkedin.svg" alt="LinkedIn" width={20} height={20} />
+                  <img src="/assets/67efea24e374e193de17a675_mdi_linkedin.svg" alt="LinkedIn" width={20} height={20} />
                   LinkedIn
                 </a>
               </li>
