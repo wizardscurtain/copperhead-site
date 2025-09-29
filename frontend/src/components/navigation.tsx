@@ -3,7 +3,8 @@ import { Link, useLocation } from 'react-router-dom'
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const pathname = usePathname()
+  const location = useLocation()
+  const pathname = location.pathname
 
   return (
     <nav className="nav-fixed-white-menu w-nav" role="banner">
