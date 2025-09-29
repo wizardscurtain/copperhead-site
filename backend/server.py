@@ -49,42 +49,69 @@ app.add_middleware(
 
 # Serve static frontend files
 frontend_dist_path = "/app/frontend/dist"
-if os.path.exists(frontend_dist_path):
-    logger.info(f"Serving frontend static files from {frontend_dist_path}")
-    # Serve static files from frontend dist directory
-    app.mount("/assets", StaticFiles(directory=f"{frontend_dist_path}/assets"), name="assets")
+try:
+    if os.path.exists(frontend_dist_path):
+        logger.info(f"Serving frontend static files from {frontend_dist_path}")
+        
+        # Mount assets directory
+        if os.path.exists(f"{frontend_dist_path}/assets"):
+            app.mount("/assets", StaticFiles(directory=f"{frontend_dist_path}/assets"), name="assets")
+            logger.info("✅ Assets directory mounted")
+        
+        @app.api_route("/", methods=["GET", "HEAD"])
+        async def serve_frontend():
+            """Serve the frontend index.html for root path"""
+            try:
+                index_path = f"{frontend_dist_path}/index.html"
+                if os.path.exists(index_path):
+                    return FileResponse(index_path, media_type="text/html")
+                else:
+                    logger.error(f"index.html not found at {index_path}")
+                    return JSONResponse({"error": "Frontend not available", "status": "backend-only"})
+            except Exception as e:
+                logger.error(f"Error serving frontend: {e}")
+                return JSONResponse({"error": "Frontend serving error", "status": "backend-only"})
+        
+        @app.api_route("/health", methods=["GET", "HEAD"])
+        async def frontend_health():
+            """Health check endpoint for deployment system"""
+            return {"status": "healthy", "service": "copperhead-frontend", "build": "production"}
+        
+        # Serve other static files (favicon, manifest, etc.)
+        @app.get("/{file_path:path}")
+        async def serve_static_files(file_path: str):
+            """Serve static files from frontend dist"""
+            if file_path.startswith("api/"):
+                raise HTTPException(status_code=404, detail="API endpoint not found")
+            
+            file_full_path = os.path.join(frontend_dist_path, file_path)
+            if os.path.exists(file_full_path) and os.path.isfile(file_full_path):
+                return FileResponse(file_full_path)
+            
+            # For SPA routing, return index.html for non-file requests
+            if "." not in file_path and not file_path.startswith("api"):
+                return FileResponse(f"{frontend_dist_path}/index.html", media_type="text/html")
+            
+            raise HTTPException(status_code=404, detail="File not found")
+            
+    else:
+        logger.warning(f"Frontend dist directory not found at {frontend_dist_path}")
+        
+        @app.api_route("/", methods=["GET", "HEAD"])
+        async def root_fallback():
+            return {"message": "Copperhead Consulting API", "status": "backend-only", "frontend": "not available"}
+        
+        @app.api_route("/health", methods=["GET", "HEAD"]) 
+        async def backend_only_health():
+            return {"status": "healthy", "service": "copperhead-backend", "frontend": "not available"}
+
+except Exception as e:
+    logger.error(f"Error setting up frontend serving: {e}")
+    logger.error(traceback.format_exc())
     
     @app.api_route("/", methods=["GET", "HEAD"])
-    async def serve_frontend():
-        """Serve the frontend index.html for root path"""
-        return FileResponse(f"{frontend_dist_path}/index.html")
-    
-    @app.api_route("/health", methods=["GET", "HEAD"])
-    async def frontend_health():
-        """Health check endpoint for deployment system"""
-        return {"status": "healthy", "service": "copperhead-frontend", "build": "production"}
-    
-    @app.get("/api/debug")
-    async def debug_info():
-        """Debug information for troubleshooting"""
-        return {
-            "status": "ok",
-            "frontend_dist_exists": os.path.exists(frontend_dist_path),
-            "frontend_files_count": len(os.listdir(frontend_dist_path)) if os.path.exists(frontend_dist_path) else 0,
-            "environment": os.environ.get("ENVIRONMENT", "unknown"),
-            "python_version": "3.11+",
-            "server": "FastAPI + Uvicorn"
-        }
-else:
-    logger.warning(f"Frontend dist directory not found at {frontend_dist_path}")
-    
-    @app.api_route("/", methods=["GET", "HEAD"])
-    async def root_fallback():
-        return {"message": "Copperhead Consulting API", "status": "backend-only", "frontend": "not available"}
-    
-    @app.api_route("/health", methods=["GET", "HEAD"]) 
-    async def backend_only_health():
-        return {"status": "healthy", "service": "copperhead-backend", "frontend": "not available"}
+    async def error_fallback():
+        return {"message": "Copperhead Consulting API", "status": "backend-only", "error": str(e)}
 
 # Email configuration
 RESEND_API_KEY = os.getenv('RESEND_API_KEY')
