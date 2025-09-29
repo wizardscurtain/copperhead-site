@@ -195,11 +195,13 @@ export default function RootLayout({
           Skip to main content
         </a>
         
-        <Header />
-        
-        <main id="main-content" role="main">
-          {children}
-        </main>
+        <PWAWrapper>
+          <Header />
+          
+          <main id="main-content" role="main">
+            {children}
+          </main>
+        </PWAWrapper>
         
         {/* Toast notifications */}
         <Toaster 
