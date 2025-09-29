@@ -178,4 +178,5 @@ async def send_email_via_resend(subject: str, html_content: str, reply_to: str):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8001)
+    # Ensure binding to all interfaces for deployment
+    uvicorn.run(app, host="0.0.0.0", port=8001, log_level="info")
