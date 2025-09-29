@@ -66,8 +66,8 @@ export default function ContactPage() {
                     <div>
                       <h3 className="text-white font-semibold mb-1">Email</h3>
                       <p className="text-gray-300">
-                        <a href="mailto:josh@copperheadci.com" className="hover:text-accent transition-colors">
-                          josh@copperheadci.com
+                        <a href="mailto:contact@copperheadci.com" className="hover:text-accent transition-colors">
+                          contact@copperheadci.com
                         </a>
                       </p>
                     </div>
