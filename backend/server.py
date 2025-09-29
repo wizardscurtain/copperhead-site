@@ -65,9 +65,13 @@ if os.path.exists(frontend_dist_path):
 else:
     logger.warning(f"Frontend dist directory not found at {frontend_dist_path}")
     
-    @app.get("/")
+    @app.api_route("/", methods=["GET", "HEAD"])
     async def root_fallback():
-        return {"message": "Copperhead Consulting API", "frontend": "not available"}
+        return {"message": "Copperhead Consulting API", "status": "backend-only", "frontend": "not available"}
+    
+    @app.api_route("/health", methods=["GET", "HEAD"]) 
+    async def backend_only_health():
+        return {"status": "healthy", "service": "copperhead-backend", "frontend": "not available"}
 
 # Email configuration
 RESEND_API_KEY = os.getenv('RESEND_API_KEY')
