@@ -79,7 +79,7 @@ export function generateLocalBusinessSchema(): LocalBusiness {
       addressRegion: siteConfig.contact.addresses.seattle.state,
       postalCode: siteConfig.contact.addresses.seattle.zip,
       addressCountry: 'US'
-    },
+    } as any, // Type assertion for schema.org properties
     geo: {
       '@type': 'GeoCoordinates',
       latitude: siteConfig.seo.location.coordinates.latitude,
