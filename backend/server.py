@@ -34,9 +34,28 @@ async def startup_event():
     logger.info("🚀 Copperhead Consulting API starting up...")
     logger.info(f"📁 Frontend dist path: {'/app/frontend/dist'}")
     logger.info(f"📂 Frontend dist exists: {os.path.exists('/app/frontend/dist')}")
+    logger.info(f"🌍 Environment: {os.environ.get('ENVIRONMENT', 'unknown')}")
+    logger.info(f"🔧 Python version: {os.sys.version}")
+    logger.info("✅ Startup complete - ready to serve requests")
     if os.path.exists('/app/frontend/dist'):
         files = os.listdir('/app/frontend/dist')
         logger.info(f"📋 Frontend dist files: {files[:10]}")  # Log first 10 files
+
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    """Log all incoming requests for debugging"""
+    start_time = time.time()
+    logger.info(f"🌐 {request.method} {request.url} from {request.client.host if request.client else 'unknown'}")
+    
+    try:
+        response = await call_next(request)
+        process_time = time.time() - start_time
+        logger.info(f"✅ {request.method} {request.url} -> {response.status_code} ({process_time:.3f}s)")
+        return response
+    except Exception as e:
+        process_time = time.time() - start_time
+        logger.error(f"❌ {request.method} {request.url} -> ERROR: {str(e)} ({process_time:.3f}s)")
+        raise
 
 # CORS configuration for frontend
 app.add_middleware(
