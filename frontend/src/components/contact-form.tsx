@@ -190,7 +190,7 @@ export function ContactForm({
         })
       }
     } finally {
-      setIsSubmitting(false)
+      // The transition will automatically handle the pending state
     }
   }
 
