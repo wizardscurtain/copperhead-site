@@ -220,7 +220,7 @@ def main():
     print("=" * 50)
     
     # Test with the configured backend URL
-    tester = CopperheadAPITester("https://sec-elite-pwa.emergent.host")
+    tester = CopperheadAPITester("http://localhost:8001")
     
     # Run all tests
     print("\n📋 Running Backend API Tests...")
