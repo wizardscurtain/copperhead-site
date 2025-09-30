@@ -1,4 +1,3 @@
-import React from 'react'
 import { TeamGrid } from '../components/team-grid'
 import { ValuesSection } from '../components/values-section'
 import { CTAButton } from '../components/cta-buttons'
