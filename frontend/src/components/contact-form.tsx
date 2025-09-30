@@ -100,11 +100,25 @@ export function ContactForm({
     watch,
     reset
   } = useForm<ContactFormData | QuoteFormData>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(isQuoteForm ? quoteSchema : contactSchema),
     defaultValues: {
+      name: '',
+      email: '',
+      phone: '',
+      company: '',
       services: [],
-      urgency: isQuoteForm ? 'medium' : undefined,
-      consent: false
+      message: '',
+      budget: '',
+      timeline: '',
+      source: 'website',
+      consent: false,
+      ...(isQuoteForm && {
+        serviceType: '',
+        urgency: 'medium' as const,
+        duration: '',
+        location: '',
+        additionalDetails: ''
+      })
     }
   })
 
