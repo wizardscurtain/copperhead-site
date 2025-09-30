@@ -322,7 +322,7 @@ export function ContactForm({
                   Primary Service Needed <span className="text-red-500">*</span>
                 </Label>
                 <Select onValueChange={(value) => setValue('serviceType' as any, value)}>
-                  <SelectTrigger className={errors.serviceType ? 'border-red-500' : ''}>
+                  <SelectTrigger className={(errors as any).serviceType ? 'border-red-500' : ''}>
                     <SelectValue placeholder="Select a service" />
                   </SelectTrigger>
                   <SelectContent>
