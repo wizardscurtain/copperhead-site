@@ -28,8 +28,9 @@ export function PerformanceMonitor() {
       let clsValue = 0
       const clsObserver = new PerformanceObserver((list) => {
         for (const entry of list.getEntries()) {
-          if (!entry.hadRecentInput) {
-            clsValue += entry.value
+          const clsEntry = entry as any  // Type assertion for CLS-specific properties
+          if (!clsEntry.hadRecentInput) {
+            clsValue += clsEntry.value
             console.log("[v0] CLS:", clsValue)
           }
         }
