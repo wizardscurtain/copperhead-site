@@ -226,7 +226,7 @@ export async function sendContactEmail(formData: ContactForm | QuoteRequest, typ
         to: getContactEmail(),
         subject: template.subject,
         html: template.html,
-        text: template.text,
+        ...(template.text && { text: template.text }),
         formData,
         type
       }),
