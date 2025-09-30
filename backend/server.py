@@ -75,6 +75,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.options("/{full_path:path}")
+async def options_handler(full_path: str):
+    """Handle CORS preflight requests"""
+    return JSONResponse(
+        content={"message": "OK"},
+        headers={
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, POST, HEAD, OPTIONS",
+            "Access-Control-Allow-Headers": "*",
+        }
+    )
+
 # Define API routes FIRST before catch-all routes
 @app.get("/api/debug")
 async def debug_info():
