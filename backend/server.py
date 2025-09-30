@@ -275,6 +275,31 @@ try:
             if file_path.startswith("api"):
                 raise HTTPException(status_code=404, detail="API endpoint not found")
             
+            # Handle special PWA files
+            if file_path == "site.webmanifest":
+                manifest_path = os.path.join(frontend_dist_path, "site.webmanifest")
+                if os.path.exists(manifest_path):
+                    return FileResponse(manifest_path, media_type="application/manifest+json")
+                else:
+                    # Fallback manifest if file doesn't exist
+                    logger.info("Serving fallback PWA manifest")
+                    return JSONResponse({
+                        "name": "Copperhead Consulting Inc",
+                        "short_name": "Copperhead",
+                        "description": "Professional security consulting services",
+                        "start_url": "/",
+                        "display": "standalone",
+                        "background_color": "#1e293b",
+                        "theme_color": "#ff6b35",
+                        "icons": [
+                            {
+                                "src": "/assets/67eec2d5a5a87300d777cd9f_CCI-Favicon.png",
+                                "sizes": "192x192",
+                                "type": "image/png"
+                            }
+                        ]
+                    })
+            
             file_full_path = os.path.join(frontend_dist_path, file_path)
             if os.path.exists(file_full_path) and os.path.isfile(file_full_path):
                 return FileResponse(file_full_path)
