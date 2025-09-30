@@ -135,8 +135,6 @@ export function ContactForm({
         })
       }
 
-      // The transition will handle the pending state
-
       // Remove consent from data (internal use only)
       const { consent, ...formData } = data
       
@@ -146,7 +144,9 @@ export function ContactForm({
       )
 
       if (result.success) {
-        setIsSubmitted(true)
+        startTransition(() => {
+          setIsSubmitted(true)
+        })
         toast.success(
           isQuoteForm 
             ? 'Quote request sent successfully! We\'ll respond within ' + 
@@ -189,8 +189,6 @@ export function ContactForm({
           event_label: `${type}_form_error`
         })
       }
-    } finally {
-      // The transition will automatically handle the pending state
     }
   }
 
