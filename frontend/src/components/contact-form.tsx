@@ -343,7 +343,7 @@ export function ContactForm({
                   Priority Level <span className="text-red-500">*</span>
                 </Label>
                 <Select onValueChange={(value) => setValue('urgency' as any, value)} defaultValue="medium">
-                  <SelectTrigger className={errors.urgency ? 'border-red-500' : ''}>
+                  <SelectTrigger className={(errors as any).urgency ? 'border-red-500' : ''}>
                     <SelectValue placeholder="Select urgency" />
                   </SelectTrigger>
                   <SelectContent>
