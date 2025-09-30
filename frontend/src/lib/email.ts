@@ -235,8 +235,11 @@ export async function sendContactEmail(formData: ContactForm | QuoteRequest, typ
       ? emailTemplates.quote(formData as QuoteRequest)
       : emailTemplates.contact(formData as ContactForm)
     
-    // Get backend URL from environment variables
-    const backendUrl = import.meta.env.VITE_BACKEND_URL || import.meta.env.REACT_APP_BACKEND_URL || 'http://localhost:8001'
+    // Get backend URL from environment variables with fallbacks
+    const backendUrl = import.meta.env.VITE_BACKEND_URL || 
+                      import.meta.env.REACT_APP_BACKEND_URL || 
+                      (typeof window !== 'undefined' && window.location.origin) ||
+                      'http://localhost:8001'
     
     const response = await fetch(`${backendUrl}/api/send-email`, {
       method: 'POST',
