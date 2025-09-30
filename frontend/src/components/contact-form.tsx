@@ -464,13 +464,14 @@ export function ContactForm({
         )}
 
         {/* Privacy Consent */}
-        <div className="flex items-start space-x-2">
+        <div className="flex items-start space-x-2" style={{ pointerEvents: 'auto' }}>
           <Checkbox
             id="consent"
             {...register('consent')}
             className={errors.consent ? 'border-red-500' : ''}
+            style={{ pointerEvents: 'auto' }}
           />
-          <div className="grid gap-1.5 leading-none">
+          <div className="grid gap-1.5 leading-none" style={{ pointerEvents: 'auto' }}>
             <Label
               htmlFor="consent"
               className="text-sm font-normal cursor-pointer"
