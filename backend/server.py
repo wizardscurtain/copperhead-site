@@ -177,7 +177,11 @@ async def send_contact_email(form_data: ContactFormData):
 async def send_quote_request(quote_data: QuoteRequestData):
     try:
         if not quote_data.consent:
-            raise HTTPException(status_code=400, detail="Consent required")
+            logger.warning("Quote request submitted without consent")
+            return JSONResponse(
+                content={"success": False, "error": "Consent is required to process your request"},
+                status_code=400
+            )
         
         # Prepare email content
         subject = f"Quote Request: {', '.join(quote_data.services[:2])} - {quote_data.urgency.upper()}"
