@@ -333,8 +333,8 @@ export function ContactForm({
                     ))}
                   </SelectContent>
                 </Select>
-                {errors.serviceType && (
-                  <p className="text-red-500 text-sm mt-1">{errors.serviceType.message}</p>
+                {(errors as any).serviceType && (
+                  <p className="text-red-500 text-sm mt-1">{(errors as any).serviceType.message}</p>
                 )}
               </div>
 
