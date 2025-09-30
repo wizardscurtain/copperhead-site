@@ -247,7 +247,7 @@ export async function sendContactEmail(formData: ContactForm | QuoteRequest, typ
         to: getContactEmail(),
         subject: template.subject,
         html: template.html,
-        ...(template.text && { text: template.text }),
+        ...(('text' in template) && { text: template.text }),
         formData,
         type
       }),
