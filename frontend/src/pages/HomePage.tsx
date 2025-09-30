@@ -1,4 +1,3 @@
-import React from 'react'
 import HeroCarousel from '../components/hero-carousel'
 import { PartnersStrip } from '../components/partners-strip'
 import { TestimonialsSection } from '../components/testimonials'
