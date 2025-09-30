@@ -353,8 +353,8 @@ export function ContactForm({
                     <SelectItem value="emergency">🚨 Emergency - Immediate</SelectItem>
                   </SelectContent>
                 </Select>
-                {errors.urgency && (
-                  <p className="text-red-500 text-sm mt-1">{errors.urgency.message}</p>
+                {(errors as any).urgency && (
+                  <p className="text-red-500 text-sm mt-1">{(errors as any).urgency.message}</p>
                 )}
               </div>
             </div>
