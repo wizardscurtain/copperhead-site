@@ -13,6 +13,16 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 3000,
   },
+  preview: {
+    host: '0.0.0.0',
+    port: 3000,
+    allowedHosts: [
+      'sec-elite-pwa.preview.emergentagent.com',
+      'localhost',
+      '127.0.0.1',
+      '0.0.0.0'
+    ]
+  },
   build: {
     outDir: 'dist',
     sourcemap: true,
