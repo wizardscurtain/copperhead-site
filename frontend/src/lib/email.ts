@@ -203,6 +203,27 @@ Submitted: ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles
           <p>Response Time Target: ${data.urgency === 'emergency' ? '1 hour' : data.urgency === 'high' ? '4 hours' : '24 hours'}</p>
         </div>
       </div>
+    `,
+    text: `
+🚨 PRIORITY QUOTE REQUEST - ${data.serviceType}
+Urgency: ${data.urgency.toUpperCase()}
+
+Quote Request Details:
+- Service Type: ${data.serviceType}
+- Client: ${data.name}
+- Email: ${data.email}
+- Phone: ${data.phone || 'Not provided'}
+${data.company ? `- Company: ${data.company}\n` : ''}${data.duration ? `- Duration: ${data.duration}\n` : ''}${data.location ? `- Location: ${data.location}\n` : ''}${data.budget ? `- Budget: ${data.budget}\n` : ''}${data.timeline ? `- Timeline: ${data.timeline}\n` : ''}
+
+Project Details:
+${data.message}
+
+${data.additionalDetails ? `Additional Requirements:\n${data.additionalDetails}\n\n` : ''}Priority Level: ${data.urgency.toUpperCase()}${data.urgency === 'emergency' ? ' - IMMEDIATE RESPONSE REQUIRED' : ''}
+
+Response Time Target: ${data.urgency === 'emergency' ? '1 hour' : data.urgency === 'high' ? '4 hours' : '24 hours'}
+
+---
+Submitted: ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles' })} PST
     `
   })
 }
