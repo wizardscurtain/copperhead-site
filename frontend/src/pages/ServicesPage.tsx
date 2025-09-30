@@ -1,4 +1,3 @@
-import React from 'react'
 import { ServicesGrid } from '../components/services-grid'
 import { CTAButton } from '../components/cta-buttons'
 
