@@ -125,71 +125,75 @@ export function ContactForm({
   const urgencyLevel = isQuoteForm ? (watch as any)('urgency') : 'medium'
 
   const onSubmit = async (data: ContactFormData | QuoteFormData) => {
-    startTransition(async () => {
-      try {
-        // Track form submission
-        if (typeof window !== 'undefined' && 'gtag' in window) {
-          (window as any).gtag('event', 'form_submit', {
-            event_category: 'engagement',
-            event_label: `${type}_form_submission`,
-            value: isQuoteForm ? 1 : 0.5
-          })
-        }
-
-        // Remove consent from data (internal use only)
-        const { consent, ...formData } = data
-        
-        const result = await sendContactEmail(
-          formData as ContactFormType | QuoteRequest, 
-          type
-        )
-
-        if (result.success) {
-          setIsSubmitted(true)
-          toast.success(
-            isQuoteForm 
-              ? 'Quote request sent successfully! We\'ll respond within ' + 
-                (urgencyLevel === 'emergency' ? '1 hour' : urgencyLevel === 'high' ? '4 hours' : '24 hours') + '.'
-              : 'Message sent successfully! We\'ll get back to you within 24 hours.',
-            {
-              description: 'Thank you for contacting Copperhead Consulting.',
-              duration: 5000
-            }
-          )
-          reset()
-          
-          // Track successful submission
-          if (typeof window !== 'undefined' && 'gtag' in window) {
-            (window as any).gtag('event', 'form_submit_success', {
-              event_category: 'conversion',
-              event_label: `${type}_form_success`
-            })
-          }
-        } else {
-          throw new Error(result.error || 'Unknown error occurred')
-        }
-      } catch (error) {
-        console.error('Form submission error:', error)
-        toast.error(
-          'Failed to send message. Please try again or contact us directly.',
-          {
-            description: error instanceof Error ? error.message : 'Unknown error occurred',
-            action: {
-              label: 'Call Now',
-              onClick: () => window.open('tel:+13605199932', '_self')
-            }
-          }
-        )
-        
-        // Track failed submission
-        if (typeof window !== 'undefined' && 'gtag' in window) {
-          (window as any).gtag('event', 'form_submit_error', {
-            event_category: 'error',
-            event_label: `${type}_form_error`
-          })
-        }
+    try {
+      // Track form submission
+      if (typeof window !== 'undefined' && 'gtag' in window) {
+        (window as any).gtag('event', 'form_submit', {
+          event_category: 'engagement',
+          event_label: `${type}_form_submission`,
+          value: isQuoteForm ? 1 : 0.5
+        })
       }
-    })
+
+      startTransition(() => {
+        setIsSubmitting(true)
+      })
+
+      // Remove consent from data (internal use only)
+      const { consent, ...formData } = data
+      
+      const result = await sendContactEmail(
+        formData as ContactFormType | QuoteRequest,
+        type
+      )
+
+      if (result.success) {
+        setIsSubmitted(true)
+        toast.success(
+          isQuoteForm 
+            ? 'Quote request sent successfully! We\'ll respond within ' + 
+              (urgencyLevel === 'emergency' ? '1 hour' : urgencyLevel === 'high' ? '4 hours' : '24 hours') + '.'
+            : 'Message sent successfully! We\'ll get back to you within 24 hours.',
+          {
+            description: 'Thank you for contacting Copperhead Consulting.',
+            duration: 5000
+          }
+        )
+        reset()
+        
+        // Track successful submission
+        if (typeof window !== 'undefined' && 'gtag' in window) {
+          (window as any).gtag('event', 'form_submit_success', {
+            event_category: 'conversion',
+            event_label: `${type}_form_success`
+          })
+        }
+      } else {
+        throw new Error(result.error || 'Unknown error occurred')
+      }
+    } catch (error) {
+      console.error('Form submission error:', error)
+      toast.error(
+        'Failed to send message. Please try again or contact us directly.',
+        {
+          description: error instanceof Error ? error.message : 'Unknown error occurred',
+          action: {
+            label: 'Call Now',
+            onClick: () => window.open('tel:+13605199932', '_self')
+          }
+        }
+      )
+      
+      // Track failed submission
+      if (typeof window !== 'undefined' && 'gtag' in window) {
+        (window as any).gtag('event', 'form_submit_error', {
+          event_category: 'error',
+          event_label: `${type}_form_error`
+        })
+      }
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   if (isSubmitted) {
