@@ -4,6 +4,10 @@
   "description": "Professional security consulting website frontend",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=18.0.0 <=20.19.5",
+    "yarn": ">=1.22.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
