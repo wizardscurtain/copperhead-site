@@ -27,5 +27,24 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          router: ['react-router-dom'],
+          forms: ['react-hook-form', 'zod'],
+          ui: ['@radix-ui/react-slot', '@radix-ui/react-checkbox', '@radix-ui/react-label', '@radix-ui/react-select', '@radix-ui/react-dialog']
+        }
+      }
+    },
+    chunkSizeWarningLimit: 1000,
+    // Optimize for deployment environments
+    minify: 'esbuild',
+    target: 'es2020'
   },
+  // Add esbuild configuration for better compatibility
+  esbuild: {
+    logOverride: { 'this-is-undefined-in-esm': 'silent' },
+    target: 'es2020'
+  }
 })
