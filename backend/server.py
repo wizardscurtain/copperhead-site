@@ -42,6 +42,7 @@ async def startup_event():
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
+        "https://app.emergent.sh",  # Emergent platform origin
         "https://sec-elite-pwa.preview.emergentagent.com",
         "https://sec-elite-pwa.emergentagent.com", 
         "http://localhost:3000",
@@ -50,7 +51,7 @@ app.add_middleware(
         "http://127.0.0.1:8001"
     ],
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "HEAD", "OPTIONS"],
     allow_headers=["*"],
 )
 
