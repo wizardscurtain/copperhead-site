@@ -4,9 +4,9 @@
   "description": "Professional security consulting website with PWA capabilities",
   "private": true,
   "scripts": {
-    "build": "cd frontend && yarn build",
+    "build": "cd frontend && yarn install --frozen-lockfile && yarn build",
     "dev": "cd frontend && yarn dev",
-    "lint": "cd frontend && yarn lint",
+    "lint": "cd frontend && yarn lint", 
     "start": "cd frontend && yarn start"
   },
   "dependencies": {
