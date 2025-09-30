@@ -214,11 +214,13 @@ try:
             logger.info("✅ Assets directory mounted")
         
         @app.api_route("/", methods=["GET", "HEAD"])
-        async def serve_frontend():
+        async def serve_frontend(request: Request):
             """Serve the frontend index.html for root path"""
             try:
                 index_path = f"{frontend_dist_path}/index.html"
                 if os.path.exists(index_path):
+                    # Log the incoming request for debugging
+                    logger.info(f"Serving frontend to {request.client.host if request.client else 'unknown'} via {request.headers.get('host', 'unknown-host')}")
                     return FileResponse(index_path, media_type="text/html")
                 else:
                     logger.error(f"index.html not found at {index_path}")
