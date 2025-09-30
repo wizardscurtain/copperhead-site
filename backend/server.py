@@ -279,6 +279,13 @@ try:
             if os.path.exists(file_full_path) and os.path.isfile(file_full_path):
                 return FileResponse(file_full_path)
             
+            # Handle common missing files gracefully
+            if file_path in ["apple-touch-icon.png", "favicon.ico", "robots.txt"]:
+                logger.info(f"Serving placeholder for missing file: {file_path}")
+                # Return a 1x1 transparent PNG for missing icons
+                if file_path.endswith(".png") or file_path.endswith(".ico"):
+                    return JSONResponse({"error": "Asset not found"}, status_code=404)
+            
             # For SPA routing, return index.html for non-file requests
             if "." not in file_path:
                 return FileResponse(f"{frontend_dist_path}/index.html", media_type="text/html")
