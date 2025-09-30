@@ -140,7 +140,11 @@ class QuoteRequestData(BaseModel):
 async def send_contact_email(form_data: ContactFormData):
     try:
         if not form_data.consent:
-            raise HTTPException(status_code=400, detail="Consent required")
+            logger.warning("Contact form submitted without consent")
+            return JSONResponse(
+                content={"success": False, "error": "Consent is required to process your request"},
+                status_code=400
+            )
         
         # Prepare email content
         subject = f"Contact Form: {form_data.service} - {form_data.urgency.upper()}"
