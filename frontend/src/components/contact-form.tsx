@@ -135,9 +135,7 @@ export function ContactForm({
         })
       }
 
-      startTransition(() => {
-        setIsSubmitting(true)
-      })
+      // The transition will handle the pending state
 
       // Remove consent from data (internal use only)
       const { consent, ...formData } = data
