@@ -12,7 +12,8 @@ export function PerformanceMonitor() {
             console.log("[v0] LCP:", entry.startTime)
           }
           if (entry.entryType === "first-input") {
-            console.log("[v0] FID:", entry.processingStart - entry.startTime)
+            const fidEntry = entry as any  // Type assertion for FID-specific properties
+            console.log("[v0] FID:", fidEntry.processingStart - entry.startTime)
           }
         }
       })
