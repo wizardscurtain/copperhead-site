@@ -272,7 +272,7 @@ export function validateContactForm(data: Partial<ContactForm>): { isValid: bool
 }
 
 export function validateQuoteRequest(data: Partial<QuoteRequest>): { isValid: boolean; errors: string[] } {
-  const { isValid: baseValid, errors: baseErrors } = validateContactForm(data)
+  const { errors: baseErrors } = validateContactForm(data)
   const errors = [...baseErrors]
 
   if (!data.serviceType || data.serviceType.trim().length < 2) {
