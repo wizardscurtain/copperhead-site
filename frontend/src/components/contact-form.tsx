@@ -90,7 +90,6 @@ export function ContactForm({
   const [isSubmitted, setIsSubmitted] = useState(false)
   
   const isQuoteForm = type === 'quote'
-  const schema = isQuoteForm ? quoteSchema : contactSchema
   
   const {
     register,
