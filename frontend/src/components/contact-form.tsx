@@ -477,17 +477,18 @@ export function ContactForm({
         )}
 
         {/* Privacy Consent */}
-        <div className="flex items-start space-x-2" style={{ pointerEvents: 'auto' }}>
+        <div className="flex items-start space-x-2" style={{ pointerEvents: 'auto', zIndex: 10 }}>
           <Checkbox
             id="consent"
             {...register('consent')}
             className={errors.consent ? 'border-red-500' : ''}
-            style={{ pointerEvents: 'auto' }}
+            style={{ pointerEvents: 'auto', position: 'relative', zIndex: 10 }}
           />
-          <div className="grid gap-1.5 leading-none" style={{ pointerEvents: 'auto' }}>
+          <div className="grid gap-1.5 leading-none" style={{ pointerEvents: 'auto', zIndex: 10 }}>
             <Label
               htmlFor="consent"
               className="text-sm font-normal cursor-pointer"
+              style={{ pointerEvents: 'auto', zIndex: 10 }}
             >
               I agree to Copperhead Consulting's{' '}
               <a 
