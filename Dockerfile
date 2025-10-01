@@ -2,29 +2,36 @@
 # Stage 1: Build Frontend
 FROM node:20.19.5-alpine AS frontend-builder
 
-WORKDIR /app/frontend
+WORKDIR /build-frontend
 
-# Copy frontend package files
+# Copy only necessary frontend files
 COPY frontend/package.json frontend/yarn.lock ./
 RUN yarn install --frozen-lockfile --production=false
 
-# Copy frontend source
-COPY frontend/ ./
+# Copy frontend source files
+COPY frontend/src ./src
+COPY frontend/public ./public
+COPY frontend/index.html ./
+COPY frontend/vite.config.ts ./
+COPY frontend/tsconfig.json ./
+COPY frontend/tsconfig.node.json ./
+COPY frontend/tailwind.config.js ./
+COPY frontend/postcss.config.js ./
 
-# Build frontend
+# Build frontend - output goes to /build-frontend/dist
 RUN yarn build
 
 # Stage 2: Setup Backend
 FROM python:3.11-slim AS backend-setup
 
-WORKDIR /app/backend
+WORKDIR /build-backend
 
-# Copy backend requirements
+# Copy backend requirements and install
 COPY backend/requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy backend source
-COPY backend/ ./
+COPY backend/server.py ./
 
 # Stage 3: Production Runtime
 FROM python:3.11-slim
@@ -39,11 +46,11 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy backend from backend-setup stage
-COPY --from=backend-setup /app/backend /app/backend
+COPY --from=backend-setup /build-backend /app/backend
 COPY --from=backend-setup /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
 
 # Copy built frontend from frontend-builder stage
-COPY --from=frontend-builder /app/frontend/dist /app/frontend/dist
+COPY --from=frontend-builder /build-frontend/dist /app/frontend/dist
 
 # Create startup script
 RUN echo '#!/bin/bash\n\
