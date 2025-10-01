@@ -88,6 +88,8 @@ export function ContactForm({
 }: ContactFormProps) {
   const [isPending, startTransition] = useTransition()
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   
   const isQuoteForm = type === 'quote'
   
