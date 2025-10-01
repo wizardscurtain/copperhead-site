@@ -1,12 +1,15 @@
 # Multi-stage Dockerfile for Copperhead CI PWA
 # Stage 1: Build Frontend
-FROM node:20.19.5-alpine AS frontend-builder
+FROM node:20.19.5 AS frontend-builder
 
 WORKDIR /build-frontend
 
 # Copy only necessary frontend files
 COPY frontend/package.json frontend/yarn.lock ./
-RUN yarn install --frozen-lockfile --production=false
+
+# Install dependencies with better error handling
+RUN yarn install --frozen-lockfile --production=false || \
+    (echo "Dependency installation failed" && exit 1)
 
 # Copy frontend source files
 COPY frontend/src ./src
@@ -19,7 +22,7 @@ COPY frontend/tailwind.config.js ./
 COPY frontend/postcss.config.js ./
 
 # Build frontend - output goes to /build-frontend/dist
-RUN yarn build
+RUN yarn build || (echo "Frontend build failed" && exit 1)
 
 # Stage 2: Setup Backend
 FROM python:3.11-slim AS backend-setup
