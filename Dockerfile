@@ -29,12 +29,12 @@ FROM python:3.11-slim AS backend-setup
 
 WORKDIR /build-backend
 
-# Copy backend requirements and install
-COPY backend/requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+# Copy backend files
+COPY backend/requirements.txt ./requirements.txt
+COPY backend/server.py ./server.py
 
-# Copy backend source
-COPY backend/server.py ./
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Stage 3: Production Runtime
 FROM python:3.11-slim
