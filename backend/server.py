@@ -204,9 +204,9 @@ except Exception as e:
     logger.error(f"Error setting up frontend serving: {e}")
     logger.error(traceback.format_exc())
     
-@app.api_route("/", methods=["GET", "HEAD"])
-async def error_fallback():
-    return {"message": "Copperhead Consulting API", "status": "backend-only", "error": str(e)}
+    @app.api_route("/", methods=["GET", "HEAD"])
+    async def error_fallback():
+        return {"message": "Copperhead Consulting API", "status": "backend-only", "error": "Frontend setup failed"}
 
 # Uvicorn startup configuration
 if __name__ == "__main__":
