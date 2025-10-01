@@ -23,6 +23,15 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      // If redirected from 404 fallback, restore original path for BrowserRouter
+      (function(){
+        var p=new URLSearchParams(window.location.search).get('ghr');
+        if(p){
+          try{var dest=decodeURIComponent(p);history.replaceState(null,'',dest);}catch(e){console.warn('Path restore failed',e)}
+        }
+      })();
+    </script>
     <script type="module" src="./src/main.tsx"></script>
   </body>
 </html>

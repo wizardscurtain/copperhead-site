@@ -30,15 +30,9 @@ jobs:
           cache: 'yarn'
           cache-dependency-path: frontend/yarn.lock
 
-      - name: Determine base path
+      - name: Set base path (relative)
         id: base
-        run: |
-          if [ "${{ github.event.repository.name }}" = "${{ github.repository_owner }}.github.io" ]; then
-            echo "base=/" >> "$GITHUB_OUTPUT"
-          else
-            echo "base=/${{ github.event.repository.name }}/" >> "$GITHUB_OUTPUT"
-          fi
-          echo "Using base path: $(grep base= $GITHUB_OUTPUT | cut -d'=' -f2)"
+        run: echo "base=./" >> "$GITHUB_OUTPUT"
 
       - name: Install dependencies
         working-directory: frontend

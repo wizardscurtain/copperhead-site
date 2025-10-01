@@ -12,9 +12,9 @@ const __dirname = path.dirname(__filename)
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const process: any
 
-// For GitHub Pages we need a base path like /<repo-name>/
-// The workflow sets GH_PAGES_BASE automatically. Locally this will just be '/'.
-const base = process.env.GH_PAGES_BASE || '/'
+// Use relative base so build works at root or sub-path on GitHub Pages without adjustment
+// This avoids hard-coding the repo name and simplifies deployment.
+const base = process.env.GH_PAGES_BASE || './'
 
 export default defineConfig({
   base, // critical for GitHub Pages when project is not served from root
