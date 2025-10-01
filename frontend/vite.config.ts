@@ -10,14 +10,18 @@ export default defineConfig({
     },
   },
   server: {
-    host: '0.0.0.0',
-    port: 3000,
-  },
-  preview: {
-    host: '0.0.0.0',
+    host: true,
     port: 3000,
     strictPort: false,
-    allowedHosts: 'all' // Disable host checking entirely
+    hmr: {
+      clientPort: 3000
+    }
+  },
+  preview: {
+    host: true,
+    port: 3000,
+    strictPort: false,
+    cors: true
   },
   build: {
     outDir: 'dist',
