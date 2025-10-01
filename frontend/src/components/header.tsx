@@ -1,4 +1,5 @@
 import { useState } from 'react'
+const base = import.meta.env.BASE_URL || '/'
 import { Link } from 'react-router-dom'
 import { Button } from './ui/button'
 import { QuoteModal } from './quote-modal'
@@ -28,7 +29,7 @@ export function Header() {
               <img
                 width={180}
                 height={60}
-                src="/assets/67eb2953665127110d87b36c_CCI-Logo1-Or-White-Horizontal.png"
+                src={`${base}assets/67eb2953665127110d87b36c_CCI-Logo1-Or-White-Horizontal.png`}
                 alt="Copperhead Consulting Inc"
                 className="h-12 w-auto"
               />
@@ -70,7 +71,7 @@ export function Header() {
               className="flex items-center text-sm text-white hover:text-accent transition-colors group"
             >
               <img
-                src="/assets/67db459955ee8b93594b40f9_phone header white.webp"
+                src={`${base}assets/67db459955ee8b93594b40f9_phone header white.webp`}
                 alt="phone"
                 width={16}
                 height={16}

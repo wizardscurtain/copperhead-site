@@ -1,5 +1,7 @@
 import { testimonials } from '../lib/content'
 
+const base = import.meta.env.BASE_URL || '/'
+
 export function TestimonialsSection() {
   if (!testimonials.length) return null
   return (
@@ -22,7 +24,7 @@ export function TestimonialsSection() {
                     {Array.from({ length: t.rating }).map((_, i) => (
                       <img
                         key={i}
-                        src="/assets/67db459955ee8b93594b4101_Star%201.webp"
+                        src={`${base}assets/67db459955ee8b93594b4101_Star%201.webp`}
                         alt="Star"
                         width={20}
                         height={20}

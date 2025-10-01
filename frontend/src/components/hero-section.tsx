@@ -3,6 +3,7 @@
 import { Button } from "./ui/button"
 import { Badge } from "./ui/badge"
 import { useEffect, useState } from "react"
+const base = import.meta.env.BASE_URL || '/'
 
 const ShieldIcon = () => (
   <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -68,7 +69,7 @@ export function HeroSection() {
     <section className="relative py-20 lg:py-32 overflow-hidden min-h-screen flex items-center hero-section">
       <div className="absolute inset-0 z-0">
         <img
-          src="/images/seattle-space-needle.jpg"
+          src={`${base}images/seattle-space-needle.jpg`}
           alt="Seattle Space Needle - Copperhead Consulting headquarters location"
           className="w-full h-full object-cover scale-105"
         />
@@ -166,7 +167,7 @@ export function HeroSection() {
                 className="w-full h-full object-cover"
                 controls
                 preload="metadata"
-                poster="/images/soc-team.jpg"
+                poster={`${base}images/soc-team.jpg`}
               >
                 Your browser does not support the video tag.
               </video>

@@ -1,6 +1,7 @@
 "use client"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card"
+const base = import.meta.env.BASE_URL || '/'
 import { Button } from "./ui/button"
 import { useEffect, useState, useRef } from "react"
 
@@ -169,7 +170,7 @@ export function ProcessSection() {
                 </div>
               </div>
               <img
-                src="/images/surveillance-camera.jpg"
+                src={`${base}images/surveillance-camera.jpg`}
                 alt="Professional surveillance and security operations"
                 className="w-full h-64 object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
               />

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Redirecting...</title>
+    <meta http-equiv="refresh" content="0; url=./" />
+    <script>
+      // If we were deep-linked, preserve the path and let the SPA router handle it
+      (function() {
+        var redirect = window.sessionStorage.getItem('gh_spa_redirect');
+        if (!redirect) {
+          window.sessionStorage.setItem('gh_spa_redirect', window.location.pathname + window.location.search + window.location.hash);
+        }
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>

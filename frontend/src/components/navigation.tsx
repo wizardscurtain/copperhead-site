@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
+const base = import.meta.env.BASE_URL || '/'
+
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const location = useLocation()
@@ -11,7 +13,7 @@ export default function Navigation() {
       <div className="main-nav-container w-container">
         <div className="main-menu-wrapper">
           <img
-            src="/assets/67eb2953665127110d87b36c_CCI-Logo1-Or-White-Horizontal.png"
+            src={`${base}assets/67eb2953665127110d87b36c_CCI-Logo1-Or-White-Horizontal.png`}
             alt="Copperhead Consulting Inc Logo"
             width={221}
             height={60}
@@ -27,7 +29,7 @@ export default function Navigation() {
                   onClick={() => setIsMenuOpen(false)}
                 >
                   <img
-                    src="/assets/63c155ba2b5c7835ff19d720_x_icon.webp"
+                    src={`${base}assets/63c155ba2b5c7835ff19d720_x_icon.webp`}
                     alt="Close menu"
                     width={20}
                     height={20}
@@ -40,7 +42,7 @@ export default function Navigation() {
                 <div className="top-tablet-menu-2">
                   <Link to="/" className="logo-mobile-3 w-nav-brand">
                     <img
-                      src="/assets/67f1de0b3fcfae53e58db532_CCI-OB-Logo.png"
+                      src={`${base}assets/67f1de0b3fcfae53e58db532_CCI-OB-Logo.png`}
                       alt="CCI Logo"
                       width={200}
                       height={60}
@@ -73,7 +75,7 @@ export default function Navigation() {
                 <div className="login-tablet-wrap">
                   <div className="phone-tablet-wrap">
                     <img
-                      src="/assets/67ed39fc12566ee1705f9642_ion_call-outline.svg"
+                      src={`${base}assets/67ed39fc12566ee1705f9642_ion_call-outline.svg`}
                       alt="Phone"
                       width={20}
                       height={20}
@@ -94,14 +96,14 @@ export default function Navigation() {
             <div className="phone-header-wrap">
               <div className="address-icon-wrapper">
                 <img
-                  src="/assets/67db459955ee8b93594b40f9_phone%20header%20white.webp"
+                  src={`${base}assets/67db459955ee8b93594b40f9_phone%20header%20white.webp`}
                   alt="Phone"
                   width={20}
                   height={20}
                   className="address-icon"
                 />
                 <img
-                  src="/assets/67db459955ee8b93594b40fb_phone%20red.webp"
+                  src={`${base}assets/67db459955ee8b93594b40fb_phone%20red.webp`}
                   alt="Phone"
                   width={20}
                   height={20}

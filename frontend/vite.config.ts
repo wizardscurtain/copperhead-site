@@ -1,8 +1,23 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
+import { fileURLToPath } from 'url'
+
+// Provide __dirname in ESM context
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+// Minimal declaration so TS doesn't complain without @types/node
+// (We don't add the dependency to keep footprint small.)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+declare const process: any
+
+// For GitHub Pages we need a base path like /<repo-name>/
+// The workflow sets GH_PAGES_BASE automatically. Locally this will just be '/'.
+const base = process.env.GH_PAGES_BASE || '/'
 
 export default defineConfig({
+  base, // critical for GitHub Pages when project is not served from root
   plugins: [react()],
   resolve: {
     alias: {
@@ -33,7 +48,7 @@ export default defineConfig({
         manualChunks: {
           vendor: ['react', 'react-dom'],
           router: ['react-router-dom'],
-          forms: ['react-hook-form', 'zod'],
+            forms: ['react-hook-form', 'zod'],
           ui: ['@radix-ui/react-slot', '@radix-ui/react-checkbox', '@radix-ui/react-label', '@radix-ui/react-select', '@radix-ui/react-dialog']
         }
       }

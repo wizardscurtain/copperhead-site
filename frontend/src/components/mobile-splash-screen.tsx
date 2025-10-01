@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+const base = import.meta.env.BASE_URL || '/'
 import { Button } from './ui/button'
 
 interface MobileSplashScreenProps {
@@ -49,7 +50,7 @@ export function MobileSplashScreen({ onProceed }: MobileSplashScreenProps) {
       {/* Copperhead Logo */}
       <div className="mb-8">
         <img
-          src="/assets/67eb2953665127110d87b36c_CCI-Logo1-Or-White-Horizontal.png"
+          src={`${base}assets/67eb2953665127110d87b36c_CCI-Logo1-Or-White-Horizontal.png`}
           alt="Copperhead Consulting Inc"
           width={280}
           height={100}

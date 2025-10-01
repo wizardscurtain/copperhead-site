@@ -69,8 +69,46 @@ cd frontend && yarn dev
 
 ## 🚢 Deployment
 
-The application is configured for Emergent auto-deployment:
+The application is configured for Emergent auto-deployment (backend) and **GitHub Pages** (static frontend) now.
 
+### GitHub Pages (Frontend Only)
+
+GitHub Pages serves only static files. The React/Vite frontend can be deployed independently of the FastAPI backend.
+
+Added in this repo:
+- Workflow: `.github/workflows/deploy-gh-pages.yml`
+- Vite `base` auto-config via `GH_PAGES_BASE` env var
+- SPA fallback: `frontend/public/404.html`
+- All asset paths now resolve relative to the configured base
+
+#### How it Works
+
+1. On push to `main` (changes under `frontend/**`), the workflow builds the frontend with `GH_PAGES_BASE=/<repo-name>/`.
+2. Output in `frontend/dist` is uploaded as a Pages artifact.
+3. GitHub Pages deploys it to: `https://<your-username>.github.io/<repo-name>/`.
+
+#### One-Time Setup
+
+1. In your repository settings, enable GitHub Pages with the "GitHub Actions" source.
+2. Merge these changes to `main`.
+3. Wait for the "Deploy Frontend to GitHub Pages" workflow to finish.
+
+#### Local Preview with Base Path
+
+If you want to preview using the same base path your GitHub Pages site will have:
+
+```bash
+cd frontend
+GH_PAGES_BASE=/copperhead-ci-clone/ yarn build && npx serve dist
+```
+
+Then open `http://localhost:3000/copperhead-ci-clone/` (adjust for the serve tool output).
+
+### Backend (FastAPI)
+
+For dynamic APIs you still need a separate hosting platform (Render, Railway, Fly.io, etc.). The current frontend does **not** call `/api` endpoints, so it functions fully as a static marketing site.
+
+### Original (Emergent) Flow
 1. Emergent detects Python app via `requirements.txt`
 2. Installs dependencies and copies Python files
 3. Builds frontend via `yarn build`
@@ -79,7 +117,8 @@ The application is configured for Emergent auto-deployment:
 ### Deployment Files
 - `Procfile` - Startup command
 - `runtime.txt` - Python version (3.11.13)
-- `.slugignore` - Files to exclude from deployment
+- `.slugignore` - Files to exclude from deployment (Emergent/Heroku-style)
+- `.github/workflows/deploy-gh-pages.yml` - GitHub Pages build & deploy workflow
 - `.env.example` - Required environment variables
 
 ## 🧪 Testing

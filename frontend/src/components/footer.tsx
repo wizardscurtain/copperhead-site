@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
 
+const base = import.meta.env.BASE_URL || '/'
+
 export default function Footer() {
   return (
     <footer className="bg-gray-900 text-white py-12">
@@ -8,7 +10,7 @@ export default function Footer() {
           {/* Company Info */}
           <div className="md:col-span-2">
             <img
-              src="/assets/67eb2953665127110d87b36c_CCI-Logo1-Or-White-Horizontal.png"
+              src={`${base}assets/67eb2953665127110d87b36c_CCI-Logo1-Or-White-Horizontal.png`}
               alt="Copperhead Consulting Inc"
               width={200}
               height={50}
@@ -62,7 +64,7 @@ export default function Footer() {
             <ul className="space-y-2 text-gray-300">
               <li>
                 <a href="https://www.linkedin.com/company/copperhead-consulting-inc" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2">
-                  <img src="/assets/67efea24e374e193de17a675_mdi_linkedin.svg" alt="LinkedIn" width={20} height={20} />
+                  <img src={`${base}assets/67efea24e374e193de17a675_mdi_linkedin.svg`} alt="LinkedIn" width={20} height={20} />
                   LinkedIn
                 </a>
               </li>
