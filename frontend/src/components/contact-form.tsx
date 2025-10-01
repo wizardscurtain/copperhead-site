@@ -145,7 +145,7 @@ export function ContactForm({
       // Generate mailto link with pre-filled content
       const subject = isQuoteForm 
         ? `Quote Request: ${(formData as any).services?.join(', ') || 'Security Services'} - ${(formData as any).urgency?.toUpperCase() || 'STANDARD'}`
-        : `Contact Form: ${(formData as any).service || 'General Inquiry'} - ${urgencyLevel}`
+        : `Contact Form: ${(formData as any).services?.join(', ') || 'General Inquiry'}`
       
       const emailBody = isQuoteForm ? 
         generateQuoteEmailBody(formData as QuoteFormData) :
