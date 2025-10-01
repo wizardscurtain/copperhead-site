@@ -124,7 +124,7 @@ export function ContactForm({
   const selectedServices = watch('services') || []
   const urgencyLevel = isQuoteForm ? (watch as any)('urgency') : 'medium'
 
-  const onSubmit = async (data: ContactFormData | QuoteFormData) => {
+  const handleSubmit = (data: ContactFormData | QuoteFormData) => {
     try {
       // Track form submission
       if (typeof window !== 'undefined' && 'gtag' in window) {
@@ -135,61 +135,91 @@ export function ContactForm({
         })
       }
 
+      startTransition(() => {
+        setIsSubmitting(true)
+      })
+
       // Remove consent from data (internal use only)
       const { consent, ...formData } = data
       
-      const result = await sendContactEmail(
-        formData as ContactFormType | QuoteRequest,
-        type
-      )
-
-      if (result.success) {
-        startTransition(() => {
-          setIsSubmitted(true)
-        })
-        toast.success(
-          isQuoteForm 
-            ? 'Quote request sent successfully! We\'ll respond within ' + 
-              (urgencyLevel === 'emergency' ? '1 hour' : urgencyLevel === 'high' ? '4 hours' : '24 hours') + '.'
-            : 'Message sent successfully! We\'ll get back to you within 24 hours.',
-          {
-            description: 'Thank you for contacting Copperhead Consulting.',
-            duration: 5000
-          }
-        )
-        reset()
-        
-        // Track successful submission
-        if (typeof window !== 'undefined' && 'gtag' in window) {
-          (window as any).gtag('event', 'form_submit_success', {
-            event_category: 'conversion',
-            event_label: `${type}_form_success`
-          })
-        }
-      } else {
-        throw new Error(result.error || 'Unknown error occurred')
-      }
-    } catch (error) {
-      console.error('Form submission error:', error)
-      toast.error(
-        'Failed to send message. Please try again or contact us directly.',
-        {
-          description: error instanceof Error ? error.message : 'Unknown error occurred',
-          action: {
-            label: 'Call Now',
-            onClick: () => window.open('tel:+13605199932', '_self')
-          }
-        }
-      )
+      // Generate mailto link with pre-filled content
+      const subject = isQuoteForm 
+        ? `Quote Request: ${(formData as any).services?.join(', ') || 'Security Services'} - ${(formData as any).urgency?.toUpperCase() || 'STANDARD'}`
+        : `Contact Form: ${(formData as any).service || 'General Inquiry'} - ${urgencyLevel}`
       
-      // Track failed submission
+      const emailBody = isQuoteForm ? 
+        generateQuoteEmailBody(formData as QuoteFormData) :
+        generateContactEmailBody(formData as ContactFormData)
+      
+      const mailtoUrl = `mailto:contact@copperheadci.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`
+      
+      // Open default email client
+      window.location.href = mailtoUrl
+      
+      setIsSubmitted(true)
+      reset()
+      
+      // Track successful submission
       if (typeof window !== 'undefined' && 'gtag' in window) {
-        (window as any).gtag('event', 'form_submit_error', {
-          event_category: 'error',
+        (window as any).gtag('event', 'form_success', {
+          event_category: 'engagement',
+          event_label: `${type}_form_success`
+        })
+      }
+    } catch (err) {
+      console.error('Form submission error:', err)
+      setError('An unexpected error occurred. Please try again or contact us directly.')
+      
+      // Track form error
+      if (typeof window !== 'undefined' && 'gtag' in window) {
+        (window as any).gtag('event', 'form_error', {
+          event_category: 'engagement',
           event_label: `${type}_form_error`
         })
       }
+    } finally {
+      setIsSubmitting(false)
     }
+  }
+
+  // Generate email body for contact form
+  const generateContactEmailBody = (data: ContactFormData): string => {
+    return `New Contact Form Submission - Copperhead Consulting Inc
+
+Name: ${data.name}
+Email: ${data.email}
+Phone: ${data.phone || 'Not provided'}
+Company: ${data.company || 'Not provided'}
+Service: ${data.service}
+Urgency: ${urgencyLevel}
+
+Message:
+${data.message}
+
+---
+Submitted from: copperheadci.com contact form
+Submission time: ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles' })} PST`
+  }
+
+  // Generate email body for quote request
+  const generateQuoteEmailBody = (data: QuoteFormData): string => {
+    return `New Quote Request - Copperhead Consulting Inc
+
+Name: ${data.name}
+Email: ${data.email}
+Phone: ${data.phone || 'Not provided'}
+Company: ${data.company || 'Not provided'}
+Services: ${(data as any).services?.join(', ') || 'Not specified'}
+Timeline: ${(data as any).timeline || 'Not specified'}
+Budget: ${(data as any).budget || 'Not specified'}
+Urgency: ${(data as any).urgency || 'Standard'}
+
+Message/Requirements:
+${data.message}
+
+---
+Submitted from: copperheadci.com quote request
+Submission time: ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles' })} PST`
   }
 
   if (isSubmitted) {
