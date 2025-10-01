@@ -1,9 +1,9 @@
 {
-  "timestamp": "2025-09-30T23:30:07.172674",
+  "timestamp": "2025-10-01T00:48:33.445732",
   "summary": {
     "tests_run": 6,
-    "tests_passed": 4,
-    "success_rate": 66.66666666666666
+    "tests_passed": 6,
+    "success_rate": 100.0
   },
   "results": [
     {
@@ -29,9 +29,9 @@
       "endpoint": "api/send-email",
       "method": "POST",
       "expected_status": 400,
-      "actual_status": 500,
-      "success": false,
-      "response_preview": "{\"detail\":\"Failed to send email\"}"
+      "actual_status": 400,
+      "success": true,
+      "response_preview": "OK"
     },
     {
       "test": "Contact Form - Invalid Email",
@@ -56,9 +56,9 @@
       "endpoint": "api/quote-request",
       "method": "POST",
       "expected_status": 400,
-      "actual_status": 500,
-      "success": false,
-      "response_preview": "{\"detail\":\"Failed to send quote request\"}"
+      "actual_status": 400,
+      "success": true,
+      "response_preview": "OK"
     }
   ]
 }
