@@ -1,3 +1,4 @@
-# Root requirements.txt for Emergent deployment detection
-# Actual requirements are in backend/requirements.txt
--r backend/requirements.txt
+fastapi==0.104.1
+uvicorn==0.24.0
+pydantic==2.5.0
+python-multipart==0.0.6
