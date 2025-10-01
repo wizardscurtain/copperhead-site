@@ -286,7 +286,7 @@ Submission time: ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_A
         )}
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={handleSubmit(handleSubmit)} className="space-y-6">
         {/* Basic Information */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
