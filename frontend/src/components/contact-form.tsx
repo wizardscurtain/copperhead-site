@@ -542,10 +542,10 @@ Submission time: ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_A
         {/* Submit Button */}
         <Button
           type="submit"
-          disabled={isPending}
+          disabled={isSubmitting}
           className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:scale-[1.02] disabled:scale-100 disabled:opacity-70"
         >
-          {isPending ? (
+          {isSubmitting ? (
             <>
               <svg 
                 className="animate-spin -ml-1 mr-3 h-5 w-5" 
