@@ -41,26 +41,19 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install Node.js for serving frontend
-RUN apt-get update && \
-    apt-get install -y nodejs npm && \
-    npm install -g serve && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
 # Copy backend from backend-setup stage
-COPY --from=backend-setup /build-backend /app/backend
+COPY --from=backend-setup /build-backend/server.py ./backend/
+COPY --from=backend-setup /build-backend/requirements.txt ./backend/
 COPY --from=backend-setup /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
 
 # Copy built frontend from frontend-builder stage
-COPY --from=frontend-builder /build-frontend/dist /app/frontend/dist
+COPY --from=frontend-builder /build-frontend/dist ./frontend/dist
 
-# Create startup script
-RUN echo '#!/bin/bash\n\
-cd /app/backend && uvicorn server:app --host 0.0.0.0 --port 8001 &\n\
-cd /app/frontend/dist && serve -s . -l 3000 &\n\
-wait' > /app/start.sh && chmod +x /app/start.sh
+# Set working directory to backend
+WORKDIR /app/backend
 
-EXPOSE 3000 8001
+# Expose only backend port (it serves both API and frontend)
+EXPOSE 8001
 
-CMD ["/app/start.sh"]
+# Start backend server (it serves the frontend via FastAPI)
+CMD ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8001"]
