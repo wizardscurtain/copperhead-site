@@ -232,22 +232,36 @@ Submission time: ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_A
             </svg>
           </div>
           <h3 className="text-2xl font-bold text-foreground mb-2">
-            {isQuoteForm ? 'Quote Request Received!' : 'Message Sent Successfully!'}
+            Email Client Opened!
           </h3>
           <p className="text-muted-foreground mb-6">
-            {isQuoteForm 
-              ? `We've received your quote request and will respond within ${urgencyLevel === 'emergency' ? '1 hour' : urgencyLevel === 'high' ? '4 hours' : '24 hours'}.`
-              : 'Thank you for contacting us. We\'ll get back to you within 24 hours.'
-            }
+            Your default email client should now be open with your {isQuoteForm ? 'quote request' : 'message'} pre-filled. 
+            Please review and send the email to contact@copperheadci.com.
           </p>
+          
+          <div className="bg-slate-100 dark:bg-slate-800 p-4 rounded-lg mb-6">
+            <p className="text-sm text-muted-foreground">
+              <strong>If your email client didn't open:</strong><br/>
+              You can manually email us at{' '}
+              <a 
+                href="mailto:contact@copperheadci.com" 
+                className="text-accent hover:underline font-semibold"
+              >
+                contact@copperheadci.com
+              </a>
+            </p>
+          </div>
           
           <div className="space-y-4">
             <Button
-              onClick={() => setIsSubmitted(false)}
+              onClick={() => {
+                setIsSubmitted(false)
+                reset()
+              }}
               variant="outline"
               className="mr-4"
             >
-              Send Another Message
+              Submit Another {isQuoteForm ? 'Quote Request' : 'Message'}
             </Button>
             <Button
               onClick={() => window.open('tel:+13605199932', '_self')}
