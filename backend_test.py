@@ -219,8 +219,9 @@ def main():
     print("🚀 Starting Copperhead Consulting API Tests")
     print("=" * 50)
     
-    # Test with the configured backend URL
-    tester = CopperheadAPITester("http://localhost:8001")
+    # Test with the configured backend URL from frontend env
+    backend_url = "https://sec-elite-pwa.emergent.host"  # From frontend/.env VITE_BACKEND_URL
+    tester = CopperheadAPITester(backend_url)
     
     # Run all tests
     print("\n📋 Running Backend API Tests...")
