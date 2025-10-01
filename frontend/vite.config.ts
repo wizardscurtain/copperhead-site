@@ -12,16 +12,18 @@ export default defineConfig({
   server: {
     host: true,
     port: 3000,
-    strictPort: false,
-    hmr: {
-      clientPort: 3000
-    }
+    strictPort: false
   },
   preview: {
     host: true,
     port: 3000,
     strictPort: false,
-    cors: true
+    allowedHosts: [
+      '.emergentagent.com',
+      '.emergent.host',
+      'localhost',
+      '127.0.0.1'
+    ]
   },
   build: {
     outDir: 'dist',
