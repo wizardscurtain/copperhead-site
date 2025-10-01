@@ -1,9 +1,10 @@
 # Slugignore - Files to exclude from deployment
 # Similar to .gitignore but for deployment builds
 
-# Documentation (keep only README.md)
+# Documentation (keep only README.md and DEPLOYMENT_GUIDE.md)
 *.md
 !README.md
+!DEPLOYMENT_GUIDE.md
 docs/
 
 # Development artifacts
@@ -16,10 +17,16 @@ test_reports/
 .git/
 .github/
 
+# Build scripts (Emergent handles building)
+build.sh
+deployment-check.sh
+*.sh
+
 # Log files
 *.log
 
 # Test files
+tests/
 *test*.py
 __pycache__/
 *.pyc
@@ -28,6 +35,7 @@ __pycache__/
 # Build artifacts
 *.bak
 *.tmp
+build/
 
 # Media (if very large)
 # *.mp4
@@ -36,6 +44,7 @@ __pycache__/
 # Environment files (will be set in deployment)
 .env.local
 .env.development
+.env.example
 
 # IDE
 .vscode/
