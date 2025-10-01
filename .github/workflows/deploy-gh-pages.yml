@@ -30,6 +30,16 @@ jobs:
           cache: 'yarn'
           cache-dependency-path: frontend/yarn.lock
 
+      - name: Determine base path
+        id: base
+        run: |
+          if [ "${{ github.event.repository.name }}" = "${{ github.repository_owner }}.github.io" ]; then
+            echo "base=/" >> "$GITHUB_OUTPUT"
+          else
+            echo "base=/${{ github.event.repository.name }}/" >> "$GITHUB_OUTPUT"
+          fi
+          echo "Using base path: $(grep base= $GITHUB_OUTPUT | cut -d'=' -f2)"
+
       - name: Install dependencies
         working-directory: frontend
         run: |
@@ -38,11 +48,12 @@ jobs:
       - name: Build
         working-directory: frontend
         env:
-          GH_PAGES_BASE: /${{ github.event.repository.name }}/
+          GH_PAGES_BASE: ${{ steps.base.outputs.base }}
         run: |
           yarn build
           # Copy index.html to 404.html if not already present (fallback for SPA routing)
           if [ ! -f dist/404.html ]; then cp dist/index.html dist/404.html; fi
+          echo "Build complete with base=${GH_PAGES_BASE}"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -59,3 +70,5 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deploy
         uses: actions/deploy-pages@v4
+      - name: Output Deployed URL
+        run: echo "Deployed to ${{ steps.deploy.outputs.page_url }}"
