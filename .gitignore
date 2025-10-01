@@ -54,4 +54,7 @@ test_reports/
 .cache/
 
 # Deployment
-.emergent/summary.txt
+.emergent/summary.txt-e 
+# Environment files
+*.env
+*.env.*
