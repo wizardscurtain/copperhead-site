@@ -1,30 +1,106 @@
-# Copperhead CI clone
+# Copperhead Consulting Inc - PWA
 
-*Automatically synced with your [v0.app](https://v0.app) deployments*
+Professional security consulting services platform built as a Progressive Web App.
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/systems-5115s-projects/v0-copperhead-ci-clone)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.app-black?style=for-the-badge)](https://v0.app/chat/projects/kDuelWe7Ix7)
+## 🚀 Quick Start
 
-## Overview
+### Prerequisites
+- Python 3.11+
+- Node.js 20+
+- Yarn package manager
 
-This repository will stay in sync with your deployed chats on [v0.app](https://v0.app).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.app](https://v0.app).
+### Local Development
 
-## Deployment
+```bash
+# Install backend dependencies
+pip install -r requirements.txt
 
-Your project is live at:
+# Install frontend dependencies
+cd frontend && yarn install
 
-**[https://vercel.com/systems-5115s-projects/v0-copperhead-ci-clone](https://vercel.com/systems-5115s-projects/v0-copperhead-ci-clone)**
+# Start backend (from root)
+uvicorn app:app --reload --port 8001
 
-## Build your app
+# Start frontend (from frontend/)
+cd frontend && yarn dev
+```
 
-Continue building your app on:
+### Environment Setup
 
-**[https://v0.app/chat/projects/kDuelWe7Ix7](https://v0.app/chat/projects/kDuelWe7Ix7)**
+1. Copy `.env.example` to `.env`
+2. Update environment variables with your values
+3. Ensure MongoDB is running (local or Atlas)
 
-## How It Works
+## 📦 Project Structure
 
-1. Create and modify your project using [v0.app](https://v0.app)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+```
+/
+├── server.py           # FastAPI backend (main application)
+├── app.py              # Entry point (imports from server.py)
+├── requirements.txt    # Python dependencies
+├── Procfile           # Deployment startup command
+├── runtime.txt        # Python version specification
+│
+├── frontend/          # React + Vite frontend
+│   ├── src/          # React components, pages, lib
+│   ├── public/       # Static assets
+│   ├── dist/         # Built output (generated)
+│   └── package.json  # Frontend dependencies
+│
+├── backend/          # Reference (legacy structure)
+│   └── .env         # Backend environment variables
+│
+└── docs/            # Project documentation
+```
+
+## 🏗️ Architecture
+
+- **Frontend**: React 18 + Vite + Tailwind CSS
+- **Backend**: FastAPI (Python) serving both API and static frontend
+- **Database**: MongoDB (local development or Atlas in production)
+- **Deployment**: Emergent platform with auto-detection
+
+### Key Features
+- Progressive Web App (PWA) with service worker
+- Responsive dark theme design
+- Contact forms using mailto: (no backend email service)
+- Health check endpoint: `/api/health`
+- Static file serving from `/app/frontend/dist`
+
+## 🚢 Deployment
+
+The application is configured for Emergent auto-deployment:
+
+1. Emergent detects Python app via `requirements.txt`
+2. Installs dependencies and copies Python files
+3. Builds frontend via `yarn build`
+4. Starts via Procfile: `uvicorn app:app --port ${PORT}`
+
+### Deployment Files
+- `Procfile` - Startup command
+- `runtime.txt` - Python version (3.11.13)
+- `.slugignore` - Files to exclude from deployment
+- `.env.example` - Required environment variables
+
+## 🧪 Testing
+
+*Note: Test suite is minimal. See `/tests` directory for available tests.*
+
+```bash
+# Run Python tests (when implemented)
+pytest
+
+# Run frontend tests (when implemented)
+cd frontend && yarn test
+```
+
+## 📝 Contact & Support
+
+**Copperhead Consulting Inc**
+- Phone: (360) 519-9932
+- Email: contact@copperheadci.com
+- Website: https://copperheadci.com
+
+## 📄 License
+
+Proprietary - Copperhead Consulting Inc © 2024

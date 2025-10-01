@@ -1,15 +1,44 @@
-# Files to ignore during deployment
+# Slugignore - Files to exclude from deployment
+# Similar to .gitignore but for deployment builds
+
+# Documentation (keep only README.md)
 *.md
-.git
-.github
-.autodev
-agents
-tools
-test_reports
-*.pdf
+!README.md
+docs/
+
+# Development artifacts
+agents/
+tools/
+.autodev/
+test_reports/
+
+# Version control
+.git/
+.github/
+
+# Log files
 *.log
-.vscode
-.idea
-frontend/node_modules
-frontend/src
-backend/__pycache__
+
+# Test files
+*test*.py
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Build artifacts
+*.bak
+*.tmp
+
+# Media (if very large)
+# *.mp4
+# *.mov
+
+# Environment files (will be set in deployment)
+.env.local
+.env.development
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
