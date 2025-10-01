@@ -63,7 +63,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "https://app.emergent.sh",  # Emergent platform origin
-        "https://sec-elite-pwa.preview.emergentagent.com",
+        "https://copperhead-rebuild-1.preview.emergentagent.com",
         "https://sec-elite-pwa.emergentagent.com", 
         "http://localhost:3000",
         "http://localhost:8001",
