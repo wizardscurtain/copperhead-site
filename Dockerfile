@@ -1,0 +1,56 @@
+# Multi-stage Dockerfile for Copperhead CI PWA
+# Stage 1: Build Frontend
+FROM node:20.19.5-alpine AS frontend-builder
+
+WORKDIR /app/frontend
+
+# Copy frontend package files
+COPY frontend/package.json frontend/yarn.lock ./
+RUN yarn install --frozen-lockfile --production=false
+
+# Copy frontend source
+COPY frontend/ ./
+
+# Build frontend
+RUN yarn build
+
+# Stage 2: Setup Backend
+FROM python:3.11-slim AS backend-setup
+
+WORKDIR /app/backend
+
+# Copy backend requirements
+COPY backend/requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy backend source
+COPY backend/ ./
+
+# Stage 3: Production Runtime
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install Node.js for serving frontend
+RUN apt-get update && \
+    apt-get install -y nodejs npm && \
+    npm install -g serve && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Copy backend from backend-setup stage
+COPY --from=backend-setup /app/backend /app/backend
+COPY --from=backend-setup /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
+
+# Copy built frontend from frontend-builder stage
+COPY --from=frontend-builder /app/frontend/dist /app/frontend/dist
+
+# Create startup script
+RUN echo '#!/bin/bash\n\
+cd /app/backend && uvicorn server:app --host 0.0.0.0 --port 8001 &\n\
+cd /app/frontend/dist && serve -s . -l 3000 &\n\
+wait' > /app/start.sh && chmod +x /app/start.sh
+
+EXPOSE 3000 8001
+
+CMD ["/app/start.sh"]
