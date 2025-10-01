@@ -17,8 +17,10 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 3000,
     allowedHosts: [
+      'copperhead-rebuild-1.preview.emergentagent.com',
       '23db617c-96b6-4fc1-a993-8c7a786eeb13.preview.emergentagent.com',
       'sec-elite-pwa.preview.emergentagent.com',
+      'sec-elite-pwa.emergent.host',
       'localhost',
       '127.0.0.1',
       '0.0.0.0'
