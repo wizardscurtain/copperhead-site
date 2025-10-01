@@ -126,7 +126,7 @@ export function ContactForm({
   const selectedServices = watch('services') || []
   const urgencyLevel = isQuoteForm ? (watch as any)('urgency') : 'medium'
 
-  const handleSubmit = (data: ContactFormData | QuoteFormData) => {
+  const onSubmit = (data: ContactFormData | QuoteFormData) => {
     try {
       // Track form submission
       if (typeof window !== 'undefined' && 'gtag' in window) {
