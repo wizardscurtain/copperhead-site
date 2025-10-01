@@ -190,8 +190,7 @@ Name: ${data.name}
 Email: ${data.email}
 Phone: ${data.phone || 'Not provided'}
 Company: ${data.company || 'Not provided'}
-Service: ${data.service}
-Urgency: ${urgencyLevel}
+Services: ${data.services?.join(', ') || 'Not specified'}
 
 Message:
 ${data.message}
