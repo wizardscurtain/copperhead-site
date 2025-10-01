@@ -14,9 +14,10 @@ export default defineConfig({
     port: 3000,
   },
   preview: {
-    host: true, // Allow all hosts - safer for dynamic deployment URLs
+    host: '0.0.0.0',
     port: 3000,
-    strictPort: false
+    strictPort: false,
+    allowedHosts: 'all' // Disable host checking entirely
   },
   build: {
     outDir: 'dist',
