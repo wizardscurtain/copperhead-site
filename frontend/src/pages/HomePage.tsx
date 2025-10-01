@@ -36,15 +36,12 @@ export default function HomePage() {
                 Learn More About Us
               </CTAButton>
               
-              {/* Video Play Button */}
-              <button className="flex items-center text-white hover:text-accent transition-colors">
-                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center mr-2">
-                  <svg className="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z"/>
-                  </svg>
-                </div>
-                <span className="font-medium">Watch</span>
-              </button>
+              <CTAButton 
+                href="/contact"
+                className="bg-white/10 hover:bg-white/20 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 border border-white/30"
+              >
+                Get Started
+              </CTAButton>
             </div>
           </div>
         </div>
