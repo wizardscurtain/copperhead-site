@@ -3,8 +3,6 @@ name: Deploy Frontend to GitHub Pages
 on:
   push:
     branches: [ main ]
-    paths:
-      - 'frontend/**'
   workflow_dispatch:
 
 permissions:
@@ -30,9 +28,11 @@ jobs:
           cache: 'yarn'
           cache-dependency-path: frontend/yarn.lock
 
-      - name: Set base path (relative)
+      - name: Set base path
         id: base
-        run: echo "base=./" >> "$GITHUB_OUTPUT"
+        run: |
+          repo_name="${GITHUB_REPOSITORY#*/}"
+          echo "base=/${repo_name}/" >> "$GITHUB_OUTPUT"
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
@@ -48,11 +48,14 @@ jobs:
           GH_PAGES_BASE: ${{ steps.base.outputs.base }}
         run: |
           yarn build
-          # Copy index.html to 404.html if not already present (fallback for SPA routing)
-          if [ ! -f dist/404.html ]; then cp dist/index.html dist/404.html; fi
+          # Always copy index.html to 404.html for SPA fallback (simpler than redirect script)
+          cp dist/index.html dist/404.html
           echo "Build complete with base=${GH_PAGES_BASE}"
           echo "Listing dist root:" && ls -al dist
           echo "Finding key files:" && find dist -maxdepth 2 -type f -name 'index.html' -o -name '404.html' -o -name '*.js'
+          # Sanity check: fail if index.html missing
+          if [ ! -f dist/index.html ]; then echo 'ERROR: index.html not found after build' >&2; exit 1; fi
+          if [ ! -s dist/index.html ]; then echo 'ERROR: index.html is empty' >&2; exit 1; fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
