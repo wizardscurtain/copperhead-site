@@ -41,6 +41,23 @@ body {
   font-feature-settings: "rlig" 1, "calt" 1;
 }
 
+/* Skip to content link for accessibility */
+.skip-to-content {
+  position: absolute;
+  left: -9999px;
+  z-index: 999;
+  padding: 1rem;
+  background-color: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+  text-decoration: none;
+  border-radius: 0.25rem;
+}
+
+.skip-to-content:focus {
+  left: 1rem;
+  top: 1rem;
+}
+
 /* Hero Section Styles */
 .hero-section-professional {
   position: relative;

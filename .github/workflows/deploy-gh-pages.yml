@@ -67,5 +67,19 @@ jobs:
         uses: actions/deploy-pages@v4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
       - name: Output Deployed URL
         run: echo "Deployed to ${{ steps.deploy.outputs.page_url }}"
+      
+      - name: Validate Deployment
+        run: |
+          deployed_url="${{ steps.deploy.outputs.page_url }}"
+          echo "Validating deployment at ${deployed_url}"
+          sleep 10
+          status_code=$(curl -s -o /dev/null -w "%{http_code}" "${deployed_url}")
+          if [ "$status_code" -eq 200 ]; then
+            echo "✓ Deployment successful - HTTP ${status_code}"
+          else
+            echo "✗ Deployment check failed - HTTP ${status_code}" >&2
+            exit 1
+          fi

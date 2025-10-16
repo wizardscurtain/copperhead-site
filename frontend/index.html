@@ -9,6 +9,7 @@
     <meta name="description" content="Elite executive protection, security consulting, private investigations and K9 detection services by veteran-owned professionals." />
     <meta name="robots" content="index,follow" />
     <link rel="canonical" href="https://worksourceai.github.io/copperhead-ci-clone/" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https: data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://formspree.io;" />
     
     <!-- Open Graph Meta Tags -->
     <meta property="og:type" content="website" />
@@ -25,6 +26,79 @@
     <meta name="twitter:description" content="Elite executive protection, security consulting, private investigations and K9 detection services by veteran-owned professionals." />
     <meta name="twitter:image" content="https://worksourceai.github.io/copperhead-ci-clone/assets/67e761f4b67b3fdcfbf4f17f_CCI-Web-Home.jpg" />
     
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SecurityService",
+      "name": "Copperhead Consulting Inc",
+      "description": "Veteran-owned security consulting, executive protection, private investigations, and training services serving the Pacific Northwest.",
+      "url": "https://worksourceai.github.io/copperhead-ci-clone/",
+      "telephone": "(360) 519-9932",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "10002 Aurora Ave N Ste 36, PMB 432",
+        "addressLocality": "Seattle",
+        "addressRegion": "WA",
+        "postalCode": "98133",
+        "addressCountry": "US"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 47.6062,
+        "longitude": -122.3321
+      },
+      "openingHours": [
+        "Mo-Fr 08:00-18:00",
+        "Sa 09:00-16:00"
+      ],
+      "serviceArea": {
+        "@type": "GeoCircle",
+        "geoMidpoint": {
+          "@type": "GeoCoordinates",
+          "latitude": 47.6062,
+          "longitude": -122.3321
+        },
+        "geoRadius": "100 mi"
+      },
+      "sameAs": [
+        "https://linkedin.com/company/copperhead-consulting-inc"
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What does a security consultant do?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A security consultant assesses risks, develops security protocols, provides executive protection, conducts investigations, and implements comprehensive security solutions for businesses and individuals."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What areas does Copperhead Consulting serve?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Copperhead Consulting serves Seattle, the Pacific Northwest region, Washington State, and Oregon with comprehensive security consulting and protection services."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are Copperhead Consulting's services available 24/7?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, Copperhead Consulting provides 24/7 emergency response services with immediate deployment capabilities for urgent security situations."
+          }
+        }
+      ]
+    }
+    </script>
+    
     <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#ff6b35" />
   <link rel="manifest" href="./site.webmanifest" />
@@ -39,6 +113,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
   </head>
   <body>
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
     <div id="root"></div>
     <script>
       // If redirected from 404 fallback, restore original path for BrowserRouter
