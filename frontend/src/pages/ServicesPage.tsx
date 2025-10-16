@@ -1,9 +1,46 @@
 import { ServicesGrid } from '../components/services-grid'
 import { CTAButton } from '../components/cta-buttons'
+import { usePageSEO } from '../hooks/usePageSEO'
+import { JsonLd } from '../components/JsonLd'
+import { buildBreadcrumbList, getBreadcrumbs } from '../lib/breadcrumbs'
+import { aeoContent } from '../lib/seo'
 
 export default function ServicesPage() {
+  usePageSEO(
+    'Professional Security Services',
+    'Comprehensive security solutions backed by decades of experience and cutting-edge technology',
+    '/services'
+  )
+
+  const breadcrumbs = buildBreadcrumbList(getBreadcrumbs('/services'))
+  const howTo = aeoContent.howToContent.chooseSecurityConsultant
+  
+  const howToSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: howTo.name,
+    step: howTo.steps.map((step, index) => ({
+      '@type': 'HowToStep',
+      position: index + 1,
+      name: step
+    }))
+  }
+
   return (
     <div className="bg-slate-900 min-h-screen">
+      <JsonLd data={breadcrumbs} />
+      <JsonLd data={howToSchema} />
+
+      {/* Breadcrumb Navigation */}
+      <nav aria-label="Breadcrumb" className="bg-slate-800 py-3">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <ol className="flex items-center space-x-2 text-sm text-gray-400">
+            <li><a href="/" className="hover:text-white transition-colors">Home</a></li>
+            <li className="before:content-['/'] before:mx-2">Services</li>
+          </ol>
+        </div>
+      </nav>
+
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-b from-slate-800 to-slate-900">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -34,8 +71,27 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      {/* How-To Section */}
+      <section className="py-20 bg-slate-800" aria-labelledby="howto-heading">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+          <h2 id="howto-heading" className="text-3xl font-bold text-white mb-8 text-center">
+            {howTo.name}
+          </h2>
+          <ol className="space-y-4 mt-8">
+            {howTo.steps.map((step, index) => (
+              <li key={index} className="flex items-start gap-4">
+                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-white flex items-center justify-center font-semibold">
+                  {index + 1}
+                </span>
+                <p className="text-gray-300 pt-1">{step}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
       {/* Additional Service Information */}
-      <section className="py-20 bg-slate-800">
+      <section className="py-20 bg-slate-900">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
           <div className="text-center">
             <h2 className="text-3xl font-bold text-white mb-6">
