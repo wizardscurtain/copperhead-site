@@ -28,6 +28,8 @@ export function TestimonialsSection() {
                         alt="Star"
                         width={20}
                         height={20}
+                        loading="lazy"
+                        decoding="async"
                       />
                     ))}
                   </div>

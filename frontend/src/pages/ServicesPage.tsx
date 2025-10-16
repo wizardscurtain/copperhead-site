@@ -4,6 +4,7 @@ import { usePageSEO } from '../hooks/usePageSEO'
 import { JsonLd } from '../components/JsonLd'
 import { buildBreadcrumbList, getBreadcrumbs } from '../lib/breadcrumbs'
 import { aeoContent } from '../lib/seo'
+import { coreServices, generateServiceSchema } from '../lib/service-schema'
 
 export default function ServicesPage() {
   usePageSEO(
@@ -26,10 +27,15 @@ export default function ServicesPage() {
     }))
   }
 
+  const serviceSchemas = coreServices.map(service => generateServiceSchema(service))
+
   return (
     <div className="bg-slate-900 min-h-screen">
       <JsonLd data={breadcrumbs} />
       <JsonLd data={howToSchema} />
+      {serviceSchemas.map((schema, index) => (
+        <JsonLd key={index} data={schema} />
+      ))}
 
       {/* Breadcrumb Navigation */}
       <nav aria-label="Breadcrumb" className="bg-slate-800 py-3">

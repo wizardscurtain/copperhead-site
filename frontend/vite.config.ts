@@ -7,11 +7,6 @@ import { fileURLToPath } from 'url'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-// Minimal declaration so TS doesn't complain without @types/node
-// (We don't add the dependency to keep footprint small.)
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-declare const process: any
-
 // Use relative base so build works at root or sub-path on GitHub Pages without adjustment
 // This avoids hard-coding the repo name and simplifies deployment.
 const base = process.env.GH_PAGES_BASE || './'
