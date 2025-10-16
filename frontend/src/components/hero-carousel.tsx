@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { withBase } from '../lib/base-path'
 
 interface HeroSlide {
   id: string
@@ -10,27 +11,27 @@ interface HeroSlide {
 const heroSlides: HeroSlide[] = [
   {
     id: 'home',
-    image: '/assets/67e761f4b67b3fdcfbf4f17f_CCI-Web-Home.jpg',
+    image: withBase('assets/67e761f4b67b3fdcfbf4f17f_CCI-Web-Home.jpg'),
     alt: 'Copperhead CI Professional Security Services'
   },
   {
     id: 'pi',
-    image: '/assets/67eec03468321ce8951ae033_CCI-Web-PI.jpg',
+    image: withBase('assets/67eec03468321ce8951ae033_CCI-Web-PI.jpg'),
     alt: 'Private Investigations Services'
   },
   {
     id: 'soc',
-    image: '/assets/67eeb007429253fac0cd7e4c_CCI-Web-SOC.jpg',
+    image: withBase('assets/67eeb007429253fac0cd7e4c_CCI-Web-SOC.jpg'),
     alt: 'Security Operations Center'
   },
   {
     id: 'driver',
-    image: '/assets/67ec892286370cc1f20c74c0_CCI-Web-Driver.jpg',
+    image: withBase('assets/67ec892286370cc1f20c74c0_CCI-Web-Driver.jpg'),
     alt: 'Executive Protection Driving Services'
   },
   {
     id: 'training',
-    image: '/assets/67ef33259d35c0818526ccbe_CCI-Web-Train1.jpg',
+    image: withBase('assets/67ef33259d35c0818526ccbe_CCI-Web-Train1.jpg'),
     alt: 'Professional Security Training'
   }
 ]

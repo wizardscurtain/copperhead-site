@@ -8,11 +8,14 @@ import ServicesPage from './pages/ServicesPage'
 import ContactPage from './pages/ContactPage'
 import PrivacyPage from './pages/PrivacyPage'
 import Footer from './components/footer'
+import { getRouterBasename } from './lib/base-path'
 
 function App() {
+  const basename = getRouterBasename()
+
   return (
     <div className="min-h-screen bg-background">
-      <Router>
+      <Router basename={basename}>
         <PWAWrapper>
           <Header />
           <main id="main-content" role="main">
