@@ -298,15 +298,13 @@ async def startup_event():
 @app.on_event("shutdown")
 async def shutdown_event():
     """Graceful shutdown with database cleanup"""
-    global db_client
     logger.info("🔄 Shutting down gracefully...")
     
-    if db_client:
-        try:
-            db_client.close()
-            logger.info("💾 Database connections closed")
-        except Exception as e:
-            logger.error(f"Error closing database: {e}")
+    try:
+        await db_manager.disconnect()
+        logger.info("💾 PostgreSQL database connections closed")
+    except Exception as e:
+        logger.error(f"Error closing database: {e}")
     
     logger.info("✅ Shutdown complete")
 
