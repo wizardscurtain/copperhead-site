@@ -206,13 +206,7 @@ export function ContactForm({
       console.error('Form submission error:', err)
       setError('An unexpected error occurred. Please try again or contact us directly.')
       
-      // Track form error
-      if (typeof window !== 'undefined' && 'gtag' in window) {
-        (window as any).gtag('event', 'form_error', {
-          event_category: 'engagement',
-          event_label: `${type}_form_error`
-        })
-      }
+      // Track form error with sanitized data\n      if (typeof window !== 'undefined' && 'gtag' in window) {\n        const sanitizedEventData = sanitizeAnalyticsData({\n          event_category: 'engagement',\n          event_label: `${type}_form_error`\n        });\n        (window as any).gtag('event', 'form_error', sanitizedEventData);\n      }
     } finally {
       setIsSubmitting(false)
     }
