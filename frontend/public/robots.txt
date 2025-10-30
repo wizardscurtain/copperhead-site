@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://worksourceai.github.io/copperhead-ci-clone/sitemap.xml
+Sitemap: https://copperheadci.com/sitemap.xml
