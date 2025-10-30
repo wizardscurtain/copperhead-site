@@ -147,20 +147,18 @@ async def options_handler(full_path: str):
 # Define API routes FIRST before catch-all routes
 @app.get("/api/debug")
 async def debug_info():
-    """Debug information for troubleshooting"""
+    """Secure debug information - limited exposure"""
     try:
+        # SECURITY: Limited debug info to prevent information disclosure
         return {
             "status": "ok",
-            "frontend_dist_exists": os.path.exists(frontend_dist_path),
-            "frontend_files_count": len(os.listdir(frontend_dist_path)) if os.path.exists(frontend_dist_path) else 0,
-            "environment": os.environ.get("ENVIRONMENT", "unknown"),
-            "python_version": "3.11+",
-            "server": "FastAPI + Uvicorn",
-            "process_id": os.getpid(),
-            "working_directory": os.getcwd()
+            "frontend_available": cached_file_exists("frontend/dist"),
+            "environment": os.environ.get("ENVIRONMENT", "production"),
+            "server": "FastAPI",
+            "timestamp": int(time.time())
         }
     except Exception as e:
-        return {"status": "error", "message": str(e)}
+        return {"status": "error", "message": "Debug information unavailable"}
 
 @app.get("/api/health")
 async def api_health_check():
