@@ -259,25 +259,48 @@ Submission time: ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_A
 Security: Form data sanitized and validated`
   }
 
-  // Generate email body for quote request
+  // Generate sanitized email body for quote request
   const generateQuoteEmailBody = (data: QuoteFormData): string => {
+    const sanitizedData = {
+      name: sanitizeEmailContent(data.name),
+      email: sanitizeEmailContent(data.email),
+      phone: data.phone ? sanitizeEmailContent(data.phone) : 'Not provided',
+      company: data.company ? sanitizeEmailContent(data.company) : 'Not provided',
+      services: (data as any).services?.map((s: string) => sanitizeEmailContent(s)).join(', ') || 'Not specified',
+      timeline: (data as any).timeline ? sanitizeEmailContent((data as any).timeline) : 'Not specified',
+      budget: (data as any).budget ? sanitizeEmailContent((data as any).budget) : 'Not specified',
+      urgency: sanitizeEmailContent((data as any).urgency || 'Standard'),
+      message: sanitizeEmailContent(data.message),
+      serviceType: sanitizeEmailContent((data as any).serviceType || ''),
+      location: (data as any).location ? sanitizeEmailContent((data as any).location) : 'Not specified',
+      duration: (data as any).duration ? sanitizeEmailContent((data as any).duration) : 'Not specified',
+      additionalDetails: (data as any).additionalDetails ? sanitizeEmailContent((data as any).additionalDetails) : ''
+    };
+
     return `New Quote Request - Copperhead Consulting Inc
 
-Name: ${data.name}
-Email: ${data.email}
-Phone: ${data.phone || 'Not provided'}
-Company: ${data.company || 'Not provided'}
-Services: ${(data as any).services?.join(', ') || 'Not specified'}
-Timeline: ${(data as any).timeline || 'Not specified'}
-Budget: ${(data as any).budget || 'Not specified'}
-Urgency: ${(data as any).urgency || 'Standard'}
+Name: ${sanitizedData.name}
+Email: ${sanitizedData.email}
+Phone: ${sanitizedData.phone}
+Company: ${sanitizedData.company}
+Primary Service: ${sanitizedData.serviceType}
+Services: ${sanitizedData.services}
+Timeline: ${sanitizedData.timeline}
+Budget: ${sanitizedData.budget}
+Location: ${sanitizedData.location}
+Duration: ${sanitizedData.duration}
+Urgency: ${sanitizedData.urgency}
 
 Message/Requirements:
-${data.message}
+${sanitizedData.message}
+
+Additional Details:
+${sanitizedData.additionalDetails}
 
 ---
 Submitted from: copperheadci.com quote request
-Submission time: ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles' })} PST`
+Submission time: ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles' })} PST
+Security: Form data sanitized and validated`
   }
 
   if (isSubmitted) {
