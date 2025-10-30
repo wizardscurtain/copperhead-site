@@ -175,15 +175,7 @@ export function ContactForm({
   const urgencyLevel = isQuoteForm ? (watch as any)('urgency') : 'medium'
 
   const onSubmit = (data: ContactFormData | QuoteFormData) => {
-    try {
-      // Track form submission
-      if (typeof window !== 'undefined' && 'gtag' in window) {
-        (window as any).gtag('event', 'form_submit', {
-          event_category: 'engagement',
-          event_label: `${type}_form_submission`,
-          value: isQuoteForm ? 1 : 0.5
-        })
-      }
+    try {\n      // Rate limiting check\n      if (!formSubmissionLimiter.isAllowed('form_submit')) {\n        setError('Too many submissions. Please wait before submitting again.');\n        return;\n      }\n\n      // Track form submission with sanitized data\n      if (typeof window !== 'undefined' && 'gtag' in window) {\n        const sanitizedEventData = sanitizeAnalyticsData({\n          event_category: 'engagement',\n          event_label: `${type}_form_submission`,\n          value: isQuoteForm ? 1 : 0.5\n        });\n        (window as any).gtag('event', 'form_submit', sanitizedEventData);\n      }
 
       startTransition(() => {
         setIsSubmitting(true)
