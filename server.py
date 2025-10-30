@@ -521,6 +521,93 @@ async def api_health_check():
         }
     }
 
+# SECURITY: CSRF Token endpoint
+@app.post("/api/csrf-token")
+async def get_csrf_token(request: Request):
+    """Generate CSRF token for client"""
+    client_fingerprint = get_client_fingerprint(request)
+    token = generate_csrf_token(client_fingerprint)
+    
+    return {
+        "csrf_token": token,
+        "expires_in": CSRF_TOKEN_EXPIRY
+    }
+
+# SECURITY: Session management endpoint
+@app.post("/api/session")
+async def create_session(request: Request):
+    """Create secure session"""
+    client_fingerprint = get_client_fingerprint(request)
+    session_id = create_secure_session(client_fingerprint)
+    
+    return {
+        "session_id": session_id,
+        "expires_in": SESSION_TIMEOUT
+    }
+
+# SECURITY: Contact form with CSRF protection
+class ContactForm(BaseModel):
+    name: str
+    email: str
+    message: str
+    csrf_token: str
+
+@app.post("/api/contact")
+async def submit_contact_form(form_data: ContactForm, request: Request):
+    """Secure contact form submission with CSRF protection"""
+    client_fingerprint = get_client_fingerprint(request)
+    
+    # Validate CSRF token
+    if not validate_csrf_token(form_data.csrf_token, client_fingerprint):
+        await log_security_event(
+            "csrf_validation_failed",
+            {"form": "contact", "fingerprint": client_fingerprint},
+            request.client.host if request.client else 'unknown'
+        )
+        raise HTTPException(status_code=403, detail="Invalid CSRF token")
+    
+    # Sanitize inputs
+    name = sanitize_input(form_data.name, 100)
+    email = sanitize_input(form_data.email, 255)
+    message = sanitize_input(form_data.message, 2000)
+    
+    # Validate email format
+    email_pattern = re.compile(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+    if not email_pattern.match(email):
+        raise HTTPException(status_code=400, detail="Invalid email format")
+    
+    # Store in database if available
+    if DATABASE_CONNECTED and database:
+        try:
+            contact_submission = {
+                "_id": str(uuid.uuid4()),
+                "name": name,
+                "email": email,
+                "message": message,
+                "submitted_at": datetime.utcnow(),
+                "client_fingerprint": client_fingerprint,
+                "status": "new"
+            }
+            
+            await database.contact_submissions.insert_one(contact_submission)
+            
+            # Log successful submission
+            await log_security_event(
+                "contact_form_submitted",
+                {"submission_id": contact_submission["_id"]},
+                request.client.host if request.client else 'unknown'
+            )
+            
+            return {"status": "success", "message": "Contact form submitted successfully"}
+            
+        except Exception as e:
+            logger.error(f"Failed to store contact submission: {e}")
+            raise HTTPException(status_code=500, detail="Failed to process submission")
+    else:
+        # Fallback when database is unavailable
+        logger.info(f"Contact form submission (DB unavailable): {name} <{email}>")
+        return {"status": "success", "message": "Contact form received"}
+
 # Serve static frontend files
 frontend_dist_path = "/app/frontend/dist"
 try:
