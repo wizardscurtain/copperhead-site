@@ -31,7 +31,9 @@ def check_environment_variables():
             if os.path.exists(env_file):
                 with open(env_file, 'r') as f:
                     content = f.read()
-                    if f"{var_name}=" in content and "your_" not in content:
+                    # Check if variable is set and not a placeholder
+                    var_line = [line for line in content.split('\n') if line.startswith(f"{var_name}=")]
+                    if var_line and not any(placeholder in var_line[0] for placeholder in ["your_", "placeholder", "example"]):
                         print(f"✅ {var_name}: Configured")
                     else:
                         print(f"❌ {var_name}: Missing or placeholder value")
