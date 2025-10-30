@@ -11,7 +11,7 @@ const __dirname = path.dirname(__filename)
 const base = process.env.VITE_BASE_PATH || '/'
 
 export default defineConfig({
-  base, // critical for GitHub Pages when project is not served from root
+  base, // Production base path configuration
   plugins: [react()],
   resolve: {
     alias: {
