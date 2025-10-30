@@ -89,7 +89,7 @@ The application is configured for **production deployment** with enterprise infr
 MONGO_URL=mongodb+srv://user:pass@cluster.mongodb.net/copperhead
 
 # Frontend (build-time)
-VITE_BACKEND_URL=https://your-app.emergent.host
+VITE_BACKEND_URL=https://copperheadci.com
 VITE_APP_NAME=Copperhead Consulting Inc
 VITE_ENVIRONMENT=production
 ```
