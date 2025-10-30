@@ -1,0 +1,66 @@
+# CORRECTED Render Blueprint for Copperhead Consulting Inc
+# Fixed: Database migration timing and environment handling
+
+services:
+  # Backend API Service - CORRECTED
+  - type: web
+    name: copperhead-backend
+    env: python
+    plan: starter
+    # FIXED: Removed database migration from build (no DATABASE_URL available)
+    buildCommand: pip install -r requirements.txt
+    # FIXED: Added database migration to startup (DATABASE_URL available)
+    startCommand: |
+      python -m alembic upgrade head
+      python server.py
+    healthCheckPath: /api/health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: copperhead-db
+          property: connectionString
+      - key: ENVIRONMENT
+        value: production
+      - key: CSRF_SECRET
+        generateValue: true
+      - key: SESSION_SECRET
+        generateValue: true
+
+  # Frontend Static Site - NO CHANGES NEEDED
+  - type: web
+    name: copperhead-frontend
+    env: static
+    buildCommand: |
+      cd frontend
+      yarn install
+      yarn build
+    staticPublishPath: ./frontend/dist
+    pullRequestPreviewsEnabled: false
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=31536000
+    routes:
+      - type: rewrite
+        source: /api/*
+        destination: https://copperhead-backend.onrender.com/*
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+databases:
+  # PostgreSQL Database - NO CHANGES NEEDED
+  - name: copperhead-db
+    databaseName: copperhead_production
+    user: copperhead_user
+    plan: starter
+    postgresMajorVersion: 15
