@@ -167,7 +167,7 @@ export function HeroSection() {
                 className="w-full h-full object-cover"
               >
                 Your browser does not support the video tag.
-              </video>
+              />
             </div>
           </div>
         </div>
