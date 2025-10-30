@@ -36,7 +36,7 @@ def get_database_url():
     
     return database_url
 
-DATABASE_URL = get_database_url()"
+DATABASE_URL = get_database_url()
 
 # Create database instance
 database = databases.Database(DATABASE_URL)
