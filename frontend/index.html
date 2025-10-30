@@ -122,9 +122,9 @@
     <a href="#main-content" class="skip-to-content">Skip to main content</a>
     <div id="root"></div>
     <script>
-      // If redirected from 404 fallback, restore original path for BrowserRouter
+      // Production-ready SPA routing support
       (function(){
-        var p=new URLSearchParams(window.location.search).get('ghr');
+        var p=new URLSearchParams(window.location.search).get('redirect');
         if(p){
           try{var dest=decodeURIComponent(p);history.replaceState(null,'',dest);}catch(e){console.warn('Path restore failed',e)}
         }
