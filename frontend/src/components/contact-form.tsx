@@ -201,13 +201,7 @@ export function ContactForm({
       setIsSubmitted(true)
       reset()
       
-      // Track successful submission
-      if (typeof window !== 'undefined' && 'gtag' in window) {
-        (window as any).gtag('event', 'form_success', {
-          event_category: 'engagement',
-          event_label: `${type}_form_success`
-        })
-      }
+      // Track successful submission with sanitized data\n      if (typeof window !== 'undefined' && 'gtag' in window) {\n        const sanitizedEventData = sanitizeAnalyticsData({\n          event_category: 'engagement',\n          event_label: `${type}_form_success`\n        });\n        (window as any).gtag('event', 'form_success', sanitizedEventData);\n      }\n\n      // Store submission timestamp securely\n      SecureStorage.setItem('last_submission', Date.now().toString());
     } catch (err) {
       console.error('Form submission error:', err)
       setError('An unexpected error occurred. Please try again or contact us directly.')
