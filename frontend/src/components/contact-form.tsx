@@ -231,31 +231,42 @@ export function ContactForm({
           (window as any).gtag('event', 'form_submit', sanitizedEventData);
         }
 
-      startTransition(() => {
-        setIsSubmitting(true)
-      })
+        setIsSubmitted(true);
+        reset();
+        
+        // Track successful submission with sanitized data
+        if (typeof window !== 'undefined' && 'gtag' in window) {
+          const sanitizedEventData = sanitizeAnalyticsData({
+            event_category: 'engagement',
+            event_label: `${type}_form_success`
+          });
+          (window as any).gtag('event', 'form_success', sanitizedEventData);
+        }
 
-      // Remove consent from data (internal use only)
-      const { consent, ...formData } = data
-      
-      // Generate mailto link with pre-filled content
-      const subject = isQuoteForm 
-        ? `Quote Request: ${(formData as any).services?.join(', ') || 'Security Services'} - ${(formData as any).urgency?.toUpperCase() || 'STANDARD'}`
-        : `Contact Form: ${(formData as any).services?.join(', ') || 'General Inquiry'}`
-      
-      const emailBody = isQuoteForm ? 
-        generateQuoteEmailBody(formData as QuoteFormData) :
-        generateContactEmailBody(formData as ContactFormData)
-      
-      const mailtoUrl = `mailto:contact@copperheadci.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`
-      
-      // Open default email client
-      window.location.href = mailtoUrl
-      
-      setIsSubmitted(true)
-      reset()
-      
-      // Track successful submission with sanitized data\n      if (typeof window !== 'undefined' && 'gtag' in window) {\n        const sanitizedEventData = sanitizeAnalyticsData({\n          event_category: 'engagement',\n          event_label: `${type}_form_success`\n        });\n        (window as any).gtag('event', 'form_success', sanitizedEventData);\n      }\n\n      // Store submission timestamp securely\n      SecureStorage.setItem('last_submission', Date.now().toString());
+        // Store submission timestamp securely
+        SecureStorage.setItem('last_submission', Date.now().toString());
+
+      } catch (fetchError: any) {
+        // Fallback to mailto if backend fails
+        console.warn('Backend submission failed, falling back to mailto:', fetchError.message);
+        
+        // Generate mailto link with pre-filled content
+        const subject = isQuoteForm 
+          ? `Quote Request: ${(formData as any).services?.join(', ') || 'Security Services'} - ${(formData as any).urgency?.toUpperCase() || 'STANDARD'}`
+          : `Contact Form: ${(formData as any).services?.join(', ') || 'General Inquiry'}`;
+        
+        const emailBody = isQuoteForm ? 
+          generateQuoteEmailBody(formData as QuoteFormData) :
+          generateContactEmailBody(formData as ContactFormData);
+        
+        const mailtoUrl = `mailto:contact@copperheadci.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+        
+        // Open default email client
+        window.location.href = mailtoUrl;
+        
+        setIsSubmitted(true);
+        reset();
+      }
     } catch (err) {
       console.error('Form submission error:', err)
       setError('An unexpected error occurred. Please try again or contact us directly.')
