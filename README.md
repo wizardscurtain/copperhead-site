@@ -100,8 +100,8 @@ Then open `http://localhost:3000/copperhead-ci-clone/` (adjust for the serve too
 
 For dynamic APIs you still need a separate hosting platform (Render, Railway, Fly.io, etc.). The current frontend does **not** call `/api` endpoints, so it functions fully as a static marketing site.
 
-### Original (Emergent) Flow
-1. Emergent detects Python app via `requirements.txt`
+### Production Flow
+1. Application serves via FastAPI with `requirements.txt`
 2. Installs dependencies and copies Python files
 3. Builds frontend via `yarn build`
 4. Starts via Procfile: `uvicorn app:app --port ${PORT}`
