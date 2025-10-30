@@ -161,13 +161,24 @@ export function HeroSection() {
             }`}
           >
             <div className="aspect-video rounded-lg overflow-hidden shadow-2xl border border-accent/20">
-              <img
-                src={`${base}images/soc-team.jpg`}
-                alt="Copperhead Consulting Inc - Security Solutions"
+              <video
                 className="w-full h-full object-cover"
+                autoPlay
+                muted
+                loop
+                playsInline
+                poster={`${base}images/soc-team.jpg`}
               >
+                <source src={`${base}videos/soc-operations-demo.mp4`} type="video/mp4" />
+                <source src={`${base}videos/soc-operations-demo.webm`} type="video/webm" />
+                {/* Fallback image for browsers that don't support video */}
+                <img
+                  src={`${base}images/soc-team.jpg`}
+                  alt="Copperhead Consulting Inc - Security Operations Center"
+                  className="w-full h-full object-cover"
+                />
                 Your browser does not support the video tag.
-              />
+              </video>
             </div>
           </div>
         </div>
