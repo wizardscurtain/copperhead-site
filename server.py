@@ -39,7 +39,6 @@ DB_SERVER_SELECTION_TIMEOUT_MS = 5000
 # SECURITY: Advanced memory-safe rate limiting with circuit breaker
 import threading
 from collections import OrderedDict
-import hashlib
 
 rate_limit_lock = threading.RLock()
 rate_limit_storage = OrderedDict()  # LRU-style ordered dict
