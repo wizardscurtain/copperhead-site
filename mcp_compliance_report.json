@@ -1,0 +1,127 @@
+{
+  "overall_status": "FAIL",
+  "overall_score": 0.8571428571428571,
+  "compliance_levels": [
+    {
+      "level": "A0",
+      "name": "Autonomous Attestation",
+      "status": "WARNING",
+      "score": 0.7,
+      "details": [
+        "Checking system health and basic operations...",
+        "\u2705 Network connectivity validated",
+        "\u2705 File system integrity validated",
+        "\u2705 Configuration files validated"
+      ],
+      "errors": [
+        "\u274c Core services not running properly"
+      ],
+      "timestamp": "2025-10-30T20:39:12.989165",
+      "duration_ms": 5.114555358886719
+    },
+    {
+      "level": "A1",
+      "name": "Knowledge Base Validation",
+      "status": "FAIL",
+      "score": 0.3,
+      "details": [
+        "Validating knowledge base and data integrity...",
+        "\u2705 Data integrity validated"
+      ],
+      "errors": [
+        "\u274c Database connectivity failed",
+        "\u274c Database schema validation failed"
+      ],
+      "timestamp": "2025-10-30T20:39:13.093938",
+      "duration_ms": 104.67290878295898
+    },
+    {
+      "level": "A2",
+      "name": "Reasoning and Decision Validation",
+      "status": "PASS",
+      "score": 1.0,
+      "details": [
+        "Validating API endpoints and business logic...",
+        "\u2705 API endpoints validated",
+        "\u2705 Business logic verified",
+        "\u2705 Error handling validated"
+      ],
+      "errors": [],
+      "timestamp": "2025-10-30T20:39:13.099633",
+      "duration_ms": 5.619287490844727
+    },
+    {
+      "level": "A3",
+      "name": "Code Generation and Quality",
+      "status": "PASS",
+      "score": 1.0,
+      "details": [
+        "Validating code quality and security practices...",
+        "\u2705 Code syntax validated",
+        "\u2705 Security practices validated",
+        "\u2705 Performance optimization validated"
+      ],
+      "errors": [],
+      "timestamp": "2025-10-30T20:39:13.104230",
+      "duration_ms": 4.52423095703125
+    },
+    {
+      "level": "A4",
+      "name": "Self-Diagnosis",
+      "status": "PASS",
+      "score": 1.0,
+      "details": [
+        "Performing self-diagnosis and health monitoring...",
+        "\u2705 Health checks passed",
+        "\u2705 Performance monitoring active",
+        "\u2705 Resource utilization within limits"
+      ],
+      "errors": [],
+      "timestamp": "2025-10-30T20:39:14.105886",
+      "duration_ms": 1001.5852451324463
+    },
+    {
+      "level": "A5",
+      "name": "Self-Healing",
+      "status": "PASS",
+      "score": 1.0,
+      "details": [
+        "Validating self-healing capabilities...",
+        "\u2705 Error recovery mechanisms validated",
+        "\u2705 Service restart capabilities validated",
+        "\u2705 Configuration auto-correction validated"
+      ],
+      "errors": [],
+      "timestamp": "2025-10-30T20:39:14.108223",
+      "duration_ms": 2.224445343017578
+    },
+    {
+      "level": "A6",
+      "name": "Experience Logging",
+      "status": "PASS",
+      "score": 1.0,
+      "details": [
+        "Validating experience logging and learning systems...",
+        "\u2705 Event logging system validated",
+        "\u2705 Metrics collection validated",
+        "\u2705 Improvement tracking validated"
+      ],
+      "errors": [],
+      "timestamp": "2025-10-30T20:39:14.108447",
+      "duration_ms": 0.14328956604003906
+    }
+  ],
+  "deployment_ready": false,
+  "critical_issues": [
+    "\u274c Core services not running properly",
+    "\u274c Database connectivity failed",
+    "\u274c Database schema validation failed"
+  ],
+  "recommendations": [
+    "Improve: Enhance A0 - Autonomous Attestation",
+    "Critical: Fix A1 - Knowledge Base Validation",
+    "Ensure database connectivity for Render deployment"
+  ],
+  "generated_at": "2025-10-30T20:39:14.108489",
+  "total_duration_ms": 1124.5379447937012
+}
