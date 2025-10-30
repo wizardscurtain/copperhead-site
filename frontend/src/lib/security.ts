@@ -270,6 +270,7 @@ class SecureWebSocket {
 
 export const formSubmissionLimiter = new ClientRateLimit(300000, 3); // 3 submissions per 5 minutes
 export const analyticsLimiter = new ClientRateLimit(60000, 20); // 20 events per minute
+export const csrfManager = new CSRFManager();
 
 /**
  * Secure localStorage wrapper with encryption
