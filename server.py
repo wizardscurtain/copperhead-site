@@ -16,10 +16,19 @@ from functools import lru_cache
 DATABASE_URL = os.environ.get('MONGO_URL', 'mongodb://localhost:27017/copperhead_db')
 DATABASE_CONNECTED = False
 
-# PERFORMANCE: Cache for file system checks
+# SECURITY: Secure cached file existence check with path validation
 @lru_cache(maxsize=128)
 def cached_file_exists(path: str) -> bool:
-    """Cached file existence check to reduce I/O"""
+    """Secure cached file existence check with path traversal protection"""
+    # SECURITY: Validate and sanitize file paths
+    if not path or '..' in path or path.startswith('/'):
+        return False
+    
+    # Normalize path to prevent traversal attacks
+    normalized_path = os.path.normpath(path)
+    if normalized_path != path or normalized_path.startswith('..'):
+        return False
+    
     return os.path.exists(path)
 
 class HealthResponse(BaseModel):
