@@ -7,9 +7,8 @@ import { fileURLToPath } from 'url'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-// Use relative base so build works at root or sub-path on GitHub Pages without adjustment
-// This avoids hard-coding the repo name and simplifies deployment.
-const base = process.env.GH_PAGES_BASE || './'
+// Production base configuration
+const base = process.env.VITE_BASE_PATH || '/'
 
 export default defineConfig({
   base, // critical for GitHub Pages when project is not served from root
