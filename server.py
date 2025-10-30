@@ -55,7 +55,7 @@ async def log_requests(request: Request, call_next):
         logger.error(f"❌ {request.method} {request.url} -> ERROR: {str(e)} ({process_time:.3f}s)")
         raise
 
-# CORS configuration for frontend
+# CORS configuration for frontend - SECURITY HARDENED
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -67,9 +67,9 @@ app.add_middleware(
         "http://127.0.0.1:3000",
         "http://127.0.0.1:8001"
     ],
-    allow_credentials=True,
+    allow_credentials=False,  # SECURITY: Disabled credentials for wildcard protection
     allow_methods=["GET", "POST", "HEAD", "OPTIONS"],
-    allow_headers=["*"],
+    allow_headers=["Content-Type", "Authorization", "X-Requested-With"],  # SECURITY: Restricted headers
 )
 
 @app.options("/{full_path:path}")
