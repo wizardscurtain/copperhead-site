@@ -19,9 +19,10 @@ app = FastAPI(title="Copperhead Consulting API", version="1.0.0")
 async def global_exception_handler(request: Request, exc: Exception):
     logger.error(f"Global exception: {str(exc)}")
     logger.error(traceback.format_exc())
+    # SECURITY: Sanitized error response - no internal path exposure
     return JSONResponse(
         status_code=500,
-        content={"detail": "Internal server error", "path": str(request.url)}
+        content={"detail": "Internal server error", "error_id": str(int(time.time()))}
     )
 
 app = FastAPI(title="Copperhead Consulting API", version="1.0.0")
