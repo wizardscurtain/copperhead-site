@@ -172,7 +172,7 @@ curl -I https://your-app.emergent.host/
 ### 3. Static Assets
 ```bash
 # Check if JS bundles load
-curl -I https://your-app.emergent.host/assets/index-[hash].js
+curl -I https://copperheadci.com/assets/index-[hash].js
 # Expected: HTTP 200 OK
 ```
 
