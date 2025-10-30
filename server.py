@@ -143,7 +143,9 @@ async def security_and_logging_middleware(request: Request, call_next):
         )
     
     client_requests.append(current_time)
-    logger.info(f"🌐 {request.method} {request.url.path} from {client_ip}")
+    # Optimized logging - only log errors and important events
+    if request.url.path.startswith("/api") or request.method != "GET":
+        logger.info(f"🌐 {request.method} {request.url.path} from {client_ip}")
     
     try:
         response = await call_next(request)
@@ -158,7 +160,10 @@ async def security_and_logging_middleware(request: Request, call_next):
         response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
         response.headers["Permissions-Policy"] = "geolocation=(), microphone=(), camera=()"
         
-        logger.info(f"✅ {request.method} {request.url.path} -> {response.status_code} ({process_time:.3f}s)")
+        # Log only significant requests or errors
+        if response.status_code >= 400 or request.url.path.startswith("/api"):
+            logger.info(f"✅ {request.method} {request.url.path} -> {response.status_code} ({process_time:.3f}s)")
+        
         return response
     except Exception as e:
         process_time = time.time() - start_time
