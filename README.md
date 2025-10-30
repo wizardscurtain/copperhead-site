@@ -58,7 +58,7 @@ cd frontend && yarn dev
 - **Frontend**: React 18 + Vite + Tailwind CSS
 - **Backend**: FastAPI (Python) serving both API and static frontend
 - **Database**: MongoDB (local development or Atlas in production)
-- **Deployment**: Emergent platform with auto-detection
+- **Deployment**: Production-ready with Docker and Kubernetes support
 
 ### Key Features
 - Progressive Web App (PWA) with service worker
