@@ -43,14 +43,49 @@ const contactSchema = z.object({
 })
 
 const quoteSchema = contactSchema.extend({
-  serviceType: z.string().min(2, 'Please specify the service type you need'),
-  duration: z.string().optional(),
-  location: z.string().optional(),
+  serviceType: z.string()
+    .min(2, 'Please specify the service type you need')
+    .max(100, 'Service type too long'),
+  duration: z.string()
+    .max(200, 'Duration description too long')
+    .regex(/^[a-zA-Z0-9\s\-,\.]+$/, 'Duration contains invalid characters')
+    .optional(),
+  location: z.string()
+    .max(200, 'Location too long')
+    .regex(/^[a-zA-Z0-9\s\-,\.]+$/, 'Location contains invalid characters')
+    .optional(),
   urgency: z.enum(['low', 'medium', 'high', 'emergency'], {
     required_error: 'Please select an urgency level'
   }),
-  additionalDetails: z.string().optional()
+  additionalDetails: z.string()
+    .max(2000, 'Additional details too long')
+    .optional()
 })
+
+// Security utility functions
+const sanitizeInput = (input: string): string => {
+  if (typeof window !== 'undefined' && DOMPurify) {
+    return DOMPurify.sanitize(input, { 
+      ALLOWED_TAGS: [], 
+      ALLOWED_ATTR: [],
+      KEEP_CONTENT: true 
+    });
+  }
+  // Fallback sanitization for server-side or when DOMPurify unavailable
+  return input
+    .replace(/[<>]/g, '')
+    .replace(/javascript:/gi, '')
+    .replace(/on\w+=/gi, '')
+    .replace(/script/gi, '')
+    .trim();
+}
+
+const sanitizeEmailContent = (content: string): string => {
+  // Additional email-specific sanitization
+  return sanitizeInput(content)
+    .replace(/[\r\n]{3,}/g, '\n\n') // Limit consecutive newlines
+    .substring(0, 10000); // Hard limit for email content
+}
 
 type ContactFormData = z.infer<typeof contactSchema>
 type QuoteFormData = z.infer<typeof quoteSchema>
