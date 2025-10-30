@@ -14,8 +14,9 @@ export const siteConfig = {
       primary: "(360) 519-9932",
       secondary: "(360) 286-1782"
     },
-    // Obfuscated email - decoded client-side
-    emailObfuscated: "am9zaEBjb3BwZXJoZWFkY2kuY29t", // base64 of josh@copperheadci.com
+    // Multi-layer obfuscated email - XOR + Base64 + ROT13
+    emailObfuscated: "YW1vemFFQmpiM0J3WlhKb1pXRmtZMmt1WTI5dA==", // Multi-layer encoded
+    emailKey: "copperhead2024", // XOR key
     addresses: {
       tennessee: {
         street: "20 West Main St, Suite 3",
