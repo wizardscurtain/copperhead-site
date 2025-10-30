@@ -1,0 +1,6 @@
+# Render Static Site Redirects
+# API requests to backend service
+/api/* https://copperhead-backend.onrender.com/api/:splat 200
+
+# SPA routing - all other requests to index.html
+/* /index.html 200
