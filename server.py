@@ -277,36 +277,17 @@ async def startup_event():
         )
         logger.info(f"📂 Frontend available: {frontend_exists}")
         
-        # Initialize secure database connection with pooling
+        # Initialize PostgreSQL database connection
         try:
-            global db_client, database
-            db_client = motor.motor_asyncio.AsyncIOMotorClient(
-                DATABASE_URL,
-                maxPoolSize=DB_MAX_POOL_SIZE,
-                minPoolSize=DB_MIN_POOL_SIZE,
-                maxIdleTimeMS=DB_MAX_IDLE_TIME_MS,
-                serverSelectionTimeoutMS=DB_SERVER_SELECTION_TIMEOUT_MS,
-                retryWrites=True,
-                retryReads=True
-            )
-            
-            # Test connection with timeout
-            await asyncio.wait_for(
-                db_client.admin.command('ping'), 
-                timeout=5.0
-            )
-            
-            database = db_client.copperhead_db
+            await db_manager.connect()
+            await db_manager.create_tables()
             DATABASE_CONNECTED = True
-            logger.info("💾 Database connection: Ready with connection pooling")
+            logger.info("💾 PostgreSQL database: Ready with connection pooling")
             
-        except (ConnectionFailure, ServerSelectionTimeoutError, asyncio.TimeoutError) as db_error:
-            logger.warning(f"💾 Database connection: Failed - {db_error}")
+        except Exception as db_error:
+            logger.warning(f"💾 PostgreSQL connection: Failed - {db_error}")
             DATABASE_CONNECTED = False
             # Graceful degradation - app continues without database
-        except Exception as db_error:
-            logger.error(f"💾 Database initialization error: {db_error}")
-            DATABASE_CONNECTED = False
         
     except Exception as e:
         logger.warning(f"Startup validation failed: {e}")
