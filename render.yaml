@@ -1,0 +1,72 @@
+# Render Blueprint for Copperhead Consulting Inc
+# PostgreSQL + Static Hosting Configuration
+
+services:
+  # Backend API Service
+  - type: web
+    name: copperhead-backend
+    env: python
+    plan: starter
+    buildCommand: |
+      pip install -r requirements.txt
+      python -m alembic upgrade head
+    startCommand: python server.py
+    healthCheckPath: /api/health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: copperhead-db
+          property: connectionString
+      - key: ENVIRONMENT
+        value: production
+      - key: CSRF_SECRET
+        generateValue: true
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: RESEND_API_KEY
+        sync: false  # Set manually in Render dashboard
+
+  # Frontend Static Site
+  - type: web
+    name: copperhead-frontend
+    env: static
+    buildCommand: |
+      cd frontend
+      yarn install
+      yarn build
+    staticPublishPath: ./frontend/dist
+    pullRequestPreviewsEnabled: false
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+      - path: /videos/*
+        name: Cache-Control
+        value: public, max-age=31536000
+      - path: /images/*
+        name: Cache-Control
+        value: public, max-age=31536000
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=31536000
+    routes:
+      - type: rewrite
+        source: /api/*
+        destination: https://copperhead-backend.onrender.com/*
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+databases:
+  # PostgreSQL Database
+  - name: copperhead-db
+    databaseName: copperhead_production
+    user: copperhead_user
+    plan: starter
+    postgresMajorVersion: 15
