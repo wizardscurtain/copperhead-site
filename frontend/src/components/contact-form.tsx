@@ -12,6 +12,7 @@ import { Label } from './ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select'
 import { Checkbox } from './ui/checkbox'
 import { toast } from 'sonner'
+import { sanitizeAnalyticsData, formSubmissionLimiter, SecureStorage } from '../lib/security'
 
 // Security-enhanced form validation schemas with strict limits
 const contactSchema = z.object({
