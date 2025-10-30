@@ -13,17 +13,30 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Checkbox } from './ui/checkbox'
 import { toast } from 'sonner'
 
-// Enhanced form validation schemas
+// Security-enhanced form validation schemas with strict limits
 const contactSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters long'),
-  email: z.string().email('Please provide a valid email address'),
-  phone: z.string().optional(),
-  company: z.string().optional(),
-  services: z.array(z.string()).optional(),
-  message: z.string().min(10, 'Message must be at least 10 characters long'),
-  budget: z.string().optional(),
-  timeline: z.string().optional(),
-  source: z.string().optional(),
+  name: z.string()
+    .min(2, 'Name must be at least 2 characters long')
+    .max(100, 'Name must be less than 100 characters')
+    .regex(/^[a-zA-Z\s\-'\.]+$/, 'Name contains invalid characters'),
+  email: z.string()
+    .email('Please provide a valid email address')
+    .max(254, 'Email address too long'),
+  phone: z.string()
+    .max(20, 'Phone number too long')
+    .regex(/^[\d\s\-\(\)\+\.]*$/, 'Phone contains invalid characters')
+    .optional(),
+  company: z.string()
+    .max(200, 'Company name too long')
+    .regex(/^[a-zA-Z0-9\s\-&\.,'"]+$/, 'Company name contains invalid characters')
+    .optional(),
+  services: z.array(z.string().max(50)).max(10, 'Too many services selected').optional(),
+  message: z.string()
+    .min(10, 'Message must be at least 10 characters long')
+    .max(5000, 'Message must be less than 5000 characters'),
+  budget: z.string().max(100).optional(),
+  timeline: z.string().max(100).optional(),
+  source: z.string().max(50).optional(),
   consent: z.boolean().refine(val => val === true, {
     message: 'You must agree to our privacy policy to continue'
   })
