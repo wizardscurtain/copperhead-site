@@ -41,19 +41,27 @@ async def startup_event():
         logger.info(f"📋 Frontend dist files: {files[:10]}")  # Log first 10 files
 
 @app.middleware("http")
-async def log_requests(request: Request, call_next):
-    """Log all incoming requests for debugging"""
+async def security_and_logging_middleware(request: Request, call_next):
+    """Enhanced security headers and request logging"""
     start_time = time.time()
-    logger.info(f"🌐 {request.method} {request.url} from {request.client.host if request.client else 'unknown'}")
+    logger.info(f"🌐 {request.method} {request.url.path} from {request.client.host if request.client else 'unknown'}")
     
     try:
         response = await call_next(request)
         process_time = time.time() - start_time
-        logger.info(f"✅ {request.method} {request.url} -> {response.status_code} ({process_time:.3f}s)")
+        
+        # SECURITY: Add security headers
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        response.headers["X-Frame-Options"] = "DENY"
+        response.headers["X-XSS-Protection"] = "1; mode=block"
+        response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+        response.headers["Content-Security-Policy"] = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'"
+        
+        logger.info(f"✅ {request.method} {request.url.path} -> {response.status_code} ({process_time:.3f}s)")
         return response
     except Exception as e:
         process_time = time.time() - start_time
-        logger.error(f"❌ {request.method} {request.url} -> ERROR: {str(e)} ({process_time:.3f}s)")
+        logger.error(f"❌ {request.method} {request.url.path} -> ERROR ({process_time:.3f}s)")
         raise
 
 # CORS configuration for frontend - SECURITY HARDENED
