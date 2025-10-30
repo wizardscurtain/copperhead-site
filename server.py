@@ -576,7 +576,7 @@ async def submit_contact_form(form_data: ContactForm, request: Request):
         raise HTTPException(status_code=400, detail="Invalid email format")
     
     # Store in database if available
-    if DATABASE_CONNECTED and database:
+    if DATABASE_CONNECTED and database is not None:
         try:
             contact_submission = {
                 "_id": str(uuid.uuid4()),
