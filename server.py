@@ -463,9 +463,7 @@ async def security_and_logging_middleware(request: Request, call_next):
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://app.emergent.sh",  # Emergent platform origin
-        "https://security-gamify.preview.emergentagent.com",
-        "https://sec-elite-pwa.emergentagent.com", 
+        "https://copperheadci.com",
         "http://localhost:3000",
         "http://localhost:8001",
         "http://127.0.0.1:3000",
