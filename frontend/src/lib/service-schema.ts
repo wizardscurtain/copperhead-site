@@ -15,7 +15,7 @@ export function generateServiceSchema(service: ServiceSchemaData) {
     provider: {
       '@type': 'Organization',
       name: siteConfig.name,
-      url: 'https://worksourceai.github.io/copperhead-ci-clone/'
+      url: siteConfig.url
     },
     areaServed: {
       '@type': 'State',
