@@ -64,9 +64,12 @@ services:
         destination: /index.html
 
 databases:
-  # PostgreSQL Database
+  # PostgreSQL Database (Flexible Plan)
   - name: copperhead-db
     databaseName: copperhead_production
     user: copperhead_user
-    plan: starter
+    plan: flexible
+    cpu: 0.25
+    memoryGB: 1
+    storageGB: 10
     postgresMajorVersion: 15
