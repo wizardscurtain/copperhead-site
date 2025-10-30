@@ -267,13 +267,20 @@ export function ContactForm({
         setIsSubmitted(true);
         reset();
       }
-    } catch (err) {
-      console.error('Form submission error:', err)
-      setError('An unexpected error occurred. Please try again or contact us directly.')
+    } catch (err: any) {
+      console.error('Form submission error:', err);
+      setError(err.message || 'An unexpected error occurred. Please try again or contact us directly.');
       
-      // Track form error with sanitized data\n      if (typeof window !== 'undefined' && 'gtag' in window) {\n        const sanitizedEventData = sanitizeAnalyticsData({\n          event_category: 'engagement',\n          event_label: `${type}_form_error`\n        });\n        (window as any).gtag('event', 'form_error', sanitizedEventData);\n      }
+      // Track form error with sanitized data
+      if (typeof window !== 'undefined' && 'gtag' in window) {
+        const sanitizedEventData = sanitizeAnalyticsData({
+          event_category: 'engagement',
+          event_label: `${type}_form_error`
+        });
+        (window as any).gtag('event', 'form_error', sanitizedEventData);
+      }
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
   }
 
