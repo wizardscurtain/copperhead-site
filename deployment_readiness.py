@@ -57,7 +57,9 @@ def check_supervisor_services():
             
             print("\n🔍 Checking supervisor services...")
             for service in services:
-                if f"{service}" in output and "RUNNING" in output:
+                # Check if service is running on its line
+                service_running = any(f"{service}" in line and "RUNNING" in line for line in output.split('\n'))
+                if service_running:
                     print(f"✅ {service}: Running")
                 else:
                     print(f"❌ {service}: Not running or not configured")
