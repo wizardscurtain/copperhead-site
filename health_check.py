@@ -145,7 +145,7 @@ def check_seo_meta_tags():
                 ('og:image', 'property="og:image"'),
                 ('twitter:card', 'name="twitter:card"'),
                 ('structured data', 'application/ld+json'),
-                ('production URL', 'sec-elite-pwa.emergent.host')
+                ('production URL', 'copperheadci.com')
             ]
             
             missing_seo = []
