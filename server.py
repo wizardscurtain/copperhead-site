@@ -18,11 +18,29 @@ from collections import defaultdict
 DATABASE_URL = os.environ.get('MONGO_URL', 'mongodb://localhost:27017/copperhead_db')
 DATABASE_CONNECTED = False
 
-# SECURITY: Rate limiting with memory management
-rate_limit_storage = defaultdict(list)
+# SECURITY: Advanced memory-safe rate limiting with circuit breaker
+import threading
+from collections import OrderedDict
+import hashlib
+
+rate_limit_lock = threading.RLock()
+rate_limit_storage = OrderedDict()  # LRU-style ordered dict
 RATE_LIMIT_REQUESTS = 100  # requests per minute
 RATE_LIMIT_WINDOW = 60  # seconds
-MAX_RATE_LIMIT_ENTRIES = 10000  # Prevent memory exhaustion
+MAX_RATE_LIMIT_ENTRIES = 5000  # Reduced for better memory control
+CIRCUIT_BREAKER_THRESHOLD = 1000  # Requests per second to trigger circuit breaker
+circuit_breaker_active = False
+circuit_breaker_reset_time = 0
+
+def get_client_fingerprint(request: Request) -> str:
+    """Generate secure client fingerprint to prevent IP spoofing"""
+    client_ip = request.client.host if request.client else 'unknown'
+    user_agent = request.headers.get('user-agent', '')
+    x_forwarded = request.headers.get('x-forwarded-for', '')
+    
+    # Create fingerprint hash
+    fingerprint_data = f"{client_ip}:{user_agent[:50]}:{x_forwarded}"
+    return hashlib.sha256(fingerprint_data.encode()).hexdigest()[:16]
 
 def is_safe_path(path: str) -> bool:
     """Validate file path for security"""
