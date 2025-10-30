@@ -7,6 +7,19 @@ import os
 import logging
 import traceback
 import time
+from typing import Optional
+
+# Database configuration (MongoDB ready)
+DATABASE_URL = os.environ.get('MONGO_URL', 'mongodb://localhost:27017/copperhead_db')
+DATABASE_CONNECTED = False
+
+class HealthResponse(BaseModel):
+    status: str
+    service: str
+    version: str
+    frontend_available: bool
+    timestamp: int
+    components: dict
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
