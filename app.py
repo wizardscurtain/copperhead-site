@@ -1,6 +1,6 @@
 """
 Copperhead Consulting Inc - Main Application Entry Point
-Compatible with Emergent auto-deployment system.
+Production-ready FastAPI application.
 """
 
 # Import the FastAPI app from server.py (root level)
