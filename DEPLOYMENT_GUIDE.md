@@ -159,7 +159,7 @@ pytest tests/ -v
 
 ### 1. Health Check
 ```bash
-curl https://your-app.emergent.host/api/health
+curl https://copperheadci.com/api/health
 # Expected: {"status":"healthy","service":"copperhead-api"}
 ```
 
