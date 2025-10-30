@@ -11,6 +11,8 @@ import asyncio
 import aiofiles
 from typing import Optional
 from functools import lru_cache
+import re
+from collections import defaultdict
 
 # Database configuration (MongoDB ready)
 DATABASE_URL = os.environ.get('MONGO_URL', 'mongodb://localhost:27017/copperhead_db')
