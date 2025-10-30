@@ -221,7 +221,7 @@ async def security_and_logging_middleware(request: Request, call_next):
             logger.info(f"✅ {request.method} {request.url.path} -> {response.status_code} ({process_time:.3f}s)")
         
         return response
-    except Exception as e:
+    except Exception:
         process_time = time.time() - start_time
         logger.error(f"❌ {request.method} {request.url.path} -> ERROR ({process_time:.3f}s)")
         raise
@@ -268,7 +268,7 @@ async def debug_info():
             "server": "FastAPI",
             "timestamp": int(time.time())
         }
-    except Exception as e:
+    except Exception:
         return {"status": "error", "message": "Debug information unavailable"}
 
 @app.get("/api/health")
