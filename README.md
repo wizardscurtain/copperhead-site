@@ -69,23 +69,15 @@ cd frontend && yarn dev
 
 ## 🚢 Deployment
 
-The application is configured for Emergent auto-deployment (backend) and **GitHub Pages** (static frontend) now.
+The application is production-ready and deployed at https://copperheadci.com/
 
-### GitHub Pages (Frontend Only)
+### Production Deployment
 
-GitHub Pages serves only static files. The React/Vite frontend can be deployed independently of the FastAPI backend.
-
-Added in this repo:
-- Workflow: `.github/workflows/deploy-gh-pages.yml`
-- Vite `base` auto-config via `GH_PAGES_BASE` env var
-- SPA fallback: `frontend/public/404.html`
-- All asset paths now resolve relative to the configured base
-
-#### How it Works
-
-1. On push to `main` (changes under `frontend/**`), the workflow builds the frontend with `GH_PAGES_BASE=/<repo-name>/`.
-2. Output in `frontend/dist` is uploaded as a Pages artifact.
-3. GitHub Pages deploys it to: `https://<your-username>.github.io/<repo-name>/`.
+The application is deployed with enterprise-grade infrastructure:
+- Frontend: React/Vite SPA with optimized builds
+- Backend: FastAPI with async MongoDB integration
+- Security: Comprehensive headers, CSRF protection, rate limiting
+- Performance: CDN, caching, and optimized assets
 
 #### One-Time Setup
 
