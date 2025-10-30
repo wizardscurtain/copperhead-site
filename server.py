@@ -608,6 +608,165 @@ async def submit_contact_form(form_data: ContactForm, request: Request):
         logger.info(f"Contact form submission (DB unavailable): {name} <{email}>")
         return {"status": "success", "message": "Contact form received"}
 
+# SECURITY: WebSocket connection manager with rate limiting
+class WebSocketManager:
+    def __init__(self):
+        self.active_connections: dict = {}
+        self.connection_limits = {}
+        self.message_counts = {}
+        
+    async def connect(self, websocket: WebSocket, client_id: str):
+        """Secure WebSocket connection with rate limiting"""
+        client_ip = websocket.client.host if websocket.client else 'unknown'
+        
+        # Check connection limits per IP
+        if client_ip in self.connection_limits:
+            if self.connection_limits[client_ip] >= 5:  # Max 5 connections per IP
+                await websocket.close(code=1008, reason="Connection limit exceeded")
+                return False
+            self.connection_limits[client_ip] += 1
+        else:
+            self.connection_limits[client_ip] = 1
+        
+        await websocket.accept()
+        self.active_connections[client_id] = {
+            'websocket': websocket,
+            'ip': client_ip,
+            'connected_at': time.time(),
+            'last_message': time.time()
+        }
+        self.message_counts[client_id] = 0
+        
+        logger.info(f"WebSocket connected: {client_id} from {client_ip}")
+        return True
+    
+    def disconnect(self, client_id: str):
+        """Clean disconnect handling"""
+        if client_id in self.active_connections:
+            client_ip = self.active_connections[client_id]['ip']
+            
+            # Decrease connection count for IP
+            if client_ip in self.connection_limits:
+                self.connection_limits[client_ip] -= 1
+                if self.connection_limits[client_ip] <= 0:
+                    del self.connection_limits[client_ip]
+            
+            del self.active_connections[client_id]
+            if client_id in self.message_counts:
+                del self.message_counts[client_id]
+            
+            logger.info(f"WebSocket disconnected: {client_id}")
+    
+    async def send_personal_message(self, message: str, client_id: str):
+        """Send message to specific client"""
+        if client_id in self.active_connections:
+            websocket = self.active_connections[client_id]['websocket']
+            try:
+                await websocket.send_text(message)
+            except Exception as e:
+                logger.error(f"Failed to send WebSocket message to {client_id}: {e}")
+                self.disconnect(client_id)
+    
+    def is_rate_limited(self, client_id: str) -> bool:
+        """Check if client is rate limited"""
+        if client_id not in self.message_counts:
+            return False
+        
+        current_time = time.time()
+        connection_data = self.active_connections.get(client_id)
+        
+        if not connection_data:
+            return True
+        
+        # Reset message count every minute
+        if current_time - connection_data['last_message'] > 60:
+            self.message_counts[client_id] = 0
+            connection_data['last_message'] = current_time
+        
+        # Allow max 30 messages per minute
+        if self.message_counts[client_id] >= 30:
+            return True
+        
+        self.message_counts[client_id] += 1
+        return False
+
+websocket_manager = WebSocketManager()
+
+@app.websocket("/ws/{client_id}")
+async def websocket_endpoint(websocket: WebSocket, client_id: str):
+    """Secure WebSocket endpoint with authentication and rate limiting"""
+    # Sanitize client_id
+    client_id = sanitize_input(client_id, 50)
+    if not client_id or not re.match(r'^[a-zA-Z0-9_-]+$', client_id):
+        await websocket.close(code=1008, reason="Invalid client ID")
+        return
+    
+    # Attempt connection
+    if not await websocket_manager.connect(websocket, client_id):
+        return
+    
+    try:
+        while True:
+            # Receive message
+            data = await websocket.receive_text()
+            
+            # Rate limiting check
+            if websocket_manager.is_rate_limited(client_id):
+                await websocket.send_text(json.dumps({
+                    "error": "Rate limit exceeded",
+                    "code": "RATE_LIMIT"
+                }))
+                continue
+            
+            # Sanitize incoming message
+            sanitized_data = sanitize_input(data, 1000)
+            
+            try:
+                message_data = json.loads(sanitized_data)
+                
+                # Validate message structure
+                if not isinstance(message_data, dict) or 'type' not in message_data:
+                    await websocket.send_text(json.dumps({
+                        "error": "Invalid message format",
+                        "code": "INVALID_FORMAT"
+                    }))
+                    continue
+                
+                # Process different message types
+                message_type = message_data.get('type')
+                
+                if message_type == 'ping':
+                    await websocket.send_text(json.dumps({
+                        "type": "pong",
+                        "timestamp": int(time.time())
+                    }))
+                
+                elif message_type == 'echo':
+                    content = sanitize_input(message_data.get('content', ''), 500)
+                    await websocket.send_text(json.dumps({
+                        "type": "echo_response",
+                        "content": content,
+                        "timestamp": int(time.time())
+                    }))
+                
+                else:
+                    await websocket.send_text(json.dumps({
+                        "error": "Unknown message type",
+                        "code": "UNKNOWN_TYPE"
+                    }))
+                
+            except json.JSONDecodeError:
+                await websocket.send_text(json.dumps({
+                    "error": "Invalid JSON",
+                    "code": "INVALID_JSON"
+                }))
+                
+    except WebSocketDisconnect:
+        websocket_manager.disconnect(client_id)
+    except Exception as e:
+        logger.error(f"WebSocket error for {client_id}: {e}")
+        websocket_manager.disconnect(client_id)
+
 # Serve static frontend files
 frontend_dist_path = "/app/frontend/dist"
 try:
