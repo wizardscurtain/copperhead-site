@@ -19,7 +19,7 @@ export function buildBreadcrumbList(items: BreadcrumbItem[]) {
 }
 
 export function getBreadcrumbs(pathname: string): BreadcrumbItem[] {
-  const baseUrl = 'https://worksourceai.github.io/copperhead-ci-clone'
+  const baseUrl = siteConfig.url
   const items: BreadcrumbItem[] = [
     { name: 'Home', url: baseUrl + '/' }
   ]
