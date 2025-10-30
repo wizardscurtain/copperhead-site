@@ -97,6 +97,177 @@ class ClientRateLimit {
   }
 }
 
+/**
+ * CSRF Token Manager
+ */
+class CSRFManager {
+  private token: string | null = null;
+  private tokenExpiry: number = 0;
+
+  async getToken(): Promise<string> {
+    // Check if current token is still valid
+    if (this.token && Date.now() < this.tokenExpiry) {
+      return this.token;
+    }
+
+    try {
+      const response = await fetch('/api/csrf-token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'same-origin'
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to get CSRF token');
+      }
+
+      const data = await response.json();
+      this.token = data.csrf_token;
+      this.tokenExpiry = Date.now() + (data.expires_in * 1000) - 60000; // Refresh 1 min early
+
+      return this.token;
+    } catch (error) {
+      console.error('CSRF token fetch failed:', error);
+      throw error;
+    }
+  }
+
+  invalidateToken(): void {
+    this.token = null;
+    this.tokenExpiry = 0;
+  }
+}
+
+/**
+ * Secure WebSocket Manager
+ */
+class SecureWebSocket {
+  private ws: WebSocket | null = null;
+  private clientId: string;
+  private reconnectAttempts: number = 0;
+  private maxReconnectAttempts: number = 5;
+  private messageQueue: string[] = [];
+  private rateLimiter: ClientRateLimit;
+
+  constructor(clientId: string) {
+    this.clientId = this.sanitizeClientId(clientId);
+    this.rateLimiter = new ClientRateLimit(60000, 30); // 30 messages per minute
+  }
+
+  private sanitizeClientId(id: string): string {
+    return id.replace(/[^a-zA-Z0-9_-]/g, '').substring(0, 50);
+  }
+
+  connect(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      try {
+        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const wsUrl = `${protocol}//${window.location.host}/ws/${this.clientId}`;
+        
+        this.ws = new WebSocket(wsUrl);
+
+        this.ws.onopen = () => {
+          console.log('WebSocket connected');
+          this.reconnectAttempts = 0;
+          
+          // Send queued messages
+          while (this.messageQueue.length > 0) {
+            const message = this.messageQueue.shift();
+            if (message) this.send(message);
+          }
+          
+          resolve();
+        };
+
+        this.ws.onmessage = (event) => {
+          try {
+            const data = JSON.parse(event.data);
+            this.handleMessage(data);
+          } catch (error) {
+            console.error('Invalid WebSocket message:', error);
+          }
+        };
+
+        this.ws.onclose = () => {
+          console.log('WebSocket disconnected');
+          this.attemptReconnect();
+        };
+
+        this.ws.onerror = (error) => {
+          console.error('WebSocket error:', error);
+          reject(error);
+        };
+
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  send(message: string): boolean {
+    if (!this.rateLimiter.isAllowed('websocket_message')) {
+      console.warn('WebSocket message rate limited');
+      return false;
+    }
+
+    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+      try {
+        this.ws.send(message);
+        return true;
+      } catch (error) {
+        console.error('Failed to send WebSocket message:', error);
+        return false;
+      }
+    } else {
+      // Queue message for later
+      if (this.messageQueue.length < 10) { // Limit queue size
+        this.messageQueue.push(message);
+      }
+      return false;
+    }
+  }
+
+  private handleMessage(data: any): void {
+    if (data.error) {
+      console.error('WebSocket server error:', data.error);
+      return;
+    }
+
+    // Handle different message types
+    switch (data.type) {
+      case 'pong':
+        console.log('Received pong');
+        break;
+      case 'echo_response':
+        console.log('Echo response:', data.content);
+        break;
+      default:
+        console.log('Unknown message type:', data.type);
+    }
+  }
+
+  private attemptReconnect(): void {
+    if (this.reconnectAttempts < this.maxReconnectAttempts) {
+      this.reconnectAttempts++;
+      const delay = Math.pow(2, this.reconnectAttempts) * 1000; // Exponential backoff
+      
+      setTimeout(() => {
+        console.log(`Attempting WebSocket reconnection (${this.reconnectAttempts}/${this.maxReconnectAttempts})`);
+        this.connect().catch(console.error);
+      }, delay);
+    }
+  }
+
+  disconnect(): void {
+    if (this.ws) {
+      this.ws.close();
+      this.ws = null;
+    }
+  }
+}
+
 export const formSubmissionLimiter = new ClientRateLimit(300000, 3); // 3 submissions per 5 minutes
 export const analyticsLimiter = new ClientRateLimit(60000, 20); // 20 events per minute
 
