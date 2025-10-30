@@ -17,7 +17,26 @@ from sqlalchemy import (
 from sqlalchemy.dialects.postgresql import JSONB, INET, UUID
 from sqlalchemy.sql import func
 
-# Database configuration for Render PostgreSQL\nDATABASE_URL = os.environ.get(\n    'DATABASE_URL', \n    'postgresql://localhost:5432/copperhead_db'\n)\n\n# Handle Render's postgres:// URL format and add SSL for production\nif DATABASE_URL.startswith('postgres://'):\n    DATABASE_URL = DATABASE_URL.replace('postgres://', 'postgresql://', 1)\n\n# Add SSL mode for Render PostgreSQL in production\nif 'localhost' not in DATABASE_URL and 'sslmode' not in DATABASE_URL:\n    separator = '&' if '?' in DATABASE_URL else '?'\n    DATABASE_URL += f'{separator}sslmode=require'"
+# Database configuration for Render PostgreSQL
+def get_database_url():
+    """Get and format database URL for Render PostgreSQL"""
+    database_url = os.environ.get(
+        'DATABASE_URL', 
+        'postgresql://localhost:5432/copperhead_db'
+    )
+    
+    # Handle Render's postgres:// URL format
+    if database_url.startswith('postgres://'):
+        database_url = database_url.replace('postgres://', 'postgresql://', 1)
+    
+    # Add SSL mode for Render PostgreSQL in production
+    if 'localhost' not in database_url and 'sslmode' not in database_url:
+        separator = '&' if '?' in database_url else '?'
+        database_url += f'{separator}sslmode=require'
+    
+    return database_url
+
+DATABASE_URL = get_database_url()"
 
 # Create database instance
 database = databases.Database(DATABASE_URL)
