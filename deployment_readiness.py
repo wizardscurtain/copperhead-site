@@ -50,7 +50,8 @@ def check_supervisor_services():
         result = subprocess.run(['sudo', 'supervisorctl', 'status'], 
                               capture_output=True, text=True, timeout=10)
         
-        if result.returncode == 0:
+        # Accept return codes 0 (all good) and 3 (some services not running but command succeeded)
+        if result.returncode in [0, 3]:
             output = result.stdout
             services = ['backend', 'frontend']
             all_running = True
@@ -67,7 +68,7 @@ def check_supervisor_services():
             
             return all_running
         else:
-            print(f"❌ Supervisor: Command failed - {result.stderr}")
+            print(f"❌ Supervisor: Command failed (code {result.returncode}) - {result.stderr}")
             return False
     except Exception as e:
         print(f"❌ Supervisor: {str(e)}")
