@@ -119,15 +119,23 @@ async def security_and_logging_middleware(request: Request, call_next):
     start_time = time.time()
     client_ip = request.client.host if request.client else 'unknown'
     
-    # SECURITY: Rate limiting
+    # SECURITY: Rate limiting with memory management
     current_time = time.time()
+    
+    # Periodic cleanup to prevent memory exhaustion
+    if len(rate_limit_storage) > MAX_RATE_LIMIT_ENTRIES:
+        # Remove oldest entries
+        old_keys = [k for k, v in rate_limit_storage.items() 
+                   if not v or current_time - v[-1] > RATE_LIMIT_WINDOW * 2]
+        for key in old_keys[:len(old_keys)//2]:  # Remove half of old entries
+            del rate_limit_storage[key]
+    
     client_requests = rate_limit_storage[client_ip]
     
     # Clean old requests outside the window
     client_requests[:] = [req_time for req_time in client_requests if current_time - req_time < RATE_LIMIT_WINDOW]
     
     if len(client_requests) >= RATE_LIMIT_REQUESTS:
-        logger.warning(f"Rate limit exceeded for {client_ip}")
         return JSONResponse(
             status_code=429,
             content={"detail": "Rate limit exceeded"},
