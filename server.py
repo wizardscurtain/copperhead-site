@@ -14,8 +14,12 @@ from functools import lru_cache
 import re
 from collections import defaultdict
 import uuid
-from datetime import datetime
+from datetime import datetime, timedelta
 import bleach
+import secrets
+import hmac
+import hashlib
+import json
 
 # Database configuration with connection pooling
 import motor.motor_asyncio
