@@ -28,8 +28,7 @@ export default defineConfig({
     port: 3000,
     strictPort: false,
     allowedHosts: [
-      '.emergentagent.com',
-      '.emergent.host',
+      'copperheadci.com',
       'localhost',
       '127.0.0.1'
     ]
