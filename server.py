@@ -538,25 +538,23 @@ async def submit_contact_form(form_data: ContactForm, request: Request):
     if not email_pattern.match(email):
         raise HTTPException(status_code=400, detail="Invalid email format")
     
-    # Store in database if available
-    if DATABASE_CONNECTED and database is not None:
+    # Store in PostgreSQL database if available
+    if DATABASE_CONNECTED:
         try:
-            contact_submission = {
-                "_id": str(uuid.uuid4()),
+            submission_data = {
                 "name": name,
                 "email": email,
                 "message": message,
-                "submitted_at": datetime.utcnow(),
                 "client_fingerprint": client_fingerprint,
                 "status": "new"
             }
             
-            await database.contact_submissions.insert_one(contact_submission)
+            submission_id = await insert_contact_submission(submission_data)
             
             # Log successful submission
             await log_security_event(
                 "contact_form_submitted",
-                {"submission_id": contact_submission["_id"]},
+                {"submission_id": submission_id},
                 request.client.host if request.client else 'unknown'
             )
             
