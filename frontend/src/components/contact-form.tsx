@@ -174,8 +174,62 @@ export function ContactForm({
   const selectedServices = watch('services') || []
   const urgencyLevel = isQuoteForm ? (watch as any)('urgency') : 'medium'
 
-  const onSubmit = (data: ContactFormData | QuoteFormData) => {
-    try {\n      // Rate limiting check\n      if (!formSubmissionLimiter.isAllowed('form_submit')) {\n        setError('Too many submissions. Please wait before submitting again.');\n        return;\n      }\n\n      // Track form submission with sanitized data\n      if (typeof window !== 'undefined' && 'gtag' in window) {\n        const sanitizedEventData = sanitizeAnalyticsData({\n          event_category: 'engagement',\n          event_label: `${type}_form_submission`,\n          value: isQuoteForm ? 1 : 0.5\n        });\n        (window as any).gtag('event', 'form_submit', sanitizedEventData);\n      }
+  const onSubmit = async (data: ContactFormData | QuoteFormData) => {
+    try {
+      // Rate limiting check
+      if (!formSubmissionLimiter.isAllowed('form_submit')) {
+        setError('Too many submissions. Please wait before submitting again.');
+        return;
+      }
+
+      setIsSubmitting(true);
+
+      // Get CSRF token
+      let csrfToken: string;
+      try {
+        csrfToken = await csrfManager.getToken();
+      } catch (error) {
+        setError('Security validation failed. Please try again.');
+        return;
+      }
+
+      // Prepare secure form data
+      const { consent, ...formData } = data;
+      const secureFormData = {
+        ...formData,
+        csrf_token: csrfToken
+      };
+
+      // Submit to secure backend endpoint
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'same-origin',
+          body: JSON.stringify(secureFormData)
+        });
+
+        if (!response.ok) {
+          if (response.status === 403) {
+            csrfManager.invalidateToken();
+            throw new Error('Security validation failed. Please refresh and try again.');
+          }
+          throw new Error('Failed to submit form. Please try again.');
+        }
+
+        const result = await response.json();
+        
+        // Track form submission with sanitized data
+        if (typeof window !== 'undefined' && 'gtag' in window) {
+          const sanitizedEventData = sanitizeAnalyticsData({
+            event_category: 'engagement',
+            event_label: `${type}_form_submission`,
+            value: isQuoteForm ? 1 : 0.5
+          });
+          (window as any).gtag('event', 'form_submit', sanitizedEventData);
+        }
 
       startTransition(() => {
         setIsSubmitting(true)
