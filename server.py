@@ -21,20 +21,14 @@ import hmac
 import hashlib
 import json
 
-# Database configuration with connection pooling
-import motor.motor_asyncio
-from pymongo.errors import ConnectionFailure, ServerSelectionTimeoutError
+# Database configuration with PostgreSQL
+from database import (
+    db_manager, insert_contact_submission, insert_security_log,
+    insert_session, get_session, update_session_activity, 
+    delete_session, cleanup_expired_sessions
+)
 
-DATABASE_URL = os.environ.get('MONGO_URL', 'mongodb://localhost:27017/copperhead_db')
 DATABASE_CONNECTED = False
-db_client = None
-database = None
-
-# Connection pool configuration
-DB_MAX_POOL_SIZE = 10
-DB_MIN_POOL_SIZE = 1
-DB_MAX_IDLE_TIME_MS = 30000
-DB_SERVER_SELECTION_TIMEOUT_MS = 5000
 
 # SECURITY: Advanced memory-safe rate limiting with circuit breaker
 import threading
