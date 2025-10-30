@@ -118,8 +118,19 @@ async def debug_info():
 
 @app.get("/api/health")
 async def api_health_check():
-    """API health check endpoint"""
-    return {"status": "healthy", "service": "copperhead-api"}
+    """Unified health check endpoint with comprehensive status"""
+    frontend_available = os.path.exists(frontend_dist_path)
+    return {
+        "status": "healthy", 
+        "service": "copperhead-api",
+        "version": "1.0.0",
+        "frontend_available": frontend_available,
+        "timestamp": int(time.time()),
+        "components": {
+            "api": "healthy",
+            "frontend": "available" if frontend_available else "unavailable"
+        }
+    }
 
 # Serve static frontend files
 frontend_dist_path = "/app/frontend/dist"
