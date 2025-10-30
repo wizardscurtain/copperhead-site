@@ -18,6 +18,25 @@ from collections import defaultdict
 DATABASE_URL = os.environ.get('MONGO_URL', 'mongodb://localhost:27017/copperhead_db')
 DATABASE_CONNECTED = False
 
+# SECURITY: Rate limiting storage
+rate_limit_storage = defaultdict(list)
+RATE_LIMIT_REQUESTS = 100  # requests per minute
+RATE_LIMIT_WINDOW = 60  # seconds
+
+def is_safe_path(path: str) -> bool:
+    """Validate file path for security"""
+    if not path:
+        return False
+    
+    # Check for directory traversal patterns
+    dangerous_patterns = ['..', '~', '$', '|', ';', '&', '`', '<', '>', '"', "'"]
+    if any(pattern in path for pattern in dangerous_patterns):
+        return False
+    
+    # Validate against allowed file extensions and patterns
+    safe_pattern = re.compile(r'^[a-zA-Z0-9._/-]+$')
+    return bool(safe_pattern.match(path)) and len(path) < 255
+
 # SECURITY: Secure cached file existence check with path validation
 @lru_cache(maxsize=128)
 def cached_file_exists(path: str) -> bool:
