@@ -114,7 +114,7 @@ export const analyticsConfig = {
 // Performance configuration
 export const performanceConfig = {
   images: {
-    domains: ['copperheadci.com', 'vercel.com'],
+    domains: ['copperheadci.com'],
     formats: ['webp', 'avif'],
     quality: 85
   },
