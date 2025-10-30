@@ -231,22 +231,32 @@ export function ContactForm({
     }
   }
 
-  // Generate email body for contact form
+  // Generate sanitized email body for contact form
   const generateContactEmailBody = (data: ContactFormData): string => {
+    const sanitizedData = {
+      name: sanitizeEmailContent(data.name),
+      email: sanitizeEmailContent(data.email),
+      phone: data.phone ? sanitizeEmailContent(data.phone) : 'Not provided',
+      company: data.company ? sanitizeEmailContent(data.company) : 'Not provided',
+      services: data.services?.map(s => sanitizeEmailContent(s)).join(', ') || 'Not specified',
+      message: sanitizeEmailContent(data.message)
+    };
+
     return `New Contact Form Submission - Copperhead Consulting Inc
 
-Name: ${data.name}
-Email: ${data.email}
-Phone: ${data.phone || 'Not provided'}
-Company: ${data.company || 'Not provided'}
-Services: ${data.services?.join(', ') || 'Not specified'}
+Name: ${sanitizedData.name}
+Email: ${sanitizedData.email}
+Phone: ${sanitizedData.phone}
+Company: ${sanitizedData.company}
+Services: ${sanitizedData.services}
 
 Message:
-${data.message}
+${sanitizedData.message}
 
 ---
 Submitted from: copperheadci.com contact form
-Submission time: ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles' })} PST`
+Submission time: ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles' })} PST
+Security: Form data sanitized and validated`
   }
 
   // Generate email body for quote request
