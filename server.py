@@ -57,6 +57,44 @@ def get_client_fingerprint(request: Request) -> str:
     fingerprint_data = f"{client_ip}:{user_agent[:50]}:{x_forwarded}"
     return hashlib.sha256(fingerprint_data.encode()).hexdigest()[:16]
 
+def sanitize_input(data: str, max_length: int = 1000) -> str:
+    """Sanitize user input to prevent injection attacks"""
+    if not data:
+        return ""
+    
+    # Truncate to prevent buffer overflow
+    data = data[:max_length]
+    
+    # Remove dangerous characters and HTML
+    sanitized = bleach.clean(data, tags=[], attributes={}, strip=True)
+    
+    # Additional SQL/NoSQL injection prevention
+    dangerous_patterns = ['$', '{', '}', '..', '<script', 'javascript:', 'eval(']
+    for pattern in dangerous_patterns:
+        sanitized = sanitized.replace(pattern, '')
+    
+    return sanitized.strip()
+
+async def log_security_event(event_type: str, details: dict, client_ip: str):
+    """Log security events to database with proper error handling"""
+    if not DATABASE_CONNECTED or not database:
+        logger.warning(f"Security event not logged - DB unavailable: {event_type}")
+        return
+    
+    try:
+        security_log = {
+            "_id": str(uuid.uuid4()),
+            "event_type": event_type,
+            "timestamp": datetime.utcnow(),
+            "client_ip": client_ip,
+            "details": details,
+            "severity": "high" if event_type in ["rate_limit_exceeded", "circuit_breaker"] else "medium"
+        }
+        
+        await database.security_logs.insert_one(security_log)
+    except Exception as e:
+        logger.error(f"Failed to log security event: {e}")
+
 def is_safe_path(path: str) -> bool:
     """Validate file path for security"""
     if not path:
