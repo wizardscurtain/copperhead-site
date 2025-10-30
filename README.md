@@ -109,7 +109,7 @@ For dynamic APIs you still need a separate hosting platform (Render, Railway, Fl
 ### Deployment Files
 - `Procfile` - Startup command
 - `runtime.txt` - Python version (3.11.13)
-- `.slugignore` - Files to exclude from deployment (Emergent/Heroku-style)
+- `.slugignore` - Files to exclude from deployment
 - `.github/workflows/deploy-gh-pages.yml` - GitHub Pages build & deploy workflow
 - `.env.example` - Required environment variables
 
