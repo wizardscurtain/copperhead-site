@@ -14,9 +14,21 @@ from functools import lru_cache
 import re
 from collections import defaultdict
 
-# Database configuration (MongoDB ready)
+# Database configuration with connection pooling
+import motor.motor_asyncio
+from pymongo.errors import ConnectionFailure, ServerSelectionTimeoutError
+import asyncio
+
 DATABASE_URL = os.environ.get('MONGO_URL', 'mongodb://localhost:27017/copperhead_db')
 DATABASE_CONNECTED = False
+db_client = None
+database = None
+
+# Connection pool configuration
+DB_MAX_POOL_SIZE = 10
+DB_MIN_POOL_SIZE = 1
+DB_MAX_IDLE_TIME_MS = 30000
+DB_SERVER_SELECTION_TIMEOUT_MS = 5000
 
 # SECURITY: Advanced memory-safe rate limiting with circuit breaker
 import threading
