@@ -204,7 +204,7 @@ try:
         # Serve other static files (favicon, manifest, etc.) - but NOT API routes
         @app.get("/{file_path:path}")
         async def serve_static_files(file_path: str):
-            """Serve static files from frontend dist"""
+            """Optimized static file serving with caching"""
             # Ensure API routes are not intercepted
             if file_path.startswith("api"):
                 raise HTTPException(status_code=404, detail="API endpoint not found")
@@ -212,11 +212,15 @@ try:
             # Handle special PWA files
             if file_path == "site.webmanifest":
                 manifest_path = os.path.join(frontend_dist_path, "site.webmanifest")
-                if os.path.exists(manifest_path):
-                    return FileResponse(manifest_path, media_type="application/manifest+json")
+                if cached_file_exists(manifest_path):
+                    # PERFORMANCE: Add cache headers for manifest
+                    return FileResponse(
+                        manifest_path, 
+                        media_type="application/manifest+json",
+                        headers={"Cache-Control": "public, max-age=3600"}
+                    )
                 else:
-                    # Fallback manifest if file doesn't exist
-                    logger.info("Serving fallback PWA manifest")
+                    # Fallback manifest with cache headers
                     return JSONResponse({
                         "name": "Copperhead Consulting Inc",
                         "short_name": "Copperhead",
@@ -232,22 +236,29 @@ try:
                                 "type": "image/png"
                             }
                         ]
-                    })
+                    }, headers={"Cache-Control": "public, max-age=3600"})
             
             file_full_path = os.path.join(frontend_dist_path, file_path)
-            if os.path.exists(file_full_path) and os.path.isfile(file_full_path):
-                return FileResponse(file_full_path)
+            if cached_file_exists(file_full_path) and os.path.isfile(file_full_path):
+                # PERFORMANCE: Add appropriate cache headers based on file type
+                cache_headers = {"Cache-Control": "public, max-age=31536000"} if any(
+                    file_path.endswith(ext) for ext in ['.js', '.css', '.png', '.jpg', '.ico', '.woff2']
+                ) else {"Cache-Control": "public, max-age=3600"}
+                
+                return FileResponse(file_full_path, headers=cache_headers)
             
             # Handle common missing files gracefully
             if file_path in ["apple-touch-icon.png", "favicon.ico", "robots.txt"]:
-                logger.info(f"Serving placeholder for missing file: {file_path}")
-                # Return a 1x1 transparent PNG for missing icons
-                if file_path.endswith(".png") or file_path.endswith(".ico"):
+                if file_path.endswith((".png", ".ico")):
                     return JSONResponse({"error": "Asset not found"}, status_code=404)
             
             # For SPA routing, return index.html for non-file requests
             if "." not in file_path:
-                return FileResponse(f"{frontend_dist_path}/index.html", media_type="text/html")
+                return FileResponse(
+                    f"{frontend_dist_path}/index.html", 
+                    media_type="text/html",
+                    headers={"Cache-Control": "no-cache"}
+                )
             
             raise HTTPException(status_code=404, detail="File not found")
             
