@@ -4,7 +4,7 @@
 export const siteConfig = {
   name: "Copperhead Consulting Inc",
   description: "Veteran-owned security consulting, executive protection, private investigations, and training services serving the Pacific Northwest.",
-  url: "https://copperheadci.com",
+  url: "https://sec-elite-pwa.emergent.host",
   ogImage: "https://copperheadci.com/og-image.jpg",
   links: {
     linkedin: "https://linkedin.com/company/copperhead-consulting-inc",
