@@ -189,22 +189,14 @@ def validate_session(session_id: str, client_fingerprint: str) -> bool:
     return True
 
 async def log_security_event(event_type: str, details: dict, client_ip: str):
-    """Log security events to database with proper error handling"""
-    if not DATABASE_CONNECTED or not database:
+    """Log security events to PostgreSQL database with proper error handling"""
+    if not DATABASE_CONNECTED:
         logger.warning(f"Security event not logged - DB unavailable: {event_type}")
         return
     
     try:
-        security_log = {
-            "_id": str(uuid.uuid4()),
-            "event_type": event_type,
-            "timestamp": datetime.utcnow(),
-            "client_ip": client_ip,
-            "details": details,
-            "severity": "high" if event_type in ["rate_limit_exceeded", "circuit_breaker"] else "medium"
-        }
-        
-        await database.security_logs.insert_one(security_log)
+        severity = "high" if event_type in ["rate_limit_exceeded", "circuit_breaker"] else "medium"
+        await insert_security_log(event_type, client_ip, details, severity)
     except Exception as e:
         logger.error(f"Failed to log security event: {e}")
 
