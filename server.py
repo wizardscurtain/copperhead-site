@@ -209,6 +209,21 @@ async def startup_event():
     logger.info(f"🌍 Environment: {os.environ.get('ENVIRONMENT', 'production')}")
     logger.info("✅ Startup complete - ready to serve requests")
 
+@app.on_event("shutdown")
+async def shutdown_event():
+    """Graceful shutdown with database cleanup"""
+    global db_client
+    logger.info("🔄 Shutting down gracefully...")
+    
+    if db_client:
+        try:
+            db_client.close()
+            logger.info("💾 Database connections closed")
+        except Exception as e:
+            logger.error(f"Error closing database: {e}")
+    
+    logger.info("✅ Shutdown complete")
+
 @app.middleware("http")
 async def security_and_logging_middleware(request: Request, call_next):
     """Enhanced security with rate limiting and comprehensive headers"""
