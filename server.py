@@ -265,6 +265,12 @@ async def security_and_logging_middleware(request: Request, call_next):
         
         # Individual client rate limiting
         if len(client_requests) >= RATE_LIMIT_REQUESTS:
+            # Log security event
+            await log_security_event(
+                "rate_limit_exceeded", 
+                {"requests": len(client_requests), "fingerprint": client_fingerprint},
+                client_ip
+            )
             return JSONResponse(
                 status_code=429,
                 content={"detail": "Rate limit exceeded"},
