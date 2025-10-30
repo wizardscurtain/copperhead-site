@@ -114,20 +114,40 @@ async def startup_event():
 
 @app.middleware("http")
 async def security_and_logging_middleware(request: Request, call_next):
-    """Enhanced security headers and request logging"""
+    """Enhanced security with rate limiting and comprehensive headers"""
     start_time = time.time()
-    logger.info(f"🌐 {request.method} {request.url.path} from {request.client.host if request.client else 'unknown'}")
+    client_ip = request.client.host if request.client else 'unknown'
+    
+    # SECURITY: Rate limiting
+    current_time = time.time()
+    client_requests = rate_limit_storage[client_ip]
+    
+    # Clean old requests outside the window
+    client_requests[:] = [req_time for req_time in client_requests if current_time - req_time < RATE_LIMIT_WINDOW]
+    
+    if len(client_requests) >= RATE_LIMIT_REQUESTS:
+        logger.warning(f"Rate limit exceeded for {client_ip}")
+        return JSONResponse(
+            status_code=429,
+            content={"detail": "Rate limit exceeded"},
+            headers={"Retry-After": "60"}
+        )
+    
+    client_requests.append(current_time)
+    logger.info(f"🌐 {request.method} {request.url.path} from {client_ip}")
     
     try:
         response = await call_next(request)
         process_time = time.time() - start_time
         
-        # SECURITY: Add security headers
+        # SECURITY: Comprehensive security headers
         response.headers["X-Content-Type-Options"] = "nosniff"
         response.headers["X-Frame-Options"] = "DENY"
         response.headers["X-XSS-Protection"] = "1; mode=block"
         response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
-        response.headers["Content-Security-Policy"] = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'"
+        response.headers["Content-Security-Policy"] = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:;"
+        response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+        response.headers["Permissions-Policy"] = "geolocation=(), microphone=(), camera=()"
         
         logger.info(f"✅ {request.method} {request.url.path} -> {response.status_code} ({process_time:.3f}s)")
         return response
