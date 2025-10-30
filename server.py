@@ -18,10 +18,11 @@ from collections import defaultdict
 DATABASE_URL = os.environ.get('MONGO_URL', 'mongodb://localhost:27017/copperhead_db')
 DATABASE_CONNECTED = False
 
-# SECURITY: Rate limiting storage
+# SECURITY: Rate limiting with memory management
 rate_limit_storage = defaultdict(list)
 RATE_LIMIT_REQUESTS = 100  # requests per minute
 RATE_LIMIT_WINDOW = 60  # seconds
+MAX_RATE_LIMIT_ENTRIES = 10000  # Prevent memory exhaustion
 
 def is_safe_path(path: str) -> bool:
     """Validate file path for security"""
