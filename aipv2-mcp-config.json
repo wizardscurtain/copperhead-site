@@ -1,0 +1,82 @@
+{
+  "mcpServers": {
+    "aipv2": {
+      "command": "python",
+      "args": ["-m", "aipv2_mcp_server"],
+      "env": {
+        "PYTHONPATH": "/app",
+        "MCP_LOG_LEVEL": "INFO",
+        "DATABASE_URL": "${DATABASE_URL}",
+        "ENVIRONMENT": "production"
+      }
+    }
+  },
+  "version": "1.0.0",
+  "compliance": {
+    "levels": {
+      "A0": {
+        "name": "Autonomous Attestation",
+        "description": "Basic autonomous operation and validation",
+        "requirements": [
+          "System health monitoring",
+          "Basic error detection",
+          "Service availability validation"
+        ]
+      },
+      "A1": {
+        "name": "Knowledge Base Validation",
+        "description": "Knowledge base integrity and validation",
+        "requirements": [
+          "Database connectivity",
+          "Data integrity checks",
+          "Schema validation"
+        ]
+      },
+      "A2": {
+        "name": "Reasoning and Decision Validation",
+        "description": "Logical reasoning and decision-making validation",
+        "requirements": [
+          "API endpoint validation",
+          "Business logic verification",
+          "Error handling validation"
+        ]
+      },
+      "A3": {
+        "name": "Code Generation and Quality",
+        "description": "Code quality and generation validation",
+        "requirements": [
+          "Code syntax validation",
+          "Security best practices",
+          "Performance optimization"
+        ]
+      },
+      "A4": {
+        "name": "Self-Diagnosis",
+        "description": "System self-diagnosis and error detection",
+        "requirements": [
+          "Automated health checks",
+          "Performance monitoring",
+          "Resource utilization tracking"
+        ]
+      },
+      "A5": {
+        "name": "Self-Healing",
+        "description": "Automated remediation and self-healing",
+        "requirements": [
+          "Automatic error recovery",
+          "Service restart capabilities",
+          "Configuration auto-correction"
+        ]
+      },
+      "A6": {
+        "name": "Experience Logging",
+        "description": "Learning from experiences and continuous improvement",
+        "requirements": [
+          "Event logging and analysis",
+          "Performance metrics collection",
+          "Continuous improvement tracking"
+        ]
+      }
+    }
+  }
+}
