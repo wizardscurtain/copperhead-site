@@ -7,10 +7,10 @@ services:
     name: copperhead-backend
     env: python
     plan: starter
-    buildCommand: |
-      pip install -r requirements.txt
+    buildCommand: pip install -r requirements.txt
+    startCommand: |
       python -m alembic upgrade head
-    startCommand: python server.py
+      python server.py
     healthCheckPath: /api/health
     envVars:
       - key: DATABASE_URL
