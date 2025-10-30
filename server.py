@@ -12,7 +12,14 @@ import time
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-app = FastAPI(title="Copperhead Consulting API", version="1.0.0")
+# FUNCTIONAL FIX: Single FastAPI instance with proper configuration
+app = FastAPI(
+    title="Copperhead Consulting API", 
+    version="1.0.0",
+    description="Professional security consulting services platform",
+    docs_url="/api/docs",
+    redoc_url="/api/redoc"
+)
 
 # Global exception handler
 @app.exception_handler(Exception)
@@ -24,8 +31,6 @@ async def global_exception_handler(request: Request, exc: Exception):
         status_code=500,
         content={"detail": "Internal server error", "error_id": str(int(time.time()))}
     )
-
-app = FastAPI(title="Copperhead Consulting API", version="1.0.0")
 
 @app.on_event("startup")
 async def startup_event():
