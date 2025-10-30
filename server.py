@@ -252,7 +252,11 @@ try:
         # Serve other static files (favicon, manifest, etc.) - but NOT API routes
         @app.get("/{file_path:path}")
         async def serve_static_files(file_path: str):
-            """Optimized static file serving with caching"""
+            """Secure optimized static file serving with input validation"""
+            # SECURITY: Validate file path
+            if not is_safe_path(file_path):
+                raise HTTPException(status_code=400, detail="Invalid file path")
+            
             # Ensure API routes are not intercepted
             if file_path.startswith("api"):
                 raise HTTPException(status_code=404, detail="API endpoint not found")
