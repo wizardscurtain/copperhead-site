@@ -88,6 +88,113 @@ def sanitize_input(data: str, max_length: int = 1000) -> str:
     
     return sanitized.strip()
 
+def generate_csrf_token(client_fingerprint: str) -> str:
+    """Generate secure CSRF token with client binding"""
+    timestamp = str(int(time.time()))
+    nonce = secrets.token_urlsafe(16)
+    
+    # Create HMAC with client fingerprint binding
+    message = f"{client_fingerprint}:{timestamp}:{nonce}"
+    signature = hmac.new(
+        CSRF_SECRET_KEY.encode(),
+        message.encode(),
+        hashlib.sha256
+    ).hexdigest()
+    
+    token = f"{timestamp}:{nonce}:{signature}"
+    
+    # Store token with expiry
+    csrf_tokens[token] = {
+        'client': client_fingerprint,
+        'created': time.time(),
+        'used': False
+    }
+    
+    # Clean expired tokens
+    current_time = time.time()
+    expired_tokens = [
+        t for t, data in csrf_tokens.items()
+        if current_time - data['created'] > CSRF_TOKEN_EXPIRY
+    ]
+    for token in expired_tokens:
+        del csrf_tokens[token]
+    
+    return token
+
+def validate_csrf_token(token: str, client_fingerprint: str) -> bool:
+    """Validate CSRF token with double-submit cookie pattern"""
+    if not token or token not in csrf_tokens:
+        return False
+    
+    token_data = csrf_tokens[token]
+    
+    # Check if token is expired
+    if time.time() - token_data['created'] > CSRF_TOKEN_EXPIRY:
+        del csrf_tokens[token]
+        return False
+    
+    # Check if token was already used (prevent replay)
+    if token_data['used']:
+        return False
+    
+    # Verify client fingerprint binding
+    if token_data['client'] != client_fingerprint:
+        return False
+    
+    # Verify HMAC signature
+    try:
+        timestamp, nonce, signature = token.split(':')
+        message = f"{client_fingerprint}:{timestamp}:{nonce}"
+        expected_signature = hmac.new(
+            CSRF_SECRET_KEY.encode(),
+            message.encode(),
+            hashlib.sha256
+        ).hexdigest()
+        
+        if not hmac.compare_digest(signature, expected_signature):
+            return False
+        
+        # Mark token as used
+        token_data['used'] = True
+        return True
+        
+    except (ValueError, KeyError):
+        return False
+
+def create_secure_session(client_fingerprint: str) -> str:
+    """Create secure session with client binding"""
+    session_id = secrets.token_urlsafe(32)
+    
+    active_sessions[session_id] = {
+        'client': client_fingerprint,
+        'created': time.time(),
+        'last_activity': time.time(),
+        'csrf_token': generate_csrf_token(client_fingerprint)
+    }
+    
+    return session_id
+
+def validate_session(session_id: str, client_fingerprint: str) -> bool:
+    """Validate session with timeout and client binding"""
+    if not session_id or session_id not in active_sessions:
+        return False
+    
+    session_data = active_sessions[session_id]
+    current_time = time.time()
+    
+    # Check session timeout
+    if current_time - session_data['last_activity'] > SESSION_TIMEOUT:
+        del active_sessions[session_id]
+        return False
+    
+    # Verify client fingerprint
+    if session_data['client'] != client_fingerprint:
+        return False
+    
+    # Update last activity
+    session_data['last_activity'] = current_time
+    return True
+
 async def log_security_event(event_type: str, details: dict, client_ip: str):
     """Log security events to database with proper error handling"""
     if not DATABASE_CONNECTED or not database:
