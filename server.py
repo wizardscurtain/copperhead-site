@@ -50,6 +50,16 @@ CIRCUIT_BREAKER_THRESHOLD = 1000  # Requests per second to trigger circuit break
 circuit_breaker_active = False
 circuit_breaker_reset_time = 0
 
+# SECURITY: CSRF Protection with rotating tokens
+CSRF_SECRET_KEY = os.environ.get('CSRF_SECRET', secrets.token_urlsafe(32))
+csrf_tokens = {}  # In production, use Redis or database
+CSRF_TOKEN_EXPIRY = 3600  # 1 hour
+
+# SECURITY: Session management with secure tokens
+active_sessions = {}  # In production, use Redis or database
+SESSION_TIMEOUT = 1800  # 30 minutes
+SESSION_SECRET = os.environ.get('SESSION_SECRET', secrets.token_urlsafe(32))
+
 def get_client_fingerprint(request: Request) -> str:
     """Generate secure client fingerprint to prevent IP spoofing"""
     client_ip = request.client.host if request.client else 'unknown'
