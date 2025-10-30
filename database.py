@@ -12,9 +12,9 @@ import databases
 import sqlalchemy
 from sqlalchemy import (
     Column, String, Text, DateTime, JSON, Integer, 
-    create_engine, MetaData, Table, UUID
+    create_engine, MetaData, Table
 )
-from sqlalchemy.dialects.postgresql import JSONB, INET
+from sqlalchemy.dialects.postgresql import JSONB, INET, UUID
 from sqlalchemy.sql import func
 
 # Database configuration for Render PostgreSQL
