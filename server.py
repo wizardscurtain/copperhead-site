@@ -20,7 +20,6 @@ import bleach
 # Database configuration with connection pooling
 import motor.motor_asyncio
 from pymongo.errors import ConnectionFailure, ServerSelectionTimeoutError
-import asyncio
 
 DATABASE_URL = os.environ.get('MONGO_URL', 'mongodb://localhost:27017/copperhead_db')
 DATABASE_CONNECTED = False
