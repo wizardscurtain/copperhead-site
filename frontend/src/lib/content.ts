@@ -1,5 +1,5 @@
 // Centralized content definitions for structured sections.
-// Facilitates v0.app AI editing by keeping a single source-of-truth.
+// Production content management for consistent messaging.
 
 import { withBase } from './base-path'
 
