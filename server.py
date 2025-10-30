@@ -7,11 +7,20 @@ import os
 import logging
 import traceback
 import time
+import asyncio
+import aiofiles
 from typing import Optional
+from functools import lru_cache
 
 # Database configuration (MongoDB ready)
 DATABASE_URL = os.environ.get('MONGO_URL', 'mongodb://localhost:27017/copperhead_db')
 DATABASE_CONNECTED = False
+
+# PERFORMANCE: Cache for file system checks
+@lru_cache(maxsize=128)
+def cached_file_exists(path: str) -> bool:
+    """Cached file existence check to reduce I/O"""
+    return os.path.exists(path)
 
 class HealthResponse(BaseModel):
     status: str
