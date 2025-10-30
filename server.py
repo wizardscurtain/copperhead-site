@@ -140,30 +140,65 @@ async def security_and_logging_middleware(request: Request, call_next):
     start_time = time.time()
     client_ip = request.client.host if request.client else 'unknown'
     
-    # SECURITY: Rate limiting with memory management
+    # SECURITY: Advanced rate limiting with circuit breaker protection
     current_time = time.time()
+    global circuit_breaker_active, circuit_breaker_reset_time
     
-    # Periodic cleanup to prevent memory exhaustion
-    if len(rate_limit_storage) > MAX_RATE_LIMIT_ENTRIES:
-        # Remove oldest entries
-        old_keys = [k for k, v in rate_limit_storage.items() 
-                   if not v or current_time - v[-1] > RATE_LIMIT_WINDOW * 2]
-        for key in old_keys[:len(old_keys)//2]:  # Remove half of old entries
-            del rate_limit_storage[key]
+    # Circuit breaker check - global protection
+    if circuit_breaker_active:
+        if current_time > circuit_breaker_reset_time:
+            circuit_breaker_active = False
+            logger.info("Circuit breaker reset")
+        else:
+            return JSONResponse(
+                status_code=503,
+                content={"detail": "Service temporarily unavailable"},
+                headers={"Retry-After": "30"}
+            )
     
-    client_requests = rate_limit_storage[client_ip]
+    # Get secure client fingerprint
+    client_fingerprint = get_client_fingerprint(request)
     
-    # Clean old requests outside the window
-    client_requests[:] = [req_time for req_time in client_requests if current_time - req_time < RATE_LIMIT_WINDOW]
-    
-    if len(client_requests) >= RATE_LIMIT_REQUESTS:
-        return JSONResponse(
-            status_code=429,
-            content={"detail": "Rate limit exceeded"},
-            headers={"Retry-After": "60"}
-        )
-    
-    client_requests.append(current_time)
+    with rate_limit_lock:
+        # Efficient memory management with LRU eviction
+        if len(rate_limit_storage) >= MAX_RATE_LIMIT_ENTRIES:
+            # Remove oldest 20% of entries (LRU eviction)
+            for _ in range(max(1, len(rate_limit_storage) // 5)):
+                rate_limit_storage.popitem(last=False)
+        
+        # Get or create client request list
+        if client_fingerprint not in rate_limit_storage:
+            rate_limit_storage[client_fingerprint] = []
+        
+        client_requests = rate_limit_storage[client_fingerprint]
+        
+        # Clean old requests outside the window
+        client_requests[:] = [req_time for req_time in client_requests 
+                            if current_time - req_time < RATE_LIMIT_WINDOW]
+        
+        # Check for circuit breaker trigger (too many requests globally)
+        total_recent_requests = sum(len(reqs) for reqs in rate_limit_storage.values())
+        if total_recent_requests > CIRCUIT_BREAKER_THRESHOLD:
+            circuit_breaker_active = True
+            circuit_breaker_reset_time = current_time + 30
+            logger.warning(f"Circuit breaker activated: {total_recent_requests} requests")
+            return JSONResponse(
+                status_code=503,
+                content={"detail": "Service temporarily unavailable - high load"},
+                headers={"Retry-After": "30"}
+            )
+        
+        # Individual client rate limiting
+        if len(client_requests) >= RATE_LIMIT_REQUESTS:
+            return JSONResponse(
+                status_code=429,
+                content={"detail": "Rate limit exceeded"},
+                headers={"Retry-After": "60"}
+            )
+        
+        client_requests.append(current_time)
+        # Move to end for LRU ordering
+        rate_limit_storage.move_to_end(client_fingerprint)
     # Optimized logging - only log errors and important events
     if request.url.path.startswith("/api") or request.method != "GET":
         logger.info(f"🌐 {request.method} {request.url.path} from {client_ip}")
