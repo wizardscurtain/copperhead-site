@@ -1,4 +1,4 @@
-// Centralized configuration for CopperheadCI website
+// Centralized configuration for Copperhead Consulting Inc website
 // Production-ready configuration management
 
 export const siteConfig = {
