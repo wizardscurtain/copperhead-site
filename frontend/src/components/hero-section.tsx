@@ -161,13 +161,10 @@ export function HeroSection() {
             }`}
           >
             <div className="aspect-video rounded-lg overflow-hidden shadow-2xl border border-accent/20">
-              <video
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/67db459955ee8b93594b3fd5_67ef650a7f795f40958d6f63_CCI_EP_174%20-%20720WebShareName-transcode-fkA7heUg0sBYIPWQ7FhTdGTSIjROFL.mp4"
-                title="Copperhead Consulting Inc - Security Solutions"
+              <img
+                src={`${base}images/soc-team.jpg`}
+                alt="Copperhead Consulting Inc - Security Solutions"
                 className="w-full h-full object-cover"
-                controls
-                preload="metadata"
-                poster={`${base}images/soc-team.jpg`}
               >
                 Your browser does not support the video tag.
               </video>
