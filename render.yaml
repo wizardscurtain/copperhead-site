@@ -2,17 +2,22 @@
 # PostgreSQL + Static Hosting Configuration
 
 services:
-  # Backend API Service
+  # Backend API Service (Python)
   - type: web
     name: copperhead-backend
-    env: python
+    runtime: python
     plan: starter
-    buildCommand: pip install -r requirements.txt
+    autoDeploy: true
+    buildCommand: |
+      python -m pip install --upgrade pip
+      pip install --no-cache-dir -r requirements.txt
     startCommand: |
       python -m alembic upgrade head
       python server.py
     healthCheckPath: /api/health
     envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.5
       - key: DATABASE_URL
         fromDatabase:
           name: copperhead-db
@@ -24,18 +29,19 @@ services:
       - key: SESSION_SECRET
         generateValue: true
       - key: RESEND_API_KEY
-        sync: false  # Set manually in Render dashboard
+        value: ""  # Set manually in dashboard or via Render UI secret
 
-  # Frontend Static Site
+  # Frontend Static Site (React/Vite build output)
   - type: web
     name: copperhead-frontend
-    env: static
+    runtime: static
+    rootDir: frontend
     buildCommand: |
-      cd frontend
-      yarn install
+      yarn install --frozen-lockfile || yarn install
       yarn build
-    staticPublishPath: ./frontend/dist
+    staticPublishPath: dist
     pullRequestPreviewsEnabled: false
+    autoDeploy: true
     headers:
       - path: /*
         name: X-Frame-Options
@@ -55,20 +61,14 @@ services:
       - path: /assets/*
         name: Cache-Control
         value: public, max-age=31536000
+    # SPA fallback (all unmatched paths serve index.html)
     routes:
-      - type: rewrite
-        source: /api/*
-        destination: https://copperhead-backend.onrender.com/*
       - type: rewrite
         source: /*
         destination: /index.html
 
 databases:
-  # PostgreSQL Database (Resource-based Configuration)
+  # PostgreSQL Database
   - name: copperhead-db
-    databaseName: copperhead_production
-    user: copperhead_user
-    cpu: 0.25
-    memoryGB: 1
-    storageGB: 10
-    postgresMajorVersion: 15
+    # Plan omitted: Render will provision using current default tier. Set manually after creation if needed.
+    postgresMajorVersion: "15"
